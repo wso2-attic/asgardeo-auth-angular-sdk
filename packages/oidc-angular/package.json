@@ -1,5 +1,5 @@
 {
-  "name": "oidc-angular",
+  "name": "@asgardio/oidc-angular",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^10.2.0",
