@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "samples",
+  "newProjectRoot": "",
   "projects": {
     "oidc-angular": {
       "projectType": "library",
@@ -30,14 +30,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "packages/oidc-angular/tsconfig.lib.json",
-              "packages/oidc-angular/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "packages/oidc-angular/**/*.ts",
+              "packages/oidc-angular/**/*.html"
             ]
           }
         }
@@ -134,15 +131,11 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "samples/basic-usage/tsconfig.app.json",
-              "samples/basic-usage/tsconfig.spec.json",
-              "samples/basic-usage/e2e/tsconfig.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
+            "lintFilePatterns": [
+              "samples/basic-usage/**/*.ts",
+              "samples/basic-usage/**/*.html"
             ]
           }
         },
@@ -159,6 +152,7 @@
           }
         }
       }
-    }},
+    }
+  },
   "defaultProject": "oidc-angular"
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'lib-oidc-angular',
+  selector: 'app-lib-oidc-angular',
   template: `
     <p>
       oidc-angular works!
