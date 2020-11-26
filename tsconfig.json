@@ -18,6 +18,8 @@
     "paths": {
       "oidc-angular": [
         "dist/oidc-angular/oidc-angular",
+        "dist/oidc-angular",
+        "dist/oidc-angular/oidc-angular",
         "dist/oidc-angular"
       ]
     }
