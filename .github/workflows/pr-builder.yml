@@ -16,7 +16,7 @@
 
 # This builds the PRs raised to the master branch.
 
-name: Builder
+name: PR Builder
 
 on:
   workflow_dispatch:
