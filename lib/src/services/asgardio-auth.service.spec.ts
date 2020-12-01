@@ -17,23 +17,19 @@
  *
  */
 
-import { Component, OnInit } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
-@Component({
-  selector: 'lib-oidc-angular',
-  template: `
-    <p>
-      oidc-angular works!
-    </p>
-  `,
-  styles: [
-  ]
-})
-export class OidcAngularComponent implements OnInit {
+import { AsgardioAuthService } from './asgardio-auth.service';
 
-  constructor() { }
+describe('AsgardioAuthService', () => {
+  let service: AsgardioAuthService;
 
-  ngOnInit(): void {
-  }
+  beforeEach(() => {
+    TestBed.configureTestingModule({});
+    service = TestBed.inject(AsgardioAuthService);
+  });
 
-}
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});

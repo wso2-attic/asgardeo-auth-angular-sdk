@@ -18,12 +18,12 @@
  */
 
 import { NgModule } from '@angular/core';
-import { OidcAngularComponent } from './oidc-angular.component';
+import { AsgardioAuthService } from './services/asgardio-auth.service';
 
 @NgModule({
-  declarations: [OidcAngularComponent],
-  imports: [
-  ],
-  exports: [OidcAngularComponent]
+  declarations: [],
+  imports: [],
+  providers: [AsgardioAuthService],
+  exports: []
 })
-export class OidcAngularModule { }
+export class AsgardioAuthModule { }
