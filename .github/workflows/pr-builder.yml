@@ -14,7 +14,7 @@
 #  specific language governing permissions and limitations
 #  under the License.
 
-# This builds the PRs raised to the master branch.
+# This builds the PRs raised to the main branch.
 
 name: PR Builder
 
