@@ -17,11 +17,11 @@
  *
  */
 
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { OidcAngularService } from './oidc-angular.service';
+import { OidcAngularService } from "./oidc-angular.service";
 
-describe('OidcAngularService', () => {
+describe("OidcAngularService", () => {
     let service: OidcAngularService;
 
     beforeEach(() => {
@@ -29,7 +29,7 @@ describe('OidcAngularService', () => {
         service = TestBed.inject(OidcAngularService);
     });
 
-    it('should be created', () => {
+    it("should be created", () => {
         expect(service).toBeTruthy();
     });
 });

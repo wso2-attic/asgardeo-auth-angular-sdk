@@ -17,8 +17,8 @@
  *
  */
 
-import { NgModule } from '@angular/core';
-import { OidcAngularComponent } from './oidc-angular.component';
+import { NgModule } from "@angular/core";
+import { OidcAngularComponent } from "./oidc-angular.component";
 
 @NgModule({
     declarations: [OidcAngularComponent],

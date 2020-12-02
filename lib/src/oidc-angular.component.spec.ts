@@ -17,11 +17,11 @@
  *
  */
 
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { OidcAngularComponent } from './oidc-angular.component';
+import { OidcAngularComponent } from "./oidc-angular.component";
 
-describe('OidcAngularComponent', () => {
+describe("OidcAngularComponent", () => {
     let component: OidcAngularComponent;
     let fixture: ComponentFixture<OidcAngularComponent>;
 
@@ -38,7 +38,7 @@ describe('OidcAngularComponent', () => {
         fixture.detectChanges();
     });
 
-    it('should create', () => {
+    it("should create", () => {
         expect(component).toBeTruthy();
     });
 });
