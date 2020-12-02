@@ -17,11 +17,11 @@
  *
  */
 
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { AsgardioAuthService } from './asgardio-auth.service';
+import { AsgardioAuthService } from "./asgardio-auth.service";
 
-describe('AsgardioAuthService', () => {
+describe("AsgardioAuthService", () => {
     let service: AsgardioAuthService;
 
     beforeEach(() => {
@@ -29,7 +29,7 @@ describe('AsgardioAuthService', () => {
         service = TestBed.inject(AsgardioAuthService);
     });
 
-    it('should be created', () => {
+    it("should be created", () => {
         expect(service).toBeTruthy();
     });
 });

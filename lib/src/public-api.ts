@@ -21,5 +21,5 @@
  * Public API Surface of oidc-angular
  */
 
-export * from './services/asgardio-auth.service';
-export * from './asgardio-auth.module';
+export * from "./services/asgardio-auth.service";
+export * from "./asgardio-auth.module";

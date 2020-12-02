@@ -17,8 +17,8 @@
  *
  */
 
-import { NgModule } from '@angular/core';
-import { AsgardioAuthService } from './services/asgardio-auth.service';
+import { NgModule } from "@angular/core";
+import { AsgardioAuthService } from "./services/asgardio-auth.service";
 
 @NgModule({
     declarations: [],

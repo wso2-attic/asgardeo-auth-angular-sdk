@@ -39,7 +39,7 @@
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
             "rules": {
-                "indent": [
+                "@typescript-eslint/indent": [
                     "error",
                     4,
                     {
@@ -53,7 +53,7 @@
                         "MemberExpression": 1
                     }
                 ],
-                "quotes": [
+                "@typescript-eslint/quotes": [
                     "error",
                     "double"
                 ]
