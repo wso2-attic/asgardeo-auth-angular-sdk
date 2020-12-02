@@ -22,14 +22,14 @@ import { TestBed } from '@angular/core/testing';
 import { AsgardioAuthService } from './asgardio-auth.service';
 
 describe('AsgardioAuthService', () => {
-  let service: AsgardioAuthService;
+    let service: AsgardioAuthService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(AsgardioAuthService);
-  });
+    beforeEach(() => {
+        TestBed.configureTestingModule({});
+        service = TestBed.inject(AsgardioAuthService);
+    });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+    it('should be created', () => {
+        expect(service).toBeTruthy();
+    });
 });

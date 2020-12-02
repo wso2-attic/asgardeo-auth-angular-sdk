@@ -21,9 +21,9 @@ import { NgModule } from '@angular/core';
 import { AsgardioAuthService } from './services/asgardio-auth.service';
 
 @NgModule({
-  declarations: [],
-  imports: [],
-  providers: [AsgardioAuthService],
-  exports: []
+    declarations: [],
+    imports: [],
+    providers: [AsgardioAuthService],
+    exports: []
 })
 export class AsgardioAuthModule { }
