@@ -17,13 +17,24 @@
  *
  */
 
-import { NgModule } from "@angular/core";
+import { ModuleWithProviders, NgModule } from "@angular/core";
+import { AsgardioConfig } from './models/asgardio-config';
 import { AsgardioAuthService } from "./services/asgardio-auth.service";
+import { AsgardioConfigService } from './services/asgardio-config.service';
 
-@NgModule({
-    declarations: [],
-    imports: [],
-    providers: [AsgardioAuthService],
-    exports: []
-})
-export class AsgardioAuthModule { }
+@NgModule()
+export class AsgardioAuthModule {
+    static forRoot(config?: AsgardioConfig): ModuleWithProviders<AsgardioAuthModule> {
+        // console.log("hey");
+        return {
+            ngModule: AsgardioAuthModule,
+            providers: [
+                AsgardioAuthService,
+                { 
+                    provide: AsgardioConfigService, 
+                    useValue: config 
+                }
+            ]
+        };
+    }
+}

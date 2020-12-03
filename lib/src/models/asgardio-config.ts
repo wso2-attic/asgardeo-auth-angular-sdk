@@ -16,3 +16,7 @@
  * under the License.
  *
  */
+
+import { ConfigInterface } from '@asgardio/oidc-js';
+
+export interface AsgardioConfig extends ConfigInterface { }
