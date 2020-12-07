@@ -29,7 +29,9 @@ export class AsgardioAuthService {
     constructor(@Inject(ASGARDIO_CONFIG) config: AsgardioConfigInterface) {
         if (config) {
             this.auth = IdentityClient.getInstance();
-            this.auth.initialize(config).then((value: any) => console.log(value));
+            this.auth.initialize(config)
+                .then(() => console.log("Succesfully Initialized Authentication"))
+                .catch(() => alert("Failed to Initialize Authentication"));
         }
     }
 

@@ -32,9 +32,9 @@ import { AsgardioAuthModule } from "oidc-angular";
         BrowserModule,
         AppRoutingModule,
         AsgardioAuthModule.forRoot({
-            signInRedirectURL: "https://conotoso.com/login",
-            clientID: "1234",
-            serverOrigin: "https://conotoso.com/login",
+            signInRedirectURL: "https://localhost:4200",
+            clientID: "eUmejhksMPHqHSxB3gSqsNmmYg0a",
+            serverOrigin: "https://localhost:9443"
         })
     ],
     providers: [],
