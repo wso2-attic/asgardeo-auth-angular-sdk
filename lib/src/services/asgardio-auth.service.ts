@@ -17,12 +17,23 @@
  *
  */
 
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
+import { IdentityClient } from "@asgardio/oidc-js";
+import { AsgardioConfigInterface, ASGARDIO_CONFIG } from "../models/asgardio-config.interface";
 
 @Injectable({
     providedIn: "root"
 })
 export class AsgardioAuthService {
+    private auth: IdentityClient;
+    constructor(@Inject(ASGARDIO_CONFIG) config: AsgardioConfigInterface) {
+        if (config) {
+            this.auth = IdentityClient.getInstance();
+            this.auth.initialize(config).then((value: any) => console.log(value));
+        }
+    }
 
-    constructor() { }
+    signIn() {
+        this.auth.signIn();
+    }
 }

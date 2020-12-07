@@ -22,7 +22,7 @@ import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { AsgardioAuthModule } from 'oidc-angular';
+import { AsgardioAuthModule } from "oidc-angular";
 
 @NgModule({
     declarations: [
@@ -34,7 +34,7 @@ import { AsgardioAuthModule } from 'oidc-angular';
         AsgardioAuthModule.forRoot({
             signInRedirectURL: "https://conotoso.com/login",
             clientID: "1234",
-            serverOrigin: "https://conotoso.com/login"
+            serverOrigin: "https://conotoso.com/login",
         })
     ],
     providers: [],
