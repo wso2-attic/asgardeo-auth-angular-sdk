@@ -41,6 +41,6 @@ export class AsgardioAuthService {
     }
 
     signInWithRedirect(){
-        
+
     }
 }

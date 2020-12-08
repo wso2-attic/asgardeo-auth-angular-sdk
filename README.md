@@ -17,8 +17,10 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Introduction](#introduction)
 - [Install](#install)
 - [Getting Started](#getting-started)
+    - [Register and Configure Asgardio Auth Module](###register-and-configure-asgardio-auth-module)
 - [Try Out the Sample Apps](#try-out-the-sample-apps)
 - [APIs](#apis)
+    - [Configuration](#configuration)
 - [Develop](#develop)
     - [Prerequisites](#prerequisites)
     - [Installing Dependencies](#installing-dependencies)
@@ -35,10 +37,46 @@ Asgardio's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth
 
 ## Getting Started
 
+### Register and Configure Asgardio Auth Module
+```javascript
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
+import { AppComponent } from "./app.component";
+
+// Import Asgardio Auth Module
+import { AsgardioAuthModule } from "@asgardio/oidc-angular";
+
+@NgModule({
+    declarations: [
+        AppComponent
+    ],
+    imports: [
+        BrowserModule,
+
+        // Add the module as a Import providing the configs (See API Docs)
+        AsgardioAuthModule.forRoot({
+            signInRedirectURL: "https://localhost:9443/myaccount/login",
+            clientID: "client ID",
+            serverOrigin: "https://localhost:9443"
+        })
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+
 ## Try Out the Sample Apps
 - [Basic Usage](samples/basic-usage)
 
 ## APIs
+
+### Configuration
+
+Pass configuration data for authentication into `AsgardoAuthModule` using `forRoot` function.
+
+Get a list of available configuration parameters [here](https://github.com/asgardio/asgardio-js-oidc-sdk/blob/master/packages/oidc-js/README.md#initialize).  
 
 ## Develop
 
