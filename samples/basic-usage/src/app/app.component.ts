@@ -31,6 +31,7 @@ export class AppComponent {
     constructor(private auth: AsgardioAuthService){}
 
     signIn(){
-        this.auth.signIn();
+        this.auth.signIn().then(value => console.log(value));
     }
+
 }

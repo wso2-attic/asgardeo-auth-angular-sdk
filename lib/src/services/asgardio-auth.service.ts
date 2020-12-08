@@ -19,7 +19,8 @@
 
 import { Inject, Injectable } from "@angular/core";
 import { IdentityClient } from "@asgardio/oidc-js";
-import { AsgardioConfigInterface, ASGARDIO_CONFIG } from "../models/asgardio-config.interface";
+import { ASGARDIO_CONFIG } from "../configs/asgardio-config";
+import { AsgardioConfigInterface } from "../models/asgardio-config.interface";
 
 @Injectable({
     providedIn: "root"
@@ -30,12 +31,16 @@ export class AsgardioAuthService {
         if (config) {
             this.auth = IdentityClient.getInstance();
             this.auth.initialize(config)
-                .then(() => console.log("Succesfully Initialized Authentication"))
-                .catch(() => alert("Failed to Initialize Authentication"));
+                .then(() => console.log("Succesfully Initialized"))
+                .catch(() => alert("Failed to Initialize"));
         }
     }
 
     signIn() {
-        this.auth.signIn();
+        return this.auth.signIn();
+    }
+
+    signInWithRedirect(){
+
     }
 }

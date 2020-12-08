@@ -18,7 +18,8 @@
  */
 
 import { ModuleWithProviders, NgModule } from "@angular/core";
-import { AsgardioConfigInterface, ASGARDIO_CONFIG } from "./models/asgardio-config.interface";
+import { ASGARDIO_CONFIG } from "./configs/asgardio-config";
+import { AsgardioConfigInterface } from "./models/asgardio-config.interface";
 import { AsgardioAuthService } from "./services/asgardio-auth.service";
 
 @NgModule()
