@@ -32,7 +32,7 @@ import { AsgardioAuthModule } from "@asgardio/oidc-angular";
         BrowserModule,
         AppRoutingModule,
         AsgardioAuthModule.forRoot({
-            signInRedirectURL: "https://localhost:4200",
+            signInRedirectURL: "http://localhost:4200",
             clientID: "eUmejhksMPHqHSxB3gSqsNmmYg0a",
             serverOrigin: "https://localhost:9443"
         })

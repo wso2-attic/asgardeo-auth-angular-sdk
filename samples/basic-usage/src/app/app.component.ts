@@ -25,17 +25,13 @@ import { AsgardioAuthService } from "@asgardio/oidc-angular";
     templateUrl: "./app.component.html",
     styleUrls: ["./app.component.css"]
 })
-export class AppComponent implements OnInit{
+export class AppComponent{
     title = "basic-usage";
 
     constructor(private auth: AsgardioAuthService){}
 
-    ngOnInit() {
-        this.auth.signIn().then(value => console.log(value));
-    }
-
     signIn(){
-
+        this.auth.signIn().then(value => console.log(value));
     }
 
 }
