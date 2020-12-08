@@ -18,24 +18,17 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { AsgardioAuthService } from "@asgardio/oidc-angular";
 
 @Component({
-    selector: "app-root",
-    templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.css"]
+    selector: "lib-asgardio-sign-in-redirect",
+    templateUrl: "./asgardio-sign-in-redirect.component.html",
+    styleUrls: ["./asgardio-sign-in-redirect.component.css"]
 })
-export class AppComponent implements OnInit{
-    title = "basic-usage";
+export class AsgardioSignInRedirectComponent implements OnInit {
 
-    constructor(private auth: AsgardioAuthService){}
+    constructor() { }
 
-    ngOnInit() {
-        this.auth.signIn().then(value => console.log(value));
-    }
-
-    signIn(){
-
+    ngOnInit(): void {
     }
 
 }

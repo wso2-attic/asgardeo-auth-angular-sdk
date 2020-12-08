@@ -17,25 +17,30 @@
  *
  */
 
-import { Component, OnInit } from "@angular/core";
-import { AsgardioAuthService } from "@asgardio/oidc-angular";
+import { Injectable, Injector } from "@angular/core";
+import { Router } from "@angular/router";
+import { Location } from "@angular/common";
 
-@Component({
-    selector: "app-root",
-    templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.css"]
+@Injectable({
+    providedIn: "root"
 })
-export class AppComponent implements OnInit{
-    title = "basic-usage";
+export class AsgardioNavigatorService {
 
-    constructor(private auth: AsgardioAuthService){}
+    private readonly router: Router;
 
-    ngOnInit() {
-        this.auth.signIn().then(value => console.log(value));
+    constructor(private location: Location, injector: Injector) {
+        try {
+            this.router = injector.get(Router);
+        }
+        catch { }
     }
 
-    signIn(){
+    navigateByUrl(url: string): void {
+        if (this.router) {
+            this.router.navigateByUrl(url);
+            return;
+        }
 
+        this.location.replaceState(url);
     }
-
 }

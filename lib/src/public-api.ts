@@ -18,7 +18,7 @@
  */
 
 /*
- * Public API Surface of oidc-angular
+ * Public API Surface of @asgardio/oidc-angular
  */
 
 export * from "./services/asgardio-auth.service";

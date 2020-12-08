@@ -17,25 +17,19 @@
  *
  */
 
-import { Component, OnInit } from "@angular/core";
-import { AsgardioAuthService } from "@asgardio/oidc-angular";
+import { TestBed } from "@angular/core/testing";
 
-@Component({
-    selector: "app-root",
-    templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.css"]
-})
-export class AppComponent implements OnInit{
-    title = "basic-usage";
+import { AsgardioNavigatorService } from "./asgardio-navigator.service";
 
-    constructor(private auth: AsgardioAuthService){}
+describe("AsgardioNavigatorService", () => {
+    let service: AsgardioNavigatorService;
 
-    ngOnInit() {
-        this.auth.signIn().then(value => console.log(value));
-    }
+    beforeEach(() => {
+        TestBed.configureTestingModule({});
+        service = TestBed.inject(AsgardioNavigatorService);
+    });
 
-    signIn(){
-
-    }
-
-}
+    it("should be created", () => {
+        expect(service).toBeTruthy();
+    });
+});
