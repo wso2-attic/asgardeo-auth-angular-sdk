@@ -18,6 +18,7 @@
  */
 
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { AsgardioAuthService } from "@asgardio/oidc-angular";
 
 @Component({
@@ -27,10 +28,9 @@ import { AsgardioAuthService } from "@asgardio/oidc-angular";
 })
 export class SignInComponent implements OnInit {
 
-    constructor(private auth: AsgardioAuthService) { }
+    constructor(private router: Router, private auth: AsgardioAuthService) { }
 
     ngOnInit() {
-        this.auth.signIn();
+        this.auth.signIn().then((m)=>console.log(m));
     }
-
 }
