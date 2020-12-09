@@ -17,10 +17,20 @@
  *
  */
 
-/*
- * Public API Surface of @asgardio/oidc-angular
- */
+import { Component, OnInit } from "@angular/core";
+import { AsgardioAuthService } from "@asgardio/oidc-angular";
 
-export * from "./asgardio-auth.module";
-export * from "./services/asgardio-auth.service";
+@Component({
+    selector: "app-sign-in",
+    templateUrl: "./sign-in.component.html",
+    styleUrls: ["./sign-in.component.css"]
+})
+export class SignInComponent implements OnInit {
 
+    constructor(private auth: AsgardioAuthService) { }
+
+    ngOnInit() {
+        this.auth.signIn();
+    }
+
+}

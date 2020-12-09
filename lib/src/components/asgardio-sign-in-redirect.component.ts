@@ -21,8 +21,7 @@ import { Component, OnInit } from "@angular/core";
 
 @Component({
     selector: "lib-asgardio-sign-in-redirect",
-    templateUrl: "./asgardio-sign-in-redirect.component.html",
-    styleUrls: ["./asgardio-sign-in-redirect.component.css"]
+    template:""
 })
 export class AsgardioSignInRedirectComponent implements OnInit {
 

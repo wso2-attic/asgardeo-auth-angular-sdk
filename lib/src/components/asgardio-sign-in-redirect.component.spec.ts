@@ -18,7 +18,6 @@
  */
 
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { AsgardioSignInRedirectComponent } from "./asgardio-sign-in-redirect.component";
 
 describe("AsgardioSignInRedirectComponent", () => {

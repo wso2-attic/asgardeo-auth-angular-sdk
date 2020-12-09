@@ -18,7 +18,6 @@
  */
 
 import { TestBed } from "@angular/core/testing";
-
 import { AsgardioNavigatorService } from "./asgardio-navigator.service";
 
 describe("AsgardioNavigatorService", () => {

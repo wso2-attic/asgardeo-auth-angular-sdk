@@ -17,10 +17,15 @@
  *
  */
 
-/*
- * Public API Surface of @asgardio/oidc-angular
- */
+import { Component } from "@angular/core";
 
-export * from "./asgardio-auth.module";
-export * from "./services/asgardio-auth.service";
+@Component({
+    selector: "app-home",
+    templateUrl: "./home.component.html",
+    styleUrls: ["./home.component.css"]
+})
+export class HomeComponent{
 
+    constructor() { }
+
+}

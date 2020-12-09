@@ -17,8 +17,8 @@
  *
  */
 
-import { Component, OnInit } from "@angular/core";
-import { AsgardioAuthService } from "@asgardio/oidc-angular";
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
     selector: "app-root",
@@ -28,10 +28,6 @@ import { AsgardioAuthService } from "@asgardio/oidc-angular";
 export class AppComponent{
     title = "basic-usage";
 
-    constructor(private auth: AsgardioAuthService){}
-
-    signIn(){
-        this.auth.signIn().then(value => console.log(value));
-    }
+    constructor(private router: Router){}
 
 }

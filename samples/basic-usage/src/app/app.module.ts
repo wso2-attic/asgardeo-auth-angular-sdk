@@ -17,22 +17,25 @@
  *
  */
 
-import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
-
+import { BrowserModule } from "@angular/platform-browser";
+import { AsgardioAuthModule } from "@asgardio/oidc-angular";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { AsgardioAuthModule } from "@asgardio/oidc-angular";
+import { HomeComponent } from "./home/home.component";
+import { SignInComponent } from "./sign-in/sign-in.component";
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        SignInComponent,
+        HomeComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         AsgardioAuthModule.forRoot({
-            signInRedirectURL: "http://localhost:4200",
+            signInRedirectURL: "http://localhost:4200/signin",
             clientID: "eUmejhksMPHqHSxB3gSqsNmmYg0a",
             serverOrigin: "https://localhost:9443"
         })

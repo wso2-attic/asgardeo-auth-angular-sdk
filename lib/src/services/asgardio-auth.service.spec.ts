@@ -18,7 +18,6 @@
  */
 
 import { TestBed } from "@angular/core/testing";
-
 import { AsgardioAuthService } from "./asgardio-auth.service";
 
 describe("AsgardioAuthService", () => {
