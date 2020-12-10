@@ -35,7 +35,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Asgardio's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk).  
 
-[@angular/router](https://angular.io/api/router) integaration of this SDK will help the developers to add identity management to their Angular Applications in a jiffy.
+Integaration with [@angular/router](https://angular.io/api/router) will help the developers to add identity management to their Angular Applications in a jiffy.
 
 ## Install
 
@@ -86,11 +86,11 @@ Pass configuration parameters for authentication into `AsgardoAuthModule` using 
 
 Following parameters are **required**.
 
-- `signInRedirectURL` - The URL to redirect to after the user authorizes the client app. (Refer [`SignInWithRedirect`](#signinwithredirect))
+- `signInRedirectURL` - URL to redirect to after the user authorizes the client app. (Refer [here](#signinwithredirect))
 - `clientID`: The client ID of the OIDC application hosted in the Asgardio.
 - `serverOrigin`: The origin of the Identity Provider. eg: https://www.asgardio.io
 
-This SDK supports all configuration parameters defined in @asgardio/oidc-js Get a list of available configuration parameters available [here](https://github.com/asgardio/asgardio-js-oidc-sdk/blob/master/packages/oidc-js/README.md#initialize).  
+This SDK supports all configuration parameters defined in [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk) Get a list of available configuration parameters available [here](https://github.com/asgardio/asgardio-js-oidc-sdk/blob/master/packages/oidc-js/README.md#initialize).  
 
 ### `SignIn`
 
