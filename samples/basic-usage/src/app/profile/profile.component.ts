@@ -17,20 +17,19 @@
  *
  */
 
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component } from "@angular/core";
 import { AsgardioAuthService } from "@asgardio/oidc-angular";
 
 @Component({
-    selector: "app-sign-in",
-    templateUrl: "./sign-in.component.html",
-    styleUrls: ["./sign-in.component.css"]
+    selector: "app-profile",
+    templateUrl: "./profile.component.html",
+    styleUrls: ["./profile.component.css"]
 })
-export class SignInComponent implements OnInit {
+export class ProfileComponent {
 
-    constructor(private router: Router, private auth: AsgardioAuthService) { }
+    constructor(private auth: AsgardioAuthService) { }
 
-    ngOnInit() {
-        this.auth.signIn().then((m)=>console.log(m));
+    signIn() {
+        this.auth.signInWithRedirect();
     }
 }

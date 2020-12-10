@@ -35,7 +35,7 @@
         "skipTemplateCodegen": true,
         "strictMetadataEmit": true,
         "enableResourceInlining": true,
-        "enableIvy":false
+        "enableIvy":true
     },
     "exclude": [
         "src/test.ts",

@@ -22,5 +22,6 @@
  */
 
 export * from "./asgardio-auth.module";
+export * from "./components/asgardio-sign-in-redirect.component";
 export * from "./services/asgardio-auth.service";
 

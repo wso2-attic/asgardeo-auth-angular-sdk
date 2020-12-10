@@ -17,7 +17,6 @@
  *
  */
 
-import { Location } from "@angular/common";
 import { Injectable, Injector } from "@angular/core";
 import { Router } from "@angular/router";
 
@@ -28,19 +27,22 @@ export class AsgardioNavigatorService {
 
     private readonly router: Router;
 
-    constructor(private location: Location, injector: Injector) {
+    constructor(injector: Injector) {
         try {
             this.router = injector.get(Router);
         }
-        catch { }
+        catch {
+            console.warn("Router is Not Provided");
+        }
     }
 
-    navigateByUrl(url: string): void {
-        if (this.router) {
-            this.router.navigateByUrl(url);
-            return;
-        }
+    getUrl(): string {
+        return this.router.url;
+    }
 
-        this.location.replaceState(url);
+    navigateByUrl(url: string) : Promise<boolean> {
+        if (this.router) {
+            return this.router.navigateByUrl(url);
+        }
     }
 }

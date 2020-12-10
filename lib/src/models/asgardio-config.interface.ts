@@ -20,4 +20,3 @@
 import { ConfigInterface } from "@asgardio/oidc-js";
 
 export type AsgardioConfigInterface = ConfigInterface;
-

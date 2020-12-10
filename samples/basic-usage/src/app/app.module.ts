@@ -23,19 +23,19 @@ import { AsgardioAuthModule } from "@asgardio/oidc-angular";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
-import { SignInComponent } from "./sign-in/sign-in.component";
+import { ProfileComponent } from "./profile/profile.component";
 
 @NgModule({
     declarations: [
         AppComponent,
-        SignInComponent,
-        HomeComponent
+        HomeComponent,
+        ProfileComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         AsgardioAuthModule.forRoot({
-            signInRedirectURL: "http://localhost:4200/signin",
+            signInRedirectURL: window.location.origin + "/signin/redirect",
             clientID: "eUmejhksMPHqHSxB3gSqsNmmYg0a",
             serverOrigin: "https://localhost:9443"
         })

@@ -18,6 +18,7 @@
  */
 
 import { Component } from "@angular/core";
+import { AsgardioAuthService } from "@asgardio/oidc-angular";
 
 @Component({
     selector: "app-home",
@@ -26,6 +27,9 @@ import { Component } from "@angular/core";
 })
 export class HomeComponent{
 
-    constructor() { }
+    constructor(private auth: AsgardioAuthService) { }
 
+    signIn() {
+        this.auth.signInWithRedirect();
+    }
 }

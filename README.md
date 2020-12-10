@@ -17,10 +17,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Introduction](#introduction)
 - [Install](#install)
 - [Getting Started](#getting-started)
-    - [Register and Configure Asgardio Auth Module](###register-and-configure-asgardio-auth-module)
+    - [Register and Configure `AsgardioAuthModule`](###register-and-configure-asgardioauthmodule)
 - [Try Out the Sample Apps](#try-out-the-sample-apps)
 - [APIs](#apis)
-    - [Configuration](#configuration)
+    - [`Configuration`](#configuration)
+    - [`SignIn`](#signin)
+    - [`SignInWithRedirect`](#signinwithredirect)
 - [Develop](#develop)
     - [Prerequisites](#prerequisites)
     - [Installing Dependencies](#installing-dependencies)
@@ -37,7 +39,7 @@ Asgardio's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth
 
 ## Getting Started
 
-### Register and Configure Asgardio Auth Module
+### Register and Configure `AsgardioAuthModule`
 ```javascript
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
@@ -72,11 +74,15 @@ export class AppModule { }
 
 ## APIs
 
-### Configuration
+### `Configuration`
 
 Pass configuration data for authentication into `AsgardoAuthModule` using `forRoot` function.
 
 Get a list of available configuration parameters [here](https://github.com/asgardio/asgardio-js-oidc-sdk/blob/master/packages/oidc-js/README.md#initialize).  
+
+### `SignIn`
+
+### `SignInWithRedirect`
 
 ## Develop
 

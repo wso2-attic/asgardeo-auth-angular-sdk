@@ -21,18 +21,19 @@ import { Inject, Injectable } from "@angular/core";
 import { IdentityClient } from "@asgardio/oidc-js";
 import { ASGARDIO_CONFIG } from "../configs/asgardio-config";
 import { AsgardioConfigInterface } from "../models/asgardio-config.interface";
+import { AsgardioNavigatorService } from "./asgardio-navigator.service";
 
 @Injectable({
     providedIn: "root"
 })
 export class AsgardioAuthService {
     private auth: IdentityClient;
-    constructor(@Inject(ASGARDIO_CONFIG) config: AsgardioConfigInterface) {
+    constructor(@Inject(ASGARDIO_CONFIG) config: AsgardioConfigInterface, private navigator: AsgardioNavigatorService) {
         if (config) {
             this.auth = IdentityClient.getInstance();
             this.auth.initialize(config)
                 .then(() => console.log("Succesfully Initialized"))
-                .catch(() => alert("Failed to Initialize"));
+                .catch(() => console.warn("Failed to Initialize"));
         }
     }
 
@@ -41,6 +42,7 @@ export class AsgardioAuthService {
     }
 
     signInWithRedirect(){
-
+        localStorage.setItem("redirectUrl", this.navigator.getUrl());
+        this.navigator.navigateByUrl("signin/redirect");
     }
 }
