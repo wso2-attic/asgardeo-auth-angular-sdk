@@ -33,7 +33,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Introduction
 
-Asgardio's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. By using Asgardio and the Angular OIDC SDK, developers will be able to add identity management to their Angular Applications in a jiffy.
+Asgardio's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk).  
+
+[@angular/router](https://angular.io/api/router) integaration of this SDK will help the developers to add identity management to their Angular Applications in a jiffy.
 
 ## Install
 
@@ -68,6 +70,10 @@ import { AsgardioAuthModule } from "@asgardio/oidc-angular";
 export class AppModule { }
 ```
 
+### Use `AsgardioAuthService` for Authentication Features
+```javascript
+import { AsgardioAuthService } from "@asgardio/oidc-angular";
+```
 
 ## Try Out the Sample Apps
 - [Basic Usage](samples/basic-usage)
@@ -76,14 +82,44 @@ export class AppModule { }
 
 ### `Configuration`
 
-Pass configuration data for authentication into `AsgardoAuthModule` using `forRoot` function.
+Pass configuration parameters for authentication into `AsgardoAuthModule` using `forRoot` method.
 
-Get a list of available configuration parameters [here](https://github.com/asgardio/asgardio-js-oidc-sdk/blob/master/packages/oidc-js/README.md#initialize).  
+Following parameters are **required**.
+
+- `signInRedirectURL` - The URL to redirect to after the user authorizes the client app. (Refer [`SignInWithRedirect`](#signinwithredirect))
+- `clientID`: The client ID of the OIDC application hosted in the Asgardio.
+- `serverOrigin`: The origin of the Identity Provider. eg: https://www.asgardio.io
+
+This SDK supports all configuration parameters defined in @asgardio/oidc-js Get a list of available configuration parameters available [here](https://github.com/asgardio/asgardio-js-oidc-sdk/blob/master/packages/oidc-js/README.md#initialize).  
 
 ### `SignIn`
 
+This method initiates the authentication flow using [signIn](https://github.com/asgardio/asgardio-js-oidc-sdk/tree/master/packages/oidc-js#signin) function of [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk) . Developer can use this method to customize their own redirect flow. 
+
 ### `SignInWithRedirect`
 
+This method redirects the user to the route where the authentication flow was initiated. To use this function following steps needs to be fullfilled.
+- `signInRedirectURL` 
+
+Change Sign In Redirect URL as follows
+```javascript
+AsgardioAuthModule.forRoot({
+    signInRedirectURL: window.location.origin + "/signin/redirect",
+    ...
+})
+```    
+- `app-routing.module.ts`
+
+Register `AsgardioLoginRedirectComponent` for the the following route.
+
+```javascript
+import { AsgardioSignInRedirectComponent } from "@asgardio/oidc-angular";
+
+const routes: Routes = [
+    { path: "signin/redirect", component: AsgardioSignInRedirectComponent },
+    ...
+];
+``` 
 ## Develop
 
 ### Prerequisites
