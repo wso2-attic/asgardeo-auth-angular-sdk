@@ -32,4 +32,8 @@ export class HomeComponent{
     signIn() {
         this.auth.signInWithRedirect();
     }
+
+    signOut() {
+        this.auth.signOut();
+    }
 }

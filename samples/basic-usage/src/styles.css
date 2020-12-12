@@ -19,27 +19,32 @@
 
 /* You can add global styles to this file, and also import other style files */
 
-/* @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"); */
-
-/* @import url("//fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"); */
-
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
 html, body {
-    height: 100%;
-    margin: 0%;
+    height: 100vh;
 }
 
 body {
-    display: flex;
     align-items: center;
-    justify-content: center;
     background-color: #212a32;
+    background-position: center;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: flex;
     font-family: 'Roboto', sans-serif !important;
+    justify-content: center;
+    text-align: center;
+}
+
+app-root {
+    height: 100%;
+    width: 100%;
 }
 
 @font-face {
+    font-display: swap;
     font-family: 'Roboto';
     font-style: normal;
     font-weight: 500;
-    font-display: swap;
     src: url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4.woff2) format('woff2');
 }
