@@ -36,6 +36,7 @@ import { ProfileComponent } from "./profile/profile.component";
         AppRoutingModule,
         AsgardioAuthModule.forRoot({
             signInRedirectURL: window.location.origin + "/signin/redirect",
+            signOutRedirectURL: window.location.origin,
             clientID: "eUmejhksMPHqHSxB3gSqsNmmYg0a",
             serverOrigin: "https://localhost:9443"
         })

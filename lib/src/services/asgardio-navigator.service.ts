@@ -40,7 +40,7 @@ export class AsgardioNavigatorService {
         return this.router.url;
     }
 
-    navigateByUrl(url: string) : Promise<boolean> {
+    navigateByUrl(url: string): Promise<boolean> {
         if (this.router) {
             return this.router.navigateByUrl(url);
         }

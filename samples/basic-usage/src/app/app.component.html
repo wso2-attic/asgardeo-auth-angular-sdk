@@ -15,17 +15,28 @@ KIND, either express or implied. See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-b<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
-    <div class="container">
-        <a class="navbar-brand" href="https://wso2.com"><img src="//wso2.cachefly.net/wso2/sites/all/2020-theme/images/wso2-logo.svg"
-                alt="WSO2 Logo" class="ls-is-cached lazyloaded"></a>
-    </div>
-</nav>
-<div class="container">
-    <router-outlet></router-outlet>
+
+<div class="main-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto">
+        <div class="inner">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+                <a class="navbar-brand" href="https://wso2.com" target="_blank" rel="noopener noreferrer"><img
+                        src="//wso2.cachefly.net/wso2/sites/all/2020-theme/images/wso2-logo.svg" alt="WSO2 Logo"
+                        width="100px" class="ls-is-cached lazyloaded"></a>
+                <h2><a routerLink="" style="color:white;text-decoration: none;">Basic Usage</a></h2>
+            </nav>
+        </div>
+    </header>
+
+    <main role="main" class="inner">
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+
+    <footer class="mastfoot mt-auto">
+        <div class="inner">
+            <p>@2020 <a href="https://wso2.com" target="_blank" rel="noopener noreferrer">WSO2</a></p>
+        </div>
+    </footer>
 </div>
-<footer class="mastfoot mt-auto">
-    <div class="inner">
-      <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-    </div>
-  </footer>

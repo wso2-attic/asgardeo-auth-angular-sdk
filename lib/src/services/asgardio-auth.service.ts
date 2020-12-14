@@ -18,7 +18,7 @@
  */
 
 import { Inject, Injectable } from "@angular/core";
-import { IdentityClient } from "@asgardio/oidc-js";
+import { DecodedIdTokenPayloadInterface, Hooks, IdentityClient, ServiceResourcesType, UserInfo } from "@asgardio/oidc-js";
 import { ASGARDIO_CONFIG } from "../configs/asgardio-config";
 import { AsgardioConfigInterface } from "../models/asgardio-config.interface";
 import { AsgardioNavigatorService } from "./asgardio-navigator.service";
@@ -27,26 +27,55 @@ import { AsgardioNavigatorService } from "./asgardio-navigator.service";
     providedIn: "root"
 })
 export class AsgardioAuthService {
+    isAuthenticated: boolean;
+    // authInfo$: Observable<any[]>;
     private auth: IdentityClient;
+
     constructor(@Inject(ASGARDIO_CONFIG) config: AsgardioConfigInterface, private navigator: AsgardioNavigatorService) {
         if (config) {
             this.auth = IdentityClient.getInstance();
             this.auth.initialize(config)
                 .then(() => console.log("Succesfully Initialized"))
                 .catch(() => console.warn("Failed to Initialize"));
+            this.auth.on(Hooks.SignIn, () => {
+                this.isAuthenticated = true;
+            });
+            this.auth.on(Hooks.SignOut, () => {
+                this.isAuthenticated = false;
+            });
         }
     }
 
-    signIn() {
+    signIn(): Promise<any> {
         return this.auth.signIn();
     }
 
-    signInWithRedirect(){
+    signInWithRedirect(): void {
         localStorage.setItem("redirectUrl", this.navigator.getUrl());
         this.navigator.navigateByUrl("signin/redirect");
     }
 
-    signOut(){
-        this.auth.signOut();
+    signOut(): Promise<any> {
+        return this.auth.signOut();
+    }
+
+    getAccessToken(): Promise<string> {
+        return this.auth.getAccessToken();
+    }
+
+    getDecodedIDToken(): Promise<DecodedIdTokenPayloadInterface> {
+        return this.auth.getDecodedIDToken();
+    }
+
+    getServiceEndpoints(): Promise<ServiceResourcesType> {
+        return this.auth.getServiceEndpoints();
+    }
+
+    getUserInfo(): Promise<UserInfo> {
+        return this.auth.getUserInfo();
+    }
+
+    refreshToken(): Promise<String> {
+        return this.auth.refreshToken();
     }
 }

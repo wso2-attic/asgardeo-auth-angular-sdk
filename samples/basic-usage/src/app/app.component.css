@@ -17,22 +17,18 @@
  *
  */
 
-nav.navbar {
-    background-color: rgb(22, 27, 34);
-    width: 100%;
-    align-items: center;
-    position: sticky;
-    height: 60px;
+div.main-container {
+    padding: 0%!important;
+}
+
+.masthead {
+    margin-bottom: 2rem;
 }
 
 .navbar-brand {
-    width : 100px;
+    margin-left: 1%;
 }
 
-div.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: calc(100% - 60px);
-    position: relative;
+.mastfoot {
+    color: rgba(255, 255, 255, .5);
 }

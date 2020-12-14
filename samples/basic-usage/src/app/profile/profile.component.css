@@ -21,41 +21,37 @@
  * Cover
  */
 
- .cover {
-    padding: 0 1.5rem;
-}
-
-div {
-    text-align: center;
-    background-color: #212a32;
-}
-
-h1 {
+h2 {
     color: #fff;
     font-weight: 500;
-    margin-bottom: 10%;
+    margin-bottom: 1%;
+    margin-top: 2%;
+}
+
+p {
+    font-size: 30px;
 }
 
 a.cButton {
+    background-color: #ff7300;
+    background-image: none;
+    border-radius: 3px;
     box-sizing: border-box;
-    font: inherit;
-    vertical-align: baseline;
+    color: #fff;
     cursor: pointer!important;
     display: inline-block;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font: inherit;
+    letter-spacing: .05rem;
+    margin-bottom: 1.5rem;
+    margin-right: 15px;
+    max-width: 260px!important;
+    padding: 12px 30px;
+    text-align: center;
+    text-decoration: none;
     text-transform: uppercase;
     transition: all .2s;
-    text-decoration: none;
-    text-align: center;
-    background-image: none;
-    font-weight: 500;
-    background-color: #ff7300;
-    color: #fff;
-    letter-spacing: .05rem;
-    margin-right: 15px;
+    vertical-align: baseline;
     width: 100%;
-    padding: 12px 30px;
-    max-width: 260px!important;
-    margin-bottom: 1.5rem;
-    font-size: 1.1rem;
-    border-radius: 3px;
 }
