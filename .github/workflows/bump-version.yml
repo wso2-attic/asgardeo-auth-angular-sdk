@@ -43,7 +43,7 @@ jobs:
       - name: Build
         run: |
           npm ci
-          npm run bootstrap
+          npm run build --if-present
       - name: Bump Version
         run: |
           git config --global user.email "version.bump@github.action.com"
