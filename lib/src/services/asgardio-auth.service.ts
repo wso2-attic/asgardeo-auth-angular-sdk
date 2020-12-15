@@ -75,7 +75,7 @@ export class AsgardioAuthService {
         return this.auth.getUserInfo();
     }
 
-    refreshToken(): Promise<String> {
+    refreshToken(): Promise<string> {
         return this.auth.refreshToken();
     }
 }
