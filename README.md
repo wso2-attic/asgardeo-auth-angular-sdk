@@ -17,12 +17,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Introduction](#introduction)
 - [Install](#install)
 - [Getting Started](#getting-started)
-    - [Register and Configure `AsgardioAuthModule`](###register-and-configure-asgardioauthmodule)
-- [Try Out the Sample Apps](#try-out-the-sample-apps)
 - [APIs](#apis)
     - [`Configuration`](#configuration)
-    - [`SignIn`](#signin)
-    - [`SignInWithRedirect`](#signinwithredirect)
+    - [`AsgardioAuthService`](#asgardioauthservice)
+        - [`SignIn`](#signin)
+        - [`SignInWithRedirect`](#signinwithredirect)
+        - [`SignOut`](#signout)
 - [Develop](#develop)
     - [Prerequisites](#prerequisites)
     - [Installing Dependencies](#installing-dependencies)
@@ -38,10 +38,30 @@ Asgardio's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth
 Integaration with [@angular/router](https://angular.io/api/router) will help the developers to add identity management to their Angular Applications in a jiffy.
 
 ## Install
-
+<!-- Install the Angular library from the npm registry.
+```bash
+npm install --save @asgardio/oidc-angular
+``` -->
 ## Getting Started
 
-### Register and Configure `AsgardioAuthModule`
+- Getting started with Angular
+    - [Angular Quickstart](https://angular.io/start)
+
+- Try Out the Sample Apps
+    - [Basic Usage](samples/basic-usage)
+
+## APIs
+
+### `Configuration`
+
+Pass configuration parameters for authentication into `AsgardoAuthModule` using `forRoot` method.
+
+Following parameters are **required**.
+
+- `signInRedirectURL` - URL to redirect to after the user authorizes the client app. (Refer [here](#signinwithredirect))
+- `clientID`: The client ID of the OIDC application hosted in the Asgardio.
+- `serverOrigin`: The origin of the Identity Provider. eg: https://www.asgardio.io
+
 ```javascript
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
@@ -70,33 +90,17 @@ import { AsgardioAuthModule } from "@asgardio/oidc-angular";
 export class AppModule { }
 ```
 
-### Use `AsgardioAuthService` for Authentication Features
-```javascript
-import { AsgardioAuthService } from "@asgardio/oidc-angular";
-```
-
-## Try Out the Sample Apps
-- [Basic Usage](samples/basic-usage)
-
-## APIs
-
-### `Configuration`
-
-Pass configuration parameters for authentication into `AsgardoAuthModule` using `forRoot` method.
-
-Following parameters are **required**.
-
-- `signInRedirectURL` - URL to redirect to after the user authorizes the client app. (Refer [here](#signinwithredirect))
-- `clientID`: The client ID of the OIDC application hosted in the Asgardio.
-- `serverOrigin`: The origin of the Identity Provider. eg: https://www.asgardio.io
-
 This SDK supports all configuration parameters defined in [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk) Get a list of available configuration parameters available [here](https://github.com/asgardio/asgardio-js-oidc-sdk/blob/master/packages/oidc-js/README.md#initialize).  
 
-### `SignIn`
+
+
+### `AsgardioAuthService`
+
+#### `SignIn`
 
 This method initiates the authentication flow using [signIn](https://github.com/asgardio/asgardio-js-oidc-sdk/tree/master/packages/oidc-js#signin) function of [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk) . Developer can use this method to customize their own redirect flow. 
 
-### `SignInWithRedirect`
+#### `SignInWithRedirect`
 
 This method redirects the user to the route where the authentication flow was initiated. To use this function following steps needs to be fullfilled.
 - `signInRedirectURL` 
@@ -120,10 +124,24 @@ const routes: Routes = [
     ...
 ];
 ``` 
+#### `SignOut()`
+
+This method ends the user session at the identity provider and logs the user out.
+
 ## Develop
 
 ### Prerequisites
+
+- `Node.js` (version 10 or above).
+- `npm` package manager.
+
 ### Installing Dependencies
+
+You can install the dependencies by running the following command at the root.
+
+```bash
+npm run build
+```
 
 ## Contribute
 
@@ -131,7 +149,7 @@ Please read [Contributing to the Code Base](http://wso2.github.io/) for details 
 
 ### Reporting Issues
 
-We encourage you to report issues, improvements, and feature requests creating [Github Issues](https://github.com/asgardio/asgardio-js-oidc-sdk/issues).
+We encourage you to report issues, improvements, and feature requests creating [Github Issues](https://github.com/asgardio/asgardio-angular-oidc-sdk/issues).
 
 Important: And please be advised that security issues must be reported to security@wso2com, not as GitHub issues, in order to reach the proper audience. We strongly advise following the WSO2 Security Vulnerability Reporting Guidelines when reporting the security issues.
 
