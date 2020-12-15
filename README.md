@@ -35,7 +35,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Asgardio's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk).  
 
-Integaration with [@angular/router](https://angular.io/api/router) will help the developers to add identity management to their Angular Applications in a jiffy.
+Integaration with [@angular/router](https://angular.io/api/router) of this SDK will help the developers to add identity management to their Angular Applications in a jiffy.
 
 ## Install
 <!-- Install the Angular library from the npm registry.
@@ -45,8 +45,8 @@ npm install --save @asgardio/oidc-angular
 ## Getting Started
 
 - Getting started with Angular
-    - [Angular Quickstart](https://angular.io/start)
-
+    - [Quickstart Guide](https://angular.io/start)
+    - [In-app navigation](https://angular.io/guide/router)
 - Try Out the Sample Apps
     - [Basic Usage](samples/basic-usage)
 
@@ -92,8 +92,6 @@ export class AppModule { }
 
 This SDK supports all configuration parameters defined in [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk) Get a list of available configuration parameters available [here](https://github.com/asgardio/asgardio-js-oidc-sdk/blob/master/packages/oidc-js/README.md#initialize).  
 
-
-
 ### `AsgardioAuthService`
 
 #### `SignIn`
@@ -124,7 +122,7 @@ const routes: Routes = [
     ...
 ];
 ``` 
-#### `SignOut()`
+#### `SignOut`
 
 This method ends the user session at the identity provider and logs the user out.
 
