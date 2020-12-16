@@ -31,7 +31,10 @@ export class HomeComponent {
 
     constructor(private auth: AsgardioAuthService) {
         this.isAuthenticated = this.auth.isAuthenticated;
-        this.auth.getAccessToken().then((val) => this.accessToken = val);
+        if (this.isAuthenticated) {
+            this.auth.getAccessToken()
+                .then((token) => this.accessToken = token);
+        }
     }
 
     signIn() {

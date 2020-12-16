@@ -90,7 +90,27 @@ import { AsgardioAuthModule } from "@asgardio/oidc-angular";
 export class AppModule { }
 ```
 
-This SDK supports all configuration parameters defined in [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk) Get a list of available configuration parameters available [here](https://github.com/asgardio/asgardio-js-oidc-sdk/blob/master/packages/oidc-js/README.md#initialize).  
+This SDK supports all configuration parameters defined in [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk) 
+
+|Attribute| Type | Default Value| Description|
+|:-----|:----|:----|:----|
+|`signInRedirectURL`|`string`|""|The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
+|`clientID`| `string` |""|The client ID of the OIDC application hosted in the Asgardio.|
+|`serverOrigin`|`string`|""|The origin of the Identity Provider. eg: `https://www.asgardio.io`|
+|`signOutRedirectURL` (optional)|`string`|`signInRedirectURL` |The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout` |
+|`clientHost` (optional)|`string`|The origin of the client app obtained using `window.origin`|The hostname of the client app.  eg: `https://contoso.com`|
+|`clientSecret` (optional)|`string`|""|The client secret of the OIDC application|
+|`enablePKCE` (optional)|`boolean`|`true`|Specifies if a PKCE should be sent with the request for the authorization code. |
+|`prompt` (optional)|`string`|""|Specifies the prompt type of an OIDC request|
+|`responseMode` (optional)|`string`|`"query"`| Specifies the response mode. The value can either be `query` or `form_post`|
+|`scope` (optional)|`string[]`|`["openid"]`|Specifies the requested scopes|
+|[`storage`](#storage) (optional)| `"sessionStorage"`, `"webWorker"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored.|
+|`baseUrls` (required if the `storage` is set to `webWorker`|`string[]`|""|The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied.|
+|`endpoints` (optional)|[`ServiceResourceTypes`](#serviceresourcetypes)|[ServiceResource Default Values](#serviceresourcetypes)| The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be used.|
+|`authorizationCode` (optional)| `string`|""|When the `responseMode` is set to `from_post`, the authorization code is returned as a `POST` request. Apps can use this attribute to pass the obtained authorization code to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the authorization code and send it back to the SDK.|
+| `sessionState` (optional) | `string`|""| When the `responseMode` is set to `from_post`, the session state is returned as a `POST` request. Apps can use this attribute to pass the obtained session state to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the session state and send it back to the SDK.|
+|`validateIDToken`(optional)|`boolean`|`true`|Allows you to enable/disable JWT ID token validation after obtaining the ID token.|
+|`clockTolerance`(optional)|`number`|`60`|Allows you to configure the leeway when validating the id_token.|
 
 ### `AsgardioAuthService`
 

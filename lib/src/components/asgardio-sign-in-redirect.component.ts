@@ -31,10 +31,10 @@ export class AsgardioSignInRedirectComponent implements OnInit {
 
     ngOnInit(): void {
         if (!this.auth.isAuthenticated) {
-            this.auth.signIn().then(() => this.navigator.navigateByUrl(localStorage.getItem("redirectUrl")));
+            this.auth.signIn().then(() => this.navigator.navigateByUrl(sessionStorage.getItem("redirectUrl")));
         }
         else {
-            this.navigator.navigateByUrl(localStorage.getItem("redirectUrl"));
+            this.navigator.navigateByUrl(sessionStorage.getItem("redirectUrl"));
         }
     }
 }

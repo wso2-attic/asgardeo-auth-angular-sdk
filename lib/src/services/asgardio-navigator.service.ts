@@ -37,12 +37,19 @@ export class AsgardioNavigatorService {
     }
 
     getUrl(): string {
-        return this.router.url;
+        return location.pathname;
     }
 
-    navigateByUrl(url: string): Promise<boolean> {
+    async navigateByUrl(url: string): Promise<boolean> {
         if (this.router) {
-            return this.router.navigateByUrl(url);
+            try {
+                return this.router.navigateByUrl(new URL(url).pathname);
+            } catch (e) {
+                return await this.router.navigateByUrl("/");
+            }
+        }
+        else {
+            console.warn("Router is Not Provided");
         }
     }
 }

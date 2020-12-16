@@ -31,7 +31,7 @@ export class AsgardioAuthService {
     // authInfo$: Observable<any[]>;
     private auth: IdentityClient;
 
-    constructor(@Inject(ASGARDIO_CONFIG) config: AsgardioConfigInterface, private navigator: AsgardioNavigatorService) {
+    constructor(@Inject(ASGARDIO_CONFIG) private config: AsgardioConfigInterface, private navigator: AsgardioNavigatorService) {
         if (config) {
             this.auth = IdentityClient.getInstance();
             this.auth.initialize(config)
@@ -51,12 +51,12 @@ export class AsgardioAuthService {
     }
 
     signInWithRedirect(): void {
-        localStorage.setItem("redirectUrl", this.navigator.getUrl());
-        this.navigator.navigateByUrl("signin/redirect");
+        sessionStorage.setItem("redirectUrl", this.navigator.getUrl());
+        this.navigator.navigateByUrl(this.config.signInRedirectURL);
     }
 
     signOut(): Promise<any> {
-        return this.auth.signOut();
+        return this.auth.signOut().catch(() => console.log("This"));
     }
 
     getAccessToken(): Promise<string> {
