@@ -32,9 +32,9 @@ export class AsgardioAuthService {
     private auth: IdentityClient;
 
     constructor(@Inject(ASGARDIO_CONFIG) private config: AsgardioConfigInterface, private navigator: AsgardioNavigatorService) {
-        if (config) {
+        if (this.config) {
             this.auth = IdentityClient.getInstance();
-            this.auth.initialize(config)
+            this.auth.initialize(this.config)
                 .then(() => console.log("Succesfully Initialized"))
                 .catch(() => console.warn("Failed to Initialize"));
             this.auth.on(Hooks.SignIn, () => {
@@ -56,7 +56,7 @@ export class AsgardioAuthService {
     }
 
     signOut(): Promise<any> {
-        return this.auth.signOut().catch(() => console.log("This"));
+        return this.auth.signOut();
     }
 
     getAccessToken(): Promise<string> {

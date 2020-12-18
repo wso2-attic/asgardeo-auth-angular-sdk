@@ -18,17 +18,86 @@
  */
 
 import { TestBed } from "@angular/core/testing";
+import { ASGARDIO_CONFIG } from "../configs/asgardio-config";
 import { AsgardioAuthService } from "./asgardio-auth.service";
 
 describe("AsgardioAuthService", () => {
     let service: AsgardioAuthService;
 
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        TestBed.configureTestingModule({
+            providers: [
+                {
+                    provide: ASGARDIO_CONFIG,
+                    useValue: {
+                        signInRedirectURL: "fakeSignInRedirectURL",
+                        clientID: "fakeClientID",
+                        serverOrigin: "fakeServerOrigin"
+                    }
+                }
+            ]
+        });
         service = TestBed.inject(AsgardioAuthService);
     });
 
-    it("should be created", () => {
+    it("should be created and identity client object / auth should be defined", () => {
         expect(service).toBeTruthy();
+        expect(service['auth']).toBeDefined();
+    });
+
+    it("should call auth.signIn when signIn is called", () => {
+        let signInSpy = spyOn(service['auth'], "signIn");
+
+        service.signIn();
+
+        expect(signInSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.signOut when signOut is called", () => {
+        let signOutSpy = spyOn(service['auth'], "signOut");
+
+        service.signOut();
+
+        expect(signOutSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.getAccessToken when getAccessToken is called", () => {
+        let getAccessTokenSpy = spyOn(service['auth'], "getAccessToken");
+
+        service.getAccessToken();
+
+        expect(getAccessTokenSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.getDecodedIDToken when getDecodedIDToken is called", () => {
+        let getDecodedIDTokenSpy = spyOn(service['auth'], "getDecodedIDToken");
+
+        service.getDecodedIDToken();
+
+        expect(getDecodedIDTokenSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.getServiceEndpoints when getServiceEndpoints is called", () => {
+        let getServiceEndpointsSpy = spyOn(service['auth'], "getServiceEndpoints");
+
+        service.getServiceEndpoints();
+
+        expect(getServiceEndpointsSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.getUserInfo when getUserInfo is called", () => {
+        let getUserInfoSpy = spyOn(service['auth'], "getUserInfo");
+
+        service.getUserInfo();
+
+        expect(getUserInfoSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.refreshToken when refreshToken is called", () => {
+        let refreshTokenSpy = spyOn(service['auth'], "refreshToken");
+
+        service.refreshToken();
+
+        expect(refreshTokenSpy).toHaveBeenCalled();
     });
 });
