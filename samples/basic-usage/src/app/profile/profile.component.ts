@@ -32,12 +32,4 @@ export class ProfileComponent {
     constructor(private auth: AsgardioAuthService) {
         this.isAuthenticated = this.auth.isAuthenticated;
     }
-
-    signIn() {
-        this.auth.signInWithRedirect();
-    }
-
-    signOut() {
-        this.auth.signOut();
-    }
 }

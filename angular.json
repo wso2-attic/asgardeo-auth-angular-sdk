@@ -44,7 +44,7 @@
             "projectType": "application",
             "schematics": {},
             "root": "samples/basic-usage",
-            "sourceRoot": "samples/basic-usage/src",
+            "sourceRoot": "/src",
             "prefix": "app",
             "architect": {
                 "build": {

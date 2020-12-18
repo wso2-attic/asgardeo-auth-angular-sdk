@@ -74,26 +74,38 @@ describe("AsgardioSignInRedirectComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    it("should call sign in and redirect back if user is not authenticated", fakeAsync(() => {
+    it("should call signIn if the user is not authenticated", () => {
         let signInSpy = spyOn(authService, "signIn").and.resolveTo("fakeSignIn");
-        let spyNavigateByURL = spyOn(navigatorService, "navigateByUrl");
+
+        authService.isAuthenticated = false;
+        fixture.detectChanges();
+
+        expect(signInSpy).toHaveBeenCalled();
+    });
+
+    it("should redirect back after signIn resolves", fakeAsync(() => {
+        const store = { "redirectUrl": "fakeUrl" };
+        let getItemSpy = spyOn(sessionStorage, 'getItem').and.callFake((key) => {
+            return store[key];
+        });
+        let navigateByURLSpy = spyOn(navigatorService, "navigateByUrl");
 
         authService.isAuthenticated = false;
         fixture.detectChanges();
         tick();
 
-        expect(signInSpy).toHaveBeenCalled();
-        expect(spyNavigateByURL).toHaveBeenCalled();
+        expect(getItemSpy).toHaveBeenCalled;
+        expect(navigateByURLSpy).toHaveBeenCalledWith(sessionStorage.getItem("redirectUrl"));
     }));
 
     it("should redirect back if the user is authenticated", () => {
         let signInSpy = spyOn(authService, "signIn");
-        let spyNavigateByURL = spyOn(navigatorService, "navigateByUrl");
+        let navigateByURLSpy = spyOn(navigatorService, "navigateByUrl");
 
         authService.isAuthenticated = true;
         fixture.detectChanges();
 
         expect(signInSpy).not.toHaveBeenCalled();
-        expect(spyNavigateByURL).toHaveBeenCalled();
+        expect(navigateByURLSpy).toHaveBeenCalled();
     });
 });

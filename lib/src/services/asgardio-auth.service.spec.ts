@@ -18,12 +18,28 @@
  */
 
 import { TestBed } from "@angular/core/testing";
+import { IdentityClient } from "@asgardio/oidc-js";
+import { AsgardioConfigInterface } from "dist/oidc-angular/models/asgardio-config.interface";
 import { ASGARDIO_CONFIG } from "../configs/asgardio-config";
 import { AsgardioAuthService } from "./asgardio-auth.service";
+import { AsgardioNavigatorService } from "./asgardio-navigator.service";
 
 describe("AsgardioAuthService", () => {
     let service: AsgardioAuthService;
+    let config: AsgardioConfigInterface;
+    let auth: IdentityClient;
+    let navigatorService: AsgardioNavigatorService;
+    let navigatorServiceStub: Partial<AsgardioNavigatorService>;
 
+    navigatorServiceStub = {
+        navigateByUrl(params) {
+            return Promise.resolve(true);
+        },
+
+        getUrl() {
+            return "fakeUrl";
+        }
+    };
     beforeEach(() => {
         TestBed.configureTestingModule({
             providers: [
@@ -34,16 +50,47 @@ describe("AsgardioAuthService", () => {
                         clientID: "fakeClientID",
                         serverOrigin: "fakeServerOrigin"
                     }
+                },
+                IdentityClient,
+                {
+                    provide: AsgardioNavigatorService,
+                    useValue: navigatorServiceStub
                 }
             ]
         });
         service = TestBed.inject(AsgardioAuthService);
+        config = TestBed.inject(ASGARDIO_CONFIG);
+        auth = TestBed.inject(IdentityClient)
+        navigatorService = TestBed.inject(AsgardioNavigatorService);
+
     });
 
-    it("should be created and identity client object / auth should be defined", () => {
+    it("should be created and identity client / auth object should be defined", () => {
         expect(service).toBeTruthy();
         expect(service['auth']).toBeDefined();
     });
+
+    it("should navigate the user to signInRedirect component when signInWithRedirect is called", () => {
+        let navigateByURLSpy = spyOn(navigatorService, "navigateByUrl");
+
+        service.signInWithRedirect();
+
+        expect(navigateByURLSpy).toHaveBeenCalledWith(config.signInRedirectURL);
+    })
+
+    it("should store the url in session storage when signInWithRedirect is called", () => {
+        const store = {};
+
+        let setItemSpy = spyOn(sessionStorage, 'setItem').and.callFake((key, value) => {
+            console.log(key);
+            return store[key] = value + '';
+        });
+
+        service.signInWithRedirect();
+
+        expect(setItemSpy).toHaveBeenCalledWith("redirectUrl", navigatorService.getUrl());
+    });
+
 
     it("should call auth.signIn when signIn is called", () => {
         let signInSpy = spyOn(service['auth'], "signIn");
