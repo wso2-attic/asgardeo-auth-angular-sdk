@@ -20,6 +20,7 @@
 import { ModuleWithProviders, NgModule } from "@angular/core";
 import { AsgardioSignInRedirectComponent } from "./components/asgardio-sign-in-redirect.component";
 import { ASGARDIO_CONFIG } from "./configs/asgardio-config";
+import { AsgardioAuthGuard } from "./guards/asgardio-auth.guard";
 import { AsgardioConfigInterface } from "./models/asgardio-config.interface";
 import { AsgardioAuthService } from "./services/asgardio-auth.service";
 
@@ -32,6 +33,7 @@ export class AsgardioAuthModule {
             ngModule: AsgardioAuthModule,
             providers: [
                 AsgardioAuthService,
+                AsgardioAuthGuard,
                 {
                     provide: ASGARDIO_CONFIG,
                     useValue: config
