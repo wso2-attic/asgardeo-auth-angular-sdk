@@ -18,8 +18,8 @@
  */
 
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { AsgardioConfigInterface } from "dist/oidc-angular/models/asgardio-config.interface";
 import { ASGARDIO_CONFIG } from "../configs/asgardio-config";
+import { AsgardioConfigInterface } from "../models/asgardio-config.interface";
 import { AsgardioAuthService } from "./asgardio-auth.service";
 import { AsgardioNavigatorService } from "./asgardio-navigator.service";
 
