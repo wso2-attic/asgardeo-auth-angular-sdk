@@ -27,7 +27,6 @@ import { AsgardioNavigatorService } from "./asgardio-navigator.service";
     providedIn: "root"
 })
 export class AsgardioAuthService {
-    isAuthenticated: boolean;
     private auth: IdentityClient;
 
     constructor(
@@ -38,12 +37,22 @@ export class AsgardioAuthService {
             .catch((error) => console.warn("Failed to Initialize - " + error));
 
         this.auth.on(Hooks.SignIn, () => {
-            this.isAuthenticated = true;
+            sessionStorage.setItem("isAuthenticated", "true");
         });
 
         this.auth.on(Hooks.SignOut, () => {
-            this.isAuthenticated = false;
+            sessionStorage.setItem("isAuthenticated", "false");
         });
+    }
+
+    isAuthenticated(): boolean {
+        // *** This is a temporary function ***
+        if (sessionStorage.getItem("isAuthenticated") === "true") {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     signIn(): Promise<any> {

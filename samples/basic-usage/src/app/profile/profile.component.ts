@@ -26,10 +26,16 @@ import { AsgardioAuthService } from "@asgardio/oidc-angular";
     styleUrls: ["./profile.component.css"]
 })
 export class ProfileComponent {
-
+    accessToken: string;
     isAuthenticated: boolean;
+    userInfo: any;
 
     constructor(private auth: AsgardioAuthService) {
-        this.isAuthenticated = this.auth.isAuthenticated;
+        this.isAuthenticated = this.auth.isAuthenticated();
+        if (this.isAuthenticated) {
+            this.auth.getAccessToken().then((token) => this.accessToken = token);
+            auth.getUserInfo().then((value) => this.userInfo = value);
+        }
+
     }
 }

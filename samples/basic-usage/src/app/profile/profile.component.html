@@ -21,10 +21,22 @@
     <div *ngIf="isAuthenticated; then signedIn else notSignedIn"></div>
 
     <ng-template #notSignedIn>
-        <p>You are not signed in!!!</p>
+        <h3>You are not signed in!!!</h3>
     </ng-template>
 
     <ng-template #signedIn>
-        <p>Awesome. You are signed in!!!</p>
+
+        <div class="card text-white bg-dark d-flex mx-auto" style="width: fit-content;">
+            <div class="card-header">
+                <h3>{{userInfo.displayName}}</h3>
+            </div>
+            <div class="card-body" style="text-align: left;">
+                <li>Access Token - {{accessToken}}</li>
+                <li>Email - {{userInfo.email}}</li>
+                <li>Username - {{userInfo.username}}</li>
+                <li>Allowed Scopes - {{userInfo.allowedScopes}}</li>
+                <li>Tenent Domain - {{userInfo.tenantDomain}}</li>
+            </div>
+        </div>
     </ng-template>
 </div>

@@ -27,13 +27,9 @@ import { AsgardioAuthService } from "@asgardio/oidc-angular";
 })
 export class HomeComponent {
     isAuthenticated: boolean;
-    accessToken: string;
 
     constructor(private auth: AsgardioAuthService) {
-        this.isAuthenticated = this.auth.isAuthenticated;
-        if (this.isAuthenticated) {
-            this.auth.getAccessToken().then((token) => this.accessToken = token);
-        }
+        this.isAuthenticated = this.auth.isAuthenticated();
     }
 
     signIn(): void {

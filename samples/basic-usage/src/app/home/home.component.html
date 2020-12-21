@@ -27,7 +27,7 @@
 
     <ng-template #signedIn>
         <h3>Awesome. You are signed in!!!</h3>
-        <p>{{accessToken}}</p>
-        <a (click)="signOut()" class="cButton cButtonDark">Sign Out</a>
+        <a routerLink="/profile" class="btn cButton cButtonDark">Profile</a>
+        <a (click)="signOut()" class="btn cButton cButtonDark">Sign Out</a>
     </ng-template>
 </div>
