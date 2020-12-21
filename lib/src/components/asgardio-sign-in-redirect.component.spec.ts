@@ -35,15 +35,11 @@ describe("AsgardioSignInRedirectComponent", () => {
     beforeEach(async () => {
 
         authServiceStub = {
-            signIn() {
-                return Promise.resolve();
-            }
+            signIn: () => Promise.resolve()
         };
 
         navigatorServiceStub = {
-            navigateByUrl(params) {
-                return Promise.resolve(true);
-            }
+            navigateByUrl: (params) => Promise.resolve(true)
         };
 
         await TestBed.configureTestingModule({
@@ -75,7 +71,7 @@ describe("AsgardioSignInRedirectComponent", () => {
     });
 
     it("should call signIn if the user is not authenticated", () => {
-        let signInSpy = spyOn(authService, "signIn").and.resolveTo("fakeSignIn");
+        const signInSpy = spyOn(authService, "signIn").and.resolveTo("fakeSignIn");
 
         authService.isAuthenticated = false;
         fixture.detectChanges();
@@ -84,23 +80,21 @@ describe("AsgardioSignInRedirectComponent", () => {
     });
 
     it("should redirect back after signIn resolves", fakeAsync(() => {
-        const store = { "redirectUrl": "fakeUrl" };
-        let getItemSpy = spyOn(sessionStorage, 'getItem').and.callFake((key) => {
-            return store[key];
-        });
-        let navigateByURLSpy = spyOn(navigatorService, "navigateByUrl");
+        const store = { redirectUrl: "fakeUrl" };
+        const getItemSpy = spyOn(sessionStorage, "getItem").and.callFake((key) => store[key]);
+        const navigateByURLSpy = spyOn(navigatorService, "navigateByUrl");
 
         authService.isAuthenticated = false;
         fixture.detectChanges();
         tick();
 
-        expect(getItemSpy).toHaveBeenCalled;
+        expect(getItemSpy).toHaveBeenCalled();
         expect(navigateByURLSpy).toHaveBeenCalledWith(sessionStorage.getItem("redirectUrl"));
     }));
 
     it("should redirect back if the user is authenticated", () => {
-        let signInSpy = spyOn(authService, "signIn");
-        let navigateByURLSpy = spyOn(navigatorService, "navigateByUrl");
+        const signInSpy = spyOn(authService, "signIn");
+        const navigateByURLSpy = spyOn(navigatorService, "navigateByUrl");
 
         authService.isAuthenticated = true;
         fixture.detectChanges();

@@ -28,19 +28,22 @@ import { AsgardioNavigatorService } from "./asgardio-navigator.service";
 })
 export class AsgardioAuthService {
     isAuthenticated: boolean;
+    private auth: IdentityClient;
 
-    constructor(@Inject(ASGARDIO_CONFIG) private config: AsgardioConfigInterface, private auth: IdentityClient, private navigator: AsgardioNavigatorService) {
-        if (this.config) {
-            this.auth.initialize(this.config)
-                .then(() => console.log("Succesfully Initialized"))
-                .catch(() => console.warn("Failed to Initialize"));
-            this.auth.on(Hooks.SignIn, () => {
-                this.isAuthenticated = true;
-            });
-            this.auth.on(Hooks.SignOut, () => {
-                this.isAuthenticated = false;
-            });
-        }
+    constructor(
+        @Inject(ASGARDIO_CONFIG) private config: AsgardioConfigInterface,
+        private navigator: AsgardioNavigatorService) {
+        this.auth = IdentityClient.getInstance();
+        this.auth.initialize(this.config)
+            .catch((error) => console.warn("Failed to Initialize - " + error));
+
+        this.auth.on(Hooks.SignIn, () => {
+            this.isAuthenticated = true;
+        });
+
+        this.auth.on(Hooks.SignOut, () => {
+            this.isAuthenticated = false;
+        });
     }
 
     signIn(): Promise<any> {

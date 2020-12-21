@@ -48,8 +48,5 @@ export class AsgardioNavigatorService {
                 return await this.router.navigateByUrl("/");
             }
         }
-        else {
-            console.warn("Router is Not Provided");
-        }
     }
 }
