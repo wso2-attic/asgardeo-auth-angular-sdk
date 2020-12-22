@@ -18,14 +18,14 @@
  */
 
 import { Injectable } from "@angular/core";
-import { CanActivate } from "@angular/router";
+import { CanActivate, CanActivateChild } from "@angular/router";
 import { AsgardioAuthService } from "../services/asgardio-auth.service";
 import { AsgardioNavigatorService } from "../services/asgardio-navigator.service";
 
 @Injectable({
     providedIn: "root"
 })
-export class AsgardioAuthGuard implements CanActivate {
+export class AsgardioAuthGuard implements CanActivate, CanActivateChild {
 
     constructor(private auth: AsgardioAuthService, private navigator: AsgardioNavigatorService) { }
 
@@ -35,5 +35,9 @@ export class AsgardioAuthGuard implements CanActivate {
             return false;
         }
         return true;
+    }
+
+    canActivateChild(): boolean {
+        return this.canActivate();
     }
 }
