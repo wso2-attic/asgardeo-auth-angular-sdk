@@ -48,5 +48,5 @@ jobs:
         run: |
           git config --global user.email "version.bump@github.action.com"
           git config --global user.name "asgardio-github-bot"
-          npm run bump-${{ github.event.inputs.Type }}-version
+          npm version ${{ github.event.inputs.Type }}
           git push --follow-tags
