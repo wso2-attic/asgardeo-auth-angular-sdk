@@ -59,9 +59,9 @@ export class AsgardioAuthService {
         return this.auth.signIn();
     }
 
-    signInWithRedirect(): void {
+    signInWithRedirect(): Promise<boolean> {
         sessionStorage.setItem("redirectUrl", this.navigator.getUrl());
-        this.navigator.navigateByUrl(this.config.signInRedirectURL);
+        return this.navigator.navigateByUrl(this.navigator.getRoute(this.config.signInRedirectURL));
     }
 
     signOut(): Promise<any> {

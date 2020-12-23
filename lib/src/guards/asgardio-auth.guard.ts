@@ -20,24 +20,23 @@
 import { Injectable } from "@angular/core";
 import { CanActivate, CanActivateChild } from "@angular/router";
 import { AsgardioAuthService } from "../services/asgardio-auth.service";
-import { AsgardioNavigatorService } from "../services/asgardio-navigator.service";
 
 @Injectable({
     providedIn: "root"
 })
 export class AsgardioAuthGuard implements CanActivate, CanActivateChild {
 
-    constructor(private auth: AsgardioAuthService, private navigator: AsgardioNavigatorService) { }
+    constructor(private auth: AsgardioAuthService) { }
 
-    canActivate(): boolean {
-        if (!this.auth.isAuthenticated()) {
-            this.navigator.navigateByUrl("/");
-            return false;
+    async canActivate(): Promise<boolean> {
+        if (this.auth.isAuthenticated()) {
+            return true;
         }
-        return true;
+        await this.auth.signInWithRedirect();
+        return false;
     }
 
-    canActivateChild(): boolean {
+    async canActivateChild(): Promise<boolean> {
         return this.canActivate();
     }
 }
