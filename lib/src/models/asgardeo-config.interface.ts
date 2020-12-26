@@ -17,7 +17,6 @@
  *
  */
 
-import { InjectionToken } from "@angular/core";
-import { AsgardioConfigInterface } from "../models/asgardio-config.interface";
+import { ConfigInterface, WebWorkerClientConfigInterface } from "@asgardio/oidc-js";
 
-export const ASGARDIO_CONFIG = new InjectionToken<AsgardioConfigInterface>("Asgardio.config.angular");
+export type AsgardeoConfigInterface = ConfigInterface | WebWorkerClientConfigInterface;

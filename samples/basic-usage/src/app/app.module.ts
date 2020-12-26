@@ -19,7 +19,8 @@
 
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { AsgardioAuthModule } from "@asgardio/oidc-angular";
+import { AsgardeoAuthModule } from "@asgardeo/oidc-angular";
+import { Storage } from "@asgardio/oidc-js";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
@@ -34,11 +35,12 @@ import { ProfileComponent } from "./profile/profile.component";
     imports: [
         BrowserModule,
         AppRoutingModule,
-        AsgardioAuthModule.forRoot({
+        AsgardeoAuthModule.forRoot({
             signInRedirectURL: window.location.origin + "/signin/redirect",
             signOutRedirectURL: window.location.origin,
-            clientID: "eUmejhksMPHqHSxB3gSqsNmmYg0a",
-            serverOrigin: "https://localhost:9443"
+            clientID: "34DgR6wzQleFD7EiNhAnEG0w33Ia",
+            serverOrigin: "https://localhost:9443",
+            storage: Storage.LocalStorage
         })
     ],
     providers: [],

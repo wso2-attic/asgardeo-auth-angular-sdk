@@ -23,7 +23,7 @@ import { Router } from "@angular/router";
 @Injectable({
     providedIn: "root"
 })
-export class AsgardioNavigatorService {
+export class AsgardeoNavigatorService {
 
     private readonly router: Router;
 

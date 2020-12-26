@@ -1,7 +1,7 @@
-# [WIP] Asgardio Angular OIDC SDK & Samples
-Repository containing the source of Asgardio Angular OIDC SDK & Samples.
+# [WIP] Asgardeo Angular OIDC SDK & Samples
+Repository containing the source of Asgardeo Angular OIDC SDK & Samples.
 
-![Builder](https://github.com/asgardio/asgardio-js-oidc-sdk/workflows/Builder/badge.svg)
+![Builder](https://github.com/asgardeo/asgardeo-js-oidc-sdk/workflows/Builder/badge.svg)
 [![Stackoverflow](https://img.shields.io/badge/Ask%20for%20help%20on-Stackoverflow-orange)](https://stackoverflow.com/questions/tagged/wso2is)
 [![Join the chat at https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE](https://img.shields.io/badge/Join%20us%20on-Slack-%23e01563.svg)](https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/wso2/product-is/blob/master/LICENSE)
@@ -19,7 +19,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Getting Started](#getting-started)
 - [APIs](#apis)
     - [`Configuration`](#configuration)
-    - [`AsgardioAuthService`](#asgardioauthservice)
+    - [`AsgardeoAuthService`](#asgardeoauthservice)
         - [`SignIn`](#signin)
         - [`SignInWithRedirect`](#signinwithredirect)
         - [`SignOut`](#signout)
@@ -33,14 +33,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Introduction
 
-Asgardio's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk).  
+Asgardeo's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-js-oidc-sdk).  
 
 Integaration with [@angular/router](https://angular.io/api/router) of this SDK will help the developers to add identity management to their Angular Applications in a jiffy.
 
 ## Install
 <!-- Install the Angular library from the npm registry.
 ```bash
-npm install --save @asgardio/oidc-angular
+npm install --save @asgardeo/oidc-angular
 ``` -->
 ## Getting Started
 
@@ -59,16 +59,16 @@ Pass configuration parameters for authentication into `AsgardoAuthModule` using 
 Following parameters are **required**.
 
 - `signInRedirectURL` - URL to redirect to after the user authorizes the client app. (Refer [here](#signinwithredirect))
-- `clientID`: The client ID of the OIDC application hosted in the Asgardio.
-- `serverOrigin`: The origin of the Identity Provider. eg: https://www.asgardio.io
+- `clientID`: The client ID of the OIDC application hosted in the Asgardeo.
+- `serverOrigin`: The origin of the Identity Provider. eg: https://www.asgardeo.io
 
 ```javascript
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 
-// Import Asgardio Auth Module
-import { AsgardioAuthModule } from "@asgardio/oidc-angular";
+// Import Asgardeo Auth Module
+import { AsgardeoAuthModule } from "@asgardeo/oidc-angular";
 
 @NgModule({
     declarations: [
@@ -78,7 +78,7 @@ import { AsgardioAuthModule } from "@asgardio/oidc-angular";
         BrowserModule,
 
         // Add the module as a Import providing the configs (See API Docs)
-        AsgardioAuthModule.forRoot({
+        AsgardeoAuthModule.forRoot({
             signInRedirectURL: "https://localhost:9443/myaccount/login",
             clientID: "client ID",
             serverOrigin: "https://localhost:9443"
@@ -90,13 +90,13 @@ import { AsgardioAuthModule } from "@asgardio/oidc-angular";
 export class AppModule { }
 ```
 
-This SDK supports all configuration parameters defined in [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk) 
+This SDK supports all configuration parameters defined in [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-js-oidc-sdk) 
 
 |Attribute| Type | Default Value| Description|
 |:-----|:----|:----|:----|
 |`signInRedirectURL`|`string`|""|The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
-|`clientID`| `string` |""|The client ID of the OIDC application hosted in the Asgardio.|
-|`serverOrigin`|`string`|""|The origin of the Identity Provider. eg: `https://www.asgardio.io`|
+|`clientID`| `string` |""|The client ID of the OIDC application hosted in the Asgardeo.|
+|`serverOrigin`|`string`|""|The origin of the Identity Provider. eg: `https://www.asgardeo.io`|
 |`signOutRedirectURL` (optional)|`string`|`signInRedirectURL` |The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout` |
 |`clientHost` (optional)|`string`|The origin of the client app obtained using `window.origin`|The hostname of the client app.  eg: `https://contoso.com`|
 |`clientSecret` (optional)|`string`|""|The client secret of the OIDC application|
@@ -112,11 +112,11 @@ This SDK supports all configuration parameters defined in [@asgardio/oidc-js](ht
 |`validateIDToken`(optional)|`boolean`|`true`|Allows you to enable/disable JWT ID token validation after obtaining the ID token.|
 |`clockTolerance`(optional)|`number`|`60`|Allows you to configure the leeway when validating the id_token.|
 
-### `AsgardioAuthService`
+### `AsgardeoAuthService`
 
 #### `SignIn`
 
-This method initiates the authentication flow using [signIn](https://github.com/asgardio/asgardio-js-oidc-sdk/tree/master/packages/oidc-js#signin) function of [@asgardio/oidc-js](https://github.com/asgardio/asgardio-js-oidc-sdk) . Developer can use this method to customize their own redirect flow. 
+This method initiates the authentication flow using [signIn](https://github.com/asgardeo/asgardeo-js-oidc-sdk/tree/master/packages/oidc-js#signin) function of [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-js-oidc-sdk) . Developer can use this method to customize their own redirect flow. 
 
 #### `SignInWithRedirect`
 
@@ -125,20 +125,20 @@ This method redirects the user to the route where the authentication flow was in
 
 Change Sign In Redirect URL as follows
 ```javascript
-AsgardioAuthModule.forRoot({
+AsgardeoAuthModule.forRoot({
     signInRedirectURL: window.location.origin + "/signin/redirect",
     ...
 })
 ```    
 - `app-routing.module.ts`
 
-Register `AsgardioLoginRedirectComponent` for the the following route.
+Register `AsgardeoLoginRedirectComponent` for the the following route.
 
 ```javascript
-import { AsgardioSignInRedirectComponent } from "@asgardio/oidc-angular";
+import { AsgardeoSignInRedirectComponent } from "@asgardeo/oidc-angular";
 
 const routes: Routes = [
-    { path: "signin/redirect", component: AsgardioSignInRedirectComponent },
+    { path: "signin/redirect", component: AsgardeoSignInRedirectComponent },
     ...
 ];
 ``` 
@@ -167,7 +167,7 @@ Please read [Contributing to the Code Base](http://wso2.github.io/) for details 
 
 ### Reporting Issues
 
-We encourage you to report issues, improvements, and feature requests creating [Github Issues](https://github.com/asgardio/asgardio-angular-oidc-sdk/issues).
+We encourage you to report issues, improvements, and feature requests creating [Github Issues](https://github.com/asgardeo/asgardeo-angular-oidc-sdk/issues).
 
 Important: And please be advised that security issues must be reported to security@wso2com, not as GitHub issues, in order to reach the proper audience. We strongly advise following the WSO2 Security Vulnerability Reporting Guidelines when reporting the security issues.
 

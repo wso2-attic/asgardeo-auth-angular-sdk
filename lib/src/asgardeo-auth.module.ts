@@ -18,24 +18,24 @@
  */
 
 import { ModuleWithProviders, NgModule } from "@angular/core";
-import { AsgardioSignInRedirectComponent } from "./components/asgardio-sign-in-redirect.component";
-import { ASGARDIO_CONFIG } from "./configs/asgardio-config";
-import { AsgardioAuthGuard } from "./guards/asgardio-auth.guard";
-import { AsgardioConfigInterface } from "./models/asgardio-config.interface";
-import { AsgardioAuthService } from "./services/asgardio-auth.service";
+import { AsgardeoSignInRedirectComponent } from "./components/asgardeo-sign-in-redirect.component";
+import { ASGARDEO_CONFIG } from "./configs/asgardeo-config";
+import { AsgardeoAuthGuard } from "./guards/asgardeo-auth.guard";
+import { AsgardeoConfigInterface } from "./models/asgardeo-config.interface";
+import { AsgardeoAuthService } from "./services/asgardeo-auth.service";
 
 @NgModule({
-    declarations: [AsgardioSignInRedirectComponent]
+    declarations: [AsgardeoSignInRedirectComponent]
 })
-export class AsgardioAuthModule {
-    static forRoot(config?: AsgardioConfigInterface): ModuleWithProviders<AsgardioAuthModule> {
+export class AsgardeoAuthModule {
+    static forRoot(config: AsgardeoConfigInterface): ModuleWithProviders<AsgardeoAuthModule> {
         return {
-            ngModule: AsgardioAuthModule,
+            ngModule: AsgardeoAuthModule,
             providers: [
-                AsgardioAuthService,
-                AsgardioAuthGuard,
+                AsgardeoAuthService,
+                AsgardeoAuthGuard,
                 {
-                    provide: ASGARDIO_CONFIG,
+                    provide: ASGARDEO_CONFIG,
                     useValue: config
                 }
             ]

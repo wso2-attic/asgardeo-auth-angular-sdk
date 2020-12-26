@@ -18,16 +18,16 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { AsgardioAuthService } from "../services/asgardio-auth.service";
-import { AsgardioNavigatorService } from "../services/asgardio-navigator.service";
+import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
+import { AsgardeoNavigatorService } from "../services/asgardeo-navigator.service";
 
 @Component({
-    selector: "lib-asgardio-sign-in-redirect",
+    selector: "lib-asgardeo-sign-in-redirect",
     template: ""
 })
-export class AsgardioSignInRedirectComponent implements OnInit {
+export class AsgardeoSignInRedirectComponent implements OnInit {
 
-    constructor(private auth: AsgardioAuthService, private navigator: AsgardioNavigatorService) { }
+    constructor(private auth: AsgardeoAuthService, private navigator: AsgardeoNavigatorService) { }
 
     ngOnInit(): void {
         if (!this.auth.isAuthenticated()) {

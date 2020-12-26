@@ -18,19 +18,19 @@
  */
 
 import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { AsgardioAuthService } from "../services/asgardio-auth.service";
-import { AsgardioNavigatorService } from "../services/asgardio-navigator.service";
-import { AsgardioSignInRedirectComponent } from "./asgardio-sign-in-redirect.component";
+import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
+import { AsgardeoNavigatorService } from "../services/asgardeo-navigator.service";
+import { AsgardeoSignInRedirectComponent } from "./asgardeo-sign-in-redirect.component";
 
-describe("AsgardioSignInRedirectComponent", () => {
-    let component: AsgardioSignInRedirectComponent;
-    let fixture: ComponentFixture<AsgardioSignInRedirectComponent>;
+describe("AsgardeoSignInRedirectComponent", () => {
+    let component: AsgardeoSignInRedirectComponent;
+    let fixture: ComponentFixture<AsgardeoSignInRedirectComponent>;
 
-    let authService: AsgardioAuthService;
-    let authServiceStub: Partial<AsgardioAuthService>;
+    let authService: AsgardeoAuthService;
+    let authServiceStub: Partial<AsgardeoAuthService>;
 
-    let navigatorService: AsgardioNavigatorService;
-    let navigatorServiceStub: Partial<AsgardioNavigatorService>;
+    let navigatorService: AsgardeoNavigatorService;
+    let navigatorServiceStub: Partial<AsgardeoNavigatorService>;
 
     beforeEach(async () => {
 
@@ -44,14 +44,14 @@ describe("AsgardioSignInRedirectComponent", () => {
         };
 
         await TestBed.configureTestingModule({
-            declarations: [AsgardioSignInRedirectComponent],
+            declarations: [AsgardeoSignInRedirectComponent],
             providers: [
                 {
-                    provide: AsgardioAuthService,
+                    provide: AsgardeoAuthService,
                     useValue: authServiceStub
                 },
                 {
-                    provide: AsgardioNavigatorService,
+                    provide: AsgardeoNavigatorService,
                     useValue: navigatorServiceStub
                 }
             ],
@@ -60,11 +60,11 @@ describe("AsgardioSignInRedirectComponent", () => {
     });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(AsgardioSignInRedirectComponent);
+        fixture = TestBed.createComponent(AsgardeoSignInRedirectComponent);
         component = fixture.componentInstance;
 
-        authService = TestBed.inject(AsgardioAuthService);
-        navigatorService = TestBed.inject(AsgardioNavigatorService);
+        authService = TestBed.inject(AsgardeoAuthService);
+        navigatorService = TestBed.inject(AsgardeoNavigatorService);
     });
 
     it("should create", () => {
