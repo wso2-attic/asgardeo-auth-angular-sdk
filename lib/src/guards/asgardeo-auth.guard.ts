@@ -19,14 +19,14 @@
 
 import { Injectable } from "@angular/core";
 import { CanActivate, CanActivateChild } from "@angular/router";
-import { AsgardioAuthService } from "../services/asgardio-auth.service";
+import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
 
 @Injectable({
     providedIn: "root"
 })
-export class AsgardioAuthGuard implements CanActivate, CanActivateChild {
+export class AsgardeoAuthGuard implements CanActivate, CanActivateChild {
 
-    constructor(private auth: AsgardioAuthService) { }
+    constructor(private auth: AsgardeoAuthService) { }
 
     async canActivate(): Promise<boolean> {
         if (this.auth.isAuthenticated()) {

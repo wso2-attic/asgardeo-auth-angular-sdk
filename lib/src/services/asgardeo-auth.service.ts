@@ -19,21 +19,21 @@
 
 import { Inject, Injectable } from "@angular/core";
 import { DecodedIdTokenPayloadInterface, Hooks, IdentityClient, ServiceResourcesType, UserInfo } from "@asgardio/oidc-js";
-import { ASGARDIO_CONFIG } from "../configs/asgardio-config";
-import { AsgardioConfigInterface } from "../models/asgardio-config.interface";
-import { AsgardioNavigatorService } from "./asgardio-navigator.service";
+import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
+import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
+import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 
 @Injectable({
     providedIn: "root"
 })
-export class AsgardioAuthService {
+export class AsgardeoAuthService {
     private auth: IdentityClient;
 
     constructor(
-        @Inject(ASGARDIO_CONFIG) private config: AsgardioConfigInterface,
-        private navigator: AsgardioNavigatorService) {
+        @Inject(ASGARDEO_CONFIG) private authConfig: AsgardeoConfigInterface,
+        private navigator: AsgardeoNavigatorService) {
         this.auth = IdentityClient.getInstance();
-        this.auth.initialize(this.config)
+        this.auth.initialize(authConfig)
             .catch((error) => console.warn("Failed to Initialize - " + error));
 
         this.auth.on(Hooks.SignIn, () => {
@@ -61,7 +61,7 @@ export class AsgardioAuthService {
 
     signInWithRedirect(): Promise<boolean> {
         sessionStorage.setItem("redirectUrl", this.navigator.getUrl());
-        return this.navigator.navigateByUrl(this.navigator.getRoute(this.config.signInRedirectURL));
+        return this.navigator.navigateByUrl(this.navigator.getRoute(this.authConfig.signInRedirectURL));
     }
 
     signOut(): Promise<any> {

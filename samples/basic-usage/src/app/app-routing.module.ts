@@ -19,14 +19,14 @@
 
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AsgardioAuthGuard, AsgardioSignInRedirectComponent } from "@asgardio/oidc-angular";
+import { AsgardeoAuthGuard, AsgardeoSignInRedirectComponent } from "@asgardeo/oidc-angular";
 import { HomeComponent } from "./home/home.component";
 import { ProfileComponent } from "./profile/profile.component";
 
 const routes: Routes = [
     { path: "", component: HomeComponent },
-    { path: "signin/redirect", component: AsgardioSignInRedirectComponent },
-    { path: "profile", component: ProfileComponent, canActivate: [AsgardioAuthGuard] },
+    { path: "signin/redirect", component: AsgardeoSignInRedirectComponent },
+    { path: "profile", component: ProfileComponent, canActivate: [AsgardeoAuthGuard] },
     { path: "**", redirectTo: "" }
 ];
 

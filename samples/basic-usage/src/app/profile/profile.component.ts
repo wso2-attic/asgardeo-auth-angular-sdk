@@ -18,7 +18,7 @@
  */
 
 import { Component } from "@angular/core";
-import { AsgardioAuthService } from "@asgardio/oidc-angular";
+import { AsgardeoAuthService } from "@asgardeo/oidc-angular";
 
 @Component({
     selector: "app-profile",
@@ -30,7 +30,7 @@ export class ProfileComponent {
     isAuthenticated: boolean;
     userInfo: any;
 
-    constructor(private auth: AsgardioAuthService) {
+    constructor(private auth: AsgardeoAuthService) {
         this.isAuthenticated = this.auth.isAuthenticated();
         if (this.isAuthenticated) {
             this.auth.getAccessToken().then((token) => this.accessToken = token);

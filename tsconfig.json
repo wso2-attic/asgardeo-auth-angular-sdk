@@ -34,7 +34,7 @@
             "dom"
         ],
         "paths": {
-            "@asgardio/oidc-angular": [
+            "@asgardeo/oidc-angular": [
                 "dist/oidc-angular"
             ]
         }

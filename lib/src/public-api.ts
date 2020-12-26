@@ -18,11 +18,11 @@
  */
 
 /*
- * Public API Surface of @asgardio/oidc-angular
+ * Public API Surface of @asgardeo/oidc-angular
  */
 
-export * from "./asgardio-auth.module";
-export * from "./components/asgardio-sign-in-redirect.component";
-export * from "./guards/asgardio-auth.guard";
-export * from "./services/asgardio-auth.service";
+export * from "./asgardeo-auth.module";
+export * from "./components/asgardeo-sign-in-redirect.component";
+export * from "./guards/asgardeo-auth.guard";
+export * from "./services/asgardeo-auth.service";
 
