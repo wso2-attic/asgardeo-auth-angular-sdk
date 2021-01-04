@@ -1,0 +1,14 @@
+{
+    "clientID": "34DgR6wzQleFD7EiNhAnEG0w33Ia",
+    "serverOrigin": "https://localhost:9443",
+    "signInRedirectURL": "http://localhost:3000/signin/redirect",
+
+    "signOutRedirectURL": "http://localhost:3000",
+    "clientHost": "http://localhost:3000",
+    "clockTolerance": 60,
+    "enablePKCE": true,
+    "prompt": "",
+    "scope": ["openid", "email"],
+    "storage": "sessionStorage",
+    "validateIDToken": false
+}
