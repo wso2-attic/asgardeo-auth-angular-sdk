@@ -37,7 +37,7 @@ export class AsgardeoNavigatorService {
     }
 
     getUrl(): string {
-        return location.pathname;
+        return this.router.url.split('?')[0];
     }
 
     getRoute(url: string): string {
