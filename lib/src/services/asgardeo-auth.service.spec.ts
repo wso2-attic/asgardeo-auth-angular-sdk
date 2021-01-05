@@ -34,7 +34,8 @@ describe("AsgardeoAuthService", () => {
 
         navigatorServiceStub = {
             navigateByUrl: (params) => Promise.resolve(true),
-            getUrl: () => "fakeUrl"
+            setRedirectUrl: () => "",
+            getCurrentRoute: () => "fakeUrl"
         };
 
         TestBed.configureTestingModule({
@@ -83,16 +84,15 @@ describe("AsgardeoAuthService", () => {
 
         service.signInWithRedirect();
 
-        expect(navigateByURLSpy).toHaveBeenCalledWith(config.signInRedirectURL);
+        expect(navigateByURLSpy).toHaveBeenCalled();
     });
 
     it("should store the url in session storage when signInWithRedirect is called", () => {
-        const store = {};
-        const setItemSpy = spyOn(sessionStorage, "setItem").and.callFake((key, value) => store[key] = value + "");
+        const navigateByURLSpy = spyOn(navigatorService, "setRedirectUrl");
 
         service.signInWithRedirect();
 
-        expect(setItemSpy).toHaveBeenCalledWith("redirectUrl", navigatorService.getUrl());
+        expect(navigateByURLSpy).toHaveBeenCalled();
     });
 
     it("should call auth.signOut when signOut is called", () => {

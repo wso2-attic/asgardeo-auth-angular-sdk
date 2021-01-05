@@ -28,12 +28,14 @@ import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 })
 export class AsgardeoAuthService {
     private auth: IdentityClient;
+    private signInRedirectUrl: string;
 
     constructor(
-        @Inject(ASGARDEO_CONFIG) private authConfig: AsgardeoConfigInterface,
-        private navigator: AsgardeoNavigatorService) {
+    @Inject(ASGARDEO_CONFIG) authConfig: AsgardeoConfigInterface,
+                             private navigator: AsgardeoNavigatorService) {
         this.auth = IdentityClient.getInstance();
         this.auth.initialize(authConfig)
+            .then(() => this.signInRedirectUrl = navigator.getRouteWithoutParams(authConfig.signInRedirectURL))
             .catch((error) => console.warn("Failed to Initialize - " + error));
 
         this.auth.on(Hooks.SignIn, () => {
@@ -60,8 +62,8 @@ export class AsgardeoAuthService {
     }
 
     signInWithRedirect(): Promise<boolean> {
-        sessionStorage.setItem("redirectUrl", this.navigator.getUrl());
-        return this.navigator.navigateByUrl(this.navigator.getRoute(this.authConfig.signInRedirectURL));
+        this.navigator.setRedirectUrl();
+        return this.navigator.navigateByUrl(this.signInRedirectUrl);
     }
 
     signOut(): Promise<any> {

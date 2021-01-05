@@ -20,7 +20,7 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AsgardeoAuthModule } from "@asgardeo/oidc-angular";
-import { default as authConfig } from "../../config.json";
+import authConfig from "../../config.json";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";

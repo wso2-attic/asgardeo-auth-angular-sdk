@@ -36,22 +36,29 @@ export class AsgardeoNavigatorService {
         }
     }
 
-    getUrl(): string {
-        return this.router.url.split('?')[0];
+    setRedirectUrl(): void {
+        sessionStorage.setItem("redirectUrl", this.getCurrentRoute());
     }
 
-    getRoute(url: string): string {
+    getRedirectUrl(): string {
+        return sessionStorage.getItem("redirectUrl") || "/";
+    }
+
+    getCurrentRoute(): string {
+        return this.router.url.split("?")[0];
+    }
+
+    getRouteWithoutParams(url: string): string {
         return new URL(url).pathname;
     }
 
-    async navigateByUrl(url: string): Promise<boolean> {
+    navigateByUrl(url: string): Promise<boolean> {
         if (this.router) {
-            console.log(url);
             try {
-                return await this.router.navigateByUrl(url);
-            } catch (e) {
-                console.log(e);
-                return await this.router.navigateByUrl("/");
+                return this.router.navigateByUrl(url);
+            } catch (err) {
+                console.warn(err);
+                return this.router.navigateByUrl("/");
             }
         }
     }

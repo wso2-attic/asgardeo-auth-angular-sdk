@@ -1,11 +1,26 @@
 {
     "name": "@asgardeo/oidc-angular",
     "version": "0.0.1",
+    "description": "Authentication module for Asgardeo Angular SPA",
+    "keywords": [
+        "Asgardeo",
+        "authentication",
+        "oidc",
+        "oauth2",
+        "angular"
+    ],
+    "author": "Asgardio",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/asgardeo/asgardeo-angular-oidc-sdk.git"
+    },
     "peerDependencies": {
         "@angular/common": "^10.2.0",
         "@angular/core": "^10.2.0"
     },
     "dependencies": {
-        "tslib": "^2.0.0"
+        "tslib": "^2.0.0",
+        "@asgardio/oidc-js": "^0.1.34"
     }
 }

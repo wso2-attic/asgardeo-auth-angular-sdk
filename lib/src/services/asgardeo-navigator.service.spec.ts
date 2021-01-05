@@ -49,9 +49,9 @@ describe("AsgardeoNavigatorService", () => {
     });
 
     it("should return the location.pathname when getUrl is called", () => {
-        const getUrlSpy = spyOn(service, "getUrl");
+        const getUrlSpy = spyOn(service, "getCurrentRoute");
 
-        service.getUrl();
+        service.getCurrentRoute();
 
         expect(getUrlSpy).toHaveBeenCalled();
     });
