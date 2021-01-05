@@ -24,7 +24,7 @@ import { HomeComponent } from "./home/home.component";
 import { ProfileComponent } from "./profile/profile.component";
 
 const routes: Routes = [
-    { path: "", component: HomeComponent },
+    { path: "xyz", component: HomeComponent },
     { path: "signin/redirect", component: AsgardeoSignInRedirectComponent },
     { path: "profile", component: ProfileComponent, canActivate: [AsgardeoAuthGuard] },
     { path: "**", redirectTo: "" }

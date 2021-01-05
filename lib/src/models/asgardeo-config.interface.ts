@@ -17,34 +17,32 @@
  *
  */
 
+// import { ConfigInterface, Storage, WebWorkerConfigInterface } from "@asgardio/oidc-js";
+
 /**
  * SDK client config parameters
  */
-
 export type AsgardeoConfigInterface = any;
 
-// import { ConfigInterface, WebWorkerConfigInterface } from "@asgardio/oidc-js";
-
 // export type AsgardeoConfigInterface = ConfigInterface | WebWorkerConfigInterface;
+// export type StorageType = Storage;
 
-// export interface AsgardeoConfigInterface {
-//     authorizationCode?: string;
-//     authorizationType?: string;
-//     baseUrls: string[];
-//     clientHost?: string;
-//     clientID: string;
-//     clientSecret?: string;
-//     clockTolerance?: number;
-//     consentDenied?: boolean;
-//     enablePKCE?: boolean;
-//     prompt?: string;
-//     responseMode?: string;
-//     scope?: string[];
-//     serverOrigin: string;
-//     sessionState?: string;
-//     signInRedirectURL: string;
-//     signOutRedirectURL?: string;
-//     storage?: string;
-//     validateIDToken?: boolean;
-// }
-
+// ------Supported Params------
+// authorizationCode?: string;
+// authorizationType?: string;
+// baseUrls: string[];
+// clientHost?: string;
+// clientID: string;
+// clientSecret?: string;
+// clockTolerance?: number;
+// consentDenied?: boolean;
+// enablePKCE?: boolean;
+// prompt?: string;
+// responseMode?: string;
+// scope?: string[];
+// serverOrigin: string;
+// sessionState?: string;
+// signInRedirectURL: string;
+// signOutRedirectURL?: string;
+// storage?: Storage;
+// validateIDToken?: boolean;
