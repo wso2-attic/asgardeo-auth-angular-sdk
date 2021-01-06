@@ -16,16 +16,14 @@
  * under the License.
  *
  */
-
-// import { ConfigInterface, Storage, WebWorkerConfigInterface } from "@asgardio/oidc-js";
+import { ConfigInterface, WebWorkerConfigInterface } from "@asgardio/oidc-js";
 
 /**
  * SDK client config parameters
  */
-export type AsgardeoConfigInterface = any;
+export type AsgardeoConfigInterface = ConfigInterface | WebWorkerConfigInterface;
 
-// export type AsgardeoConfigInterface = ConfigInterface | WebWorkerConfigInterface;
-// export type StorageType = Storage;
+// export type AsgardeoConfigInterface = any;
 
 // ------Supported Params------
 // authorizationCode?: string;
