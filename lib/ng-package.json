@@ -6,5 +6,6 @@
         "umdModuleIds": {
             "@asgardio/oidc-js": "oidcJs"
         }
-    }
+    },
+    "whitelistedNonPeerDependencies": ["tslib", "@asgardio/oidc-js"]
 }
