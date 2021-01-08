@@ -17,37 +17,30 @@
  *
  */
 
-
-/* You can add global styles to this file, and also import other style files */
-
-@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
-html,
-body {
-    height: 100vh;
-}
-
-body {
-    align-items: center;
-    background-color: #212a32;
-    background-position: center;
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    font-family: 'Roboto', sans-serif !important;
-    justify-content: center;
+a.cButton {
+    background-color: #ff7300;
+    background-image: none;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer!important;
+    display: inline-block;
+    font-size: 1.1rem;
+    font-weight: 500;
+    font: inherit;
+    letter-spacing: .05rem;
+    margin-top: 15px;
+    margin-bottom: 1.5rem;
+    margin-right: 15px;
+    max-width: 260px!important;
+    padding: 12px 30px;
     text-align: center;
-    color: white;
-}
-
-app-root {
-    height: 100%;
+    text-transform: uppercase;
+    transition: all .2s;
+    vertical-align: baseline;
     width: 100%;
 }
 
-@font-face {
-    font-display: swap;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 500;
-    src: url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4.woff2) format('woff2');
+a.cButtonDark {
+    background-color:#465867;
 }

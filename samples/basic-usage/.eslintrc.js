@@ -27,7 +27,8 @@ module.exports = {
             ],
             "parserOptions": {
                 "project": [
-                    "tsconfig.json"
+                    "tsconfig.json",
+                    "e2e/tsconfig.json"
                 ],
                 "createDefaultProgram": true
             },
@@ -37,6 +38,22 @@ module.exports = {
                 "plugin:@angular-eslint/template/process-inline-templates"
             ],
             "rules": {
+                "@angular-eslint/component-selector": [
+                    "error",
+                    {
+                        "type": "element",
+                        "prefix": "app",
+                        "style": "kebab-case"
+                    }
+                ],
+                "@angular-eslint/directive-selector": [
+                    "error",
+                    {
+                        "type": "attribute",
+                        "prefix": "app",
+                        "style": "camelCase"
+                    }
+                ],
                 "@typescript-eslint/indent": [
                     "error",
                     4,
