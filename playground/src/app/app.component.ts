@@ -16,20 +16,17 @@
  * under the License.
  *
  */
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
-{
-    "extends": "../../tsconfig.json",
-    "compilerOptions": {
-        "outDir": "../../out-tsc/app",
-        "types": [],
-        "resolveJsonModule": true,
-        "allowSyntheticDefaultImports": true,
-    },
-    "files": [
-        "src/main.ts",
-        "src/polyfills.ts"
-    ],
-    "include": [
-        "src/**/*.d.ts"
-    ]
+
+import { Component } from "@angular/core";
+
+@Component({
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"]
+})
+export class AppComponent {
+    title = "playground";
+
+    constructor() { }
+
 }

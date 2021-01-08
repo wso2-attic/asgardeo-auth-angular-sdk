@@ -17,20 +17,19 @@
  *
  */
 module.exports = {
-    "extends": "../../.eslintrc.js",
+    "extends": "../.eslintrc.js",
     "ignorePatterns": [
         "!**/*"
     ],
-    "overrides": [
-        {
+    "overrides": [{
             "files": [
                 "*.ts"
             ],
             "parserOptions": {
                 "project": [
-                    "samples/basic-usage/tsconfig.app.json",
-                    "samples/basic-usage/tsconfig.spec.json",
-                    "samples/basic-usage/e2e/tsconfig.json"
+                    "playground/tsconfig.app.json",
+                    "playground/tsconfig.spec.json",
+                    "playground/e2e/tsconfig.json"
                 ],
                 "createDefaultProgram": true
             },
