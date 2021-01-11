@@ -16,12 +16,18 @@
 
 # This builds the PRs raised to the main branch.
 
-name: PR Builder
+name: Builder
 
 on:
   workflow_dispatch:
   pull_request:
     branches: [ main ]
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**/package.json'
+      - '**/package-lock.json'
+      - 'lerna.json'
 
 jobs:
   build:
