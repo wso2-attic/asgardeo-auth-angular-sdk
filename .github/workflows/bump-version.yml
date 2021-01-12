@@ -18,9 +18,7 @@
 
 name: Bump Version
 
-# Controls when the action will run.
 on:
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
     inputs:
       Type:
@@ -28,24 +26,25 @@ on:
         required: true
         default: 'patch'
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
       - name: Install Packages
         run: |
           npm ci
-      - name: Bump Version
+      - name: Bump Library Version
+        working-directory: lib
         run: |
           git config --global user.email "version.bump@github.action.com"
-          git config --global user.name "asgardio-github-bot"
-          npm version ${{ github.event.inputs.Version }} --allow-same-version
+          git config --global user.name "asgardeo-github-bot"
+          npm version ${{ github.event.inputs.Type }}
+          git add .
+          git commit -m "Bump up library"
+      - name: Bump Version
+        run: |
+          npm version ${{ github.event.inputs.Type }}
           git push --follow-tags

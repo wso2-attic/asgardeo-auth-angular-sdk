@@ -15,6 +15,7 @@
 #  under the License.
 
 # This workflow builds the repo and then publishes the SDK to the NPM registry following a release.
+
 name: Release
 
 on:
@@ -23,7 +24,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -32,6 +32,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
