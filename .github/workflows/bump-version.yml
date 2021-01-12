@@ -14,33 +14,37 @@
 #  specific language governing permissions and limitations
 #  under the License.
 
-# This builds the PRs raised to the main branch.
+# This workflow bumps the version.
 
-name: PR Builder
+name: Bump Version
 
 on:
   workflow_dispatch:
-  pull_request:
-    branches: [ main ]
+    inputs:
+      Type:
+        description: 'Choose which version to bump'
+        required: true
+        default: 'patch'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [14.x]
-
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Build
-      run: |
-        npm ci
-        npm run build --if-present
+      - name: Install Packages
+        run: |
+          npm ci
+      - name: Bump Library Version
+        working-directory: lib
+        run: |
+          git config --global user.email "version.bump@github.action.com"
+          git config --global user.name "asgardeo-github-bot"
+          npm version ${{ github.event.inputs.Type }}
+          git add .
+          git commit -m "Bump up library"
+      - name: Bump Version
+        run: |
+          npm version ${{ github.event.inputs.Type }}
+          git push --follow-tags

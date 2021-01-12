@@ -16,10 +16,10 @@
  * under the License.
  *
  */
-{
-    "extends": "../.eslintrc.json",
+module.exports = {
+    "root": true,
     "ignorePatterns": [
-        "!**/*"
+        "projects/**/*"
     ],
     "overrides": [
         {
@@ -28,33 +28,42 @@
             ],
             "parserOptions": {
                 "project": [
-                    "lib/tsconfig.lib.json",
-                    "lib/tsconfig.spec.json"
+                    "tsconfig.json"
                 ],
                 "createDefaultProgram": true
             },
+            "extends": [
+                "plugin:@angular-eslint/ng-cli-compat",
+                "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+                "plugin:@angular-eslint/template/process-inline-templates"
+            ],
             "rules": {
-                "@angular-eslint/component-selector": [
+                "@typescript-eslint/indent": [
                     "error",
+                    4,
                     {
-                        "type": "element",
-                        "prefix": "lib",
-                        "style": "kebab-case"
+                        "FunctionDeclaration": {
+                            "parameters": "first"
+                        },
+                        "FunctionExpression": {
+                            "parameters": "first"
+                        },
+                        "ObjectExpression": "first",
+                        "MemberExpression": 1
                     }
                 ],
-                "@angular-eslint/directive-selector": [
+                "@typescript-eslint/quotes": [
                     "error",
-                    {
-                        "type": "attribute",
-                        "prefix": "lib",
-                        "style": "camelCase"
-                    }
+                    "double"
                 ]
             }
         },
         {
             "files": [
                 "*.html"
+            ],
+            "extends": [
+                "plugin:@angular-eslint/template/recommended"
             ],
             "rules": {}
         }
