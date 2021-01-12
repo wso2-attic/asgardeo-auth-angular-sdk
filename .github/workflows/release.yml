@@ -42,7 +42,7 @@ jobs:
     - name: Build
       run: |
         npm ci
-        npm run build-prod --if-present
+        npm run build:prod --if-present
     - name: Publish OIDC Angular SDK
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
