@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "./",
     "projects": {
-        "oidc-angular": {
+        "auth-angular": {
             "projectType": "library",
             "root": "lib",
             "sourceRoot": "lib/src",
@@ -152,5 +152,5 @@
             }
         }
     },
-    "defaultProject": "oidc-angular"
+    "defaultProject": "auth-angular"
 }

@@ -19,7 +19,7 @@
 
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { AsgardeoAuthModule, AsgardeoConfigInterface } from "@asgardeo/oidc-angular";
+import { AsgardeoAuthModule, AsgardeoConfigInterface } from "@asgardeo/auth-angular";
 import { default as authConfig } from "../../config.json";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";

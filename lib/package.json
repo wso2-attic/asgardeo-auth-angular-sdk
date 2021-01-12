@@ -1,5 +1,5 @@
 {
-    "name": "@asgardeo/oidc-angular",
+    "name": "@asgardeo/auth-angular",
     "version": "0.0.4",
     "description": "Authentication module for Asgardeo Angular SPA",
     "keywords": [
@@ -13,7 +13,7 @@
     "license": "Apache-2.0",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/asgardeo/asgardeo-angular-oidc-sdk.git"
+        "url": "git+https://github.com/asgardeo/asgardeo-auth-angular-sdk.git"
     },
     "peerDependencies": {
         "@angular/common": ">=10",

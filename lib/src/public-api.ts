@@ -18,7 +18,7 @@
  */
 
 /*
- * Public API Surface of @asgardeo/oidc-angular
+ * Public API Surface of @asgardeo/auth-angular
  */
 
 export * from "./asgardeo-auth.module";

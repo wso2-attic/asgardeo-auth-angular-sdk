@@ -1,5 +1,5 @@
 {
-    "name": "asgardeo-angular-oidc-sdk",
+    "name": "asgardeo-auth-angular-sdk",
     "version": "0.0.4",
     "scripts": {
         "ng": "ng",

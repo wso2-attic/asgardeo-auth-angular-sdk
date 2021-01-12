@@ -18,7 +18,7 @@
  */
 
 import { Component } from "@angular/core";
-import { AsgardeoAuthService } from "@asgardeo/oidc-angular";
+import { AsgardeoAuthService } from "@asgardeo/auth-angular";
 
 @Component({
     selector: "app-profile",
