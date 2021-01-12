@@ -32,6 +32,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+            token: ${{secrets.ASGARDEO_GITHUB_BOT_TOKEN}}
+        if: github.repository == 'asgardeo/asgardeo-auth-angular-sdk'
+        
+      - uses: actions/checkout@v2
+        if: github.repository != 'asgardeo/asgardeo-auth-angular-sdk'
 
       - name: Install Packages
         run: |
