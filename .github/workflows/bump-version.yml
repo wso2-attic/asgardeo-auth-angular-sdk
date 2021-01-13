@@ -49,8 +49,8 @@ jobs:
           git config --global user.name "asgardeo-github-bot"
           npm version ${{ github.event.inputs.Type }}
           git add .
-          git commit -m "Bump Library Version"
+          git commit -m "Bump @asgardeo/auth-angular Version"
       - name: Bump Version
         run: |
-          npm version ${{ github.event.inputs.Type }} -m ""[WSO2 Release] [GitHub Actions] [Release %s] Bump Version"
+          npm version ${{ github.event.inputs.Type }} -m "[WSO2 Release] [GitHub Actions] [Release %s] Bump Parent Version"
           git push --follow-tags
