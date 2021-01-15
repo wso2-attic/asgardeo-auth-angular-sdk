@@ -17,21 +17,6 @@
  *
  */
 
-/*
- * Cover
- */
-
-h2 {
-    color: #fff;
-    font-weight: 500;
-    margin-bottom: 1%;
-    margin-top: 2%;
-}
-
-p {
-    font-size: 30px;
-}
-
 a.cButton {
     background-color: #ff7300;
     background-image: none;

@@ -30,7 +30,7 @@ export class AsgardioSignInRedirectComponent implements OnInit {
     constructor(private auth: AsgardioAuthService, private navigator: AsgardioNavigatorService) { }
 
     ngOnInit(): void {
-        if (!this.auth.isAuthenticated) {
+        if (!this.auth.isAuthenticated()) {
             this.auth.signIn().then(() => this.navigator.navigateByUrl(sessionStorage.getItem("redirectUrl")));
         }
         else {

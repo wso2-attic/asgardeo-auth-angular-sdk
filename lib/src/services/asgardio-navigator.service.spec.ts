@@ -17,18 +17,62 @@
  *
  */
 
-import { TestBed } from "@angular/core/testing";
+import { fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { Router } from "@angular/router";
 import { AsgardioNavigatorService } from "./asgardio-navigator.service";
 
 describe("AsgardioNavigatorService", () => {
     let service: AsgardioNavigatorService;
 
+    let router: Router;
+    let routerStub: Partial<Router>;
+
     beforeEach(() => {
-        TestBed.configureTestingModule({});
+        routerStub = {
+            navigateByUrl: () => Promise.resolve(true),
+        };
+
+        TestBed.configureTestingModule({
+            providers: [
+                {
+                    provide: Router,
+                    useValue: routerStub
+                }
+            ]
+        });
         service = TestBed.inject(AsgardioNavigatorService);
+        router = TestBed.inject(Router);
     });
 
     it("should be created", () => {
         expect(service).toBeTruthy();
     });
+
+    it("should return the location.pathname when getUrl is called", () => {
+        const getUrlSpy = spyOn(service, "getUrl");
+
+        service.getUrl();
+
+        expect(getUrlSpy).toHaveBeenCalled();
+    });
+
+    it("should navigate the user to the provided route", () => {
+        const navigateByurlRSpy = spyOn(router, "navigateByUrl").and.returnValue(Promise.resolve(true));
+
+        service.navigateByUrl("fakePath");
+
+        expect(navigateByurlRSpy).toHaveBeenCalled();
+    });
+
+    it("should navigate the user to root if the provided route does not exist", fakeAsync(() => {
+        const navigateByurlRSpy = spyOn(router, "navigateByUrl").and.callFake((url: string): Promise<boolean> => {
+            if (url !== "/") {return Promise.reject("fakeReject");}
+            else {return Promise.resolve(true);}
+        });
+
+        service.navigateByUrl("fakePath");
+
+        tick();
+        expect(navigateByurlRSpy).toHaveBeenCalledWith("/");
+    }));
 });

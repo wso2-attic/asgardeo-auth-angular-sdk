@@ -27,22 +27,31 @@ import { AsgardioNavigatorService } from "./asgardio-navigator.service";
     providedIn: "root"
 })
 export class AsgardioAuthService {
-    isAuthenticated: boolean;
-    // authInfo$: Observable<any[]>;
     private auth: IdentityClient;
 
-    constructor(@Inject(ASGARDIO_CONFIG) private config: AsgardioConfigInterface, private navigator: AsgardioNavigatorService) {
-        if (config) {
-            this.auth = IdentityClient.getInstance();
-            this.auth.initialize(config)
-                .then(() => console.log("Succesfully Initialized"))
-                .catch(() => console.warn("Failed to Initialize"));
-            this.auth.on(Hooks.SignIn, () => {
-                this.isAuthenticated = true;
-            });
-            this.auth.on(Hooks.SignOut, () => {
-                this.isAuthenticated = false;
-            });
+    constructor(
+        @Inject(ASGARDIO_CONFIG) private config: AsgardioConfigInterface,
+        private navigator: AsgardioNavigatorService) {
+        this.auth = IdentityClient.getInstance();
+        this.auth.initialize(this.config)
+            .catch((error) => console.warn("Failed to Initialize - " + error));
+
+        this.auth.on(Hooks.SignIn, () => {
+            sessionStorage.setItem("isAuthenticated", "true");
+        });
+
+        this.auth.on(Hooks.SignOut, () => {
+            sessionStorage.setItem("isAuthenticated", "false");
+        });
+    }
+
+    isAuthenticated(): boolean {
+        // *** This is a temporary function ***
+        if (sessionStorage.getItem("isAuthenticated") === "true") {
+            return true;
+        }
+        else {
+            return false;
         }
     }
 
@@ -56,7 +65,7 @@ export class AsgardioAuthService {
     }
 
     signOut(): Promise<any> {
-        return this.auth.signOut().catch(() => console.log("This"));
+        return this.auth.signOut();
     }
 
     getAccessToken(): Promise<string> {

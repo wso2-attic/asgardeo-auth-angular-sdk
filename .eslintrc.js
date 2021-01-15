@@ -55,6 +55,13 @@ module.exports = {
                 "@typescript-eslint/quotes": [
                     "error",
                     "double"
+                ],
+                "@typescript-eslint/semi": ["error"],
+                "@typescript-eslint/dot-notation": [
+                    "error",
+                    {
+                        "allowPrivateClassPropertyAccess": true
+                    }
                 ]
             }
         },
