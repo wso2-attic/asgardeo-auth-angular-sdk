@@ -46,11 +46,9 @@ export class AsgardioNavigatorService {
 
     async navigateByUrl(url: string): Promise<boolean> {
         if (this.router) {
-            console.log(url);
             try {
                 return await this.router.navigateByUrl(url);
             } catch (e) {
-                console.log(e);
                 return await this.router.navigateByUrl("/");
             }
         }
