@@ -143,7 +143,7 @@ This SDK currently supports following configuration parameters defined in [@asga
 |`enablePKCE` (opt.)|`boolean`|`true`|Specifies if a PKCE should be sent with the request for the authorization code. |
 |`prompt` (opt.)|`string`|""|Specifies the prompt type of an OIDC request|
 |`scope` (opt.)|`string[]`|`["openid"]`|Specifies the requested scopes|
-|[`storage`](#storage) (opt.)| `"sessionStorage"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored. |
+|`storage` (opt.)| `"sessionStorage"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored. |
 |`validateIDToken`(opt.)|`boolean`|`true`|Allows you to enable/disable JWT ID token validation after obtaining the ID token.|
 |`clockTolerance`(opt.)|`number`|`60`|Allows you to configure the leeway when validating the id_token.|
 
