@@ -28,5 +28,4 @@ export class AppComponent {
     title = "playground";
 
     constructor() { }
-
 }
