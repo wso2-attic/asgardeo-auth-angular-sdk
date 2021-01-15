@@ -14,18 +14,16 @@
 #  specific language governing permissions and limitations
 #  under the License.
 
-# This builds the PRs raised to the main branch.
+# This workflow builds the repo and then publishes the SDK to the NPM registry following a release.
 
-name: PR Builder
+name: Release
 
 on:
-  workflow_dispatch:
-  pull_request:
-    branches: [ main ]
+  release:
+    types: [released]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -39,8 +37,15 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+        registry-url: https://registry.npmjs.org/
 
     - name: Build
       run: |
         npm ci
-        npm run build --if-present
+        npm run build:prod --if-present
+    - name: Publish OIDC Angular SDK
+      env:
+        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      run: |
+        cd dist/auth-angular
+        npm publish --access public
