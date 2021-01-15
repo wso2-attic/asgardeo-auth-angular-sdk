@@ -47,5 +47,5 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       run: |
-        cd dist/oidc-angular
+        cd dist/auth-angular
         npm publish --access public
