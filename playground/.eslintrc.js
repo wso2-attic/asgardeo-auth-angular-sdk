@@ -17,9 +17,9 @@
  *
  */
 module.exports = {
-    "root": true,
+    "extends": "../.eslintrc.js",
     "ignorePatterns": [
-        "projects/**/*"
+        "!**/*"
     ],
     "overrides": [{
             "files": [
@@ -27,39 +27,27 @@ module.exports = {
             ],
             "parserOptions": {
                 "project": [
-                    "tsconfig.json"
+                    "playground/tsconfig.app.json",
+                    "playground/tsconfig.spec.json",
+                    "playground/e2e/tsconfig.json"
                 ],
                 "createDefaultProgram": true
             },
-            "extends": [
-                "plugin:@angular-eslint/ng-cli-compat",
-                "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
-                "plugin:@angular-eslint/template/process-inline-templates"
-            ],
             "rules": {
-                "@typescript-eslint/indent": [
+                "@angular-eslint/component-selector": [
                     "error",
-                    4,
                     {
-                        "FunctionDeclaration": {
-                            "parameters": "first"
-                        },
-                        "FunctionExpression": {
-                            "parameters": "first"
-                        },
-                        "ObjectExpression": "first",
-                        "MemberExpression": 1
+                        "type": "element",
+                        "prefix": "app",
+                        "style": "kebab-case"
                     }
                 ],
-                "@typescript-eslint/quotes": [
-                    "error",
-                    "double"
-                ],
-                "@typescript-eslint/semi": ["error"],
-                "@typescript-eslint/dot-notation": [
+                "@angular-eslint/directive-selector": [
                     "error",
                     {
-                        "allowPrivateClassPropertyAccess": true
+                        "type": "attribute",
+                        "prefix": "app",
+                        "style": "camelCase"
                     }
                 ]
             }
@@ -67,9 +55,6 @@ module.exports = {
         {
             "files": [
                 "*.html"
-            ],
-            "extends": [
-                "plugin:@angular-eslint/template/recommended"
             ],
             "rules": {}
         }

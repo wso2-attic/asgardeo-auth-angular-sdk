@@ -17,23 +17,26 @@
  *
  */
 module.exports = {
-    "extends": "../../.eslintrc.js",
+    "root": true,
     "ignorePatterns": [
-        "!**/*"
+        "projects/**/*"
     ],
-    "overrides": [
-        {
+    "overrides": [{
             "files": [
                 "*.ts"
             ],
             "parserOptions": {
                 "project": [
-                    "samples/basic-usage/tsconfig.app.json",
-                    "samples/basic-usage/tsconfig.spec.json",
-                    "samples/basic-usage/e2e/tsconfig.json"
+                    "tsconfig.json",
+                    "e2e/tsconfig.json"
                 ],
                 "createDefaultProgram": true
             },
+            "extends": [
+                "plugin:@angular-eslint/ng-cli-compat",
+                "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+                "plugin:@angular-eslint/template/process-inline-templates"
+            ],
             "rules": {
                 "@angular-eslint/component-selector": [
                     "error",
@@ -50,12 +53,40 @@ module.exports = {
                         "prefix": "app",
                         "style": "camelCase"
                     }
+                ],
+                "@typescript-eslint/indent": [
+                    "error",
+                    4,
+                    {
+                        "FunctionDeclaration": {
+                            "parameters": "first"
+                        },
+                        "FunctionExpression": {
+                            "parameters": "first"
+                        },
+                        "ObjectExpression": "first",
+                        "MemberExpression": 1
+                    }
+                ],
+                "@typescript-eslint/quotes": [
+                    "error",
+                    "double"
+                ],
+                "@typescript-eslint/semi": ["error"],
+                "@typescript-eslint/dot-notation": [
+                    "error",
+                    {
+                        "allowPrivateClassPropertyAccess": true
+                    }
                 ]
             }
         },
         {
             "files": [
                 "*.html"
+            ],
+            "extends": [
+                "plugin:@angular-eslint/template/recommended"
             ],
             "rules": {}
         }

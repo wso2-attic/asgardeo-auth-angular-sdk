@@ -16,21 +16,26 @@
  * under the License.
  *
  */
- /* To learn more about this file see: https://angular.io/config/tsconfig. */
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./out-tsc/spec",
-    "types": [
-      "jasmine"
-    ]
-  },
-  "files": [
-    "src/test.ts",
-    "src/polyfills.ts"
-  ],
-  "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
-  ]
+
+import { Component } from "@angular/core";
+import { AsgardeoAuthService } from "@asgardeo/oidc-angular";
+
+@Component({
+    selector: "app-profile",
+    templateUrl: "./profile.component.html",
+    styleUrls: ["./profile.component.css"]
+})
+export class ProfileComponent {
+    accessToken: string;
+    isAuthenticated: boolean;
+    userInfo: any;
+
+    constructor(private auth: AsgardeoAuthService) {
+        this.isAuthenticated = this.auth.isAuthenticated();
+        if (this.isAuthenticated) {
+            this.auth.getAccessToken().then((token) => this.accessToken = token);
+            auth.getUserInfo().then((value) => this.userInfo = value);
+        }
+
+    }
 }

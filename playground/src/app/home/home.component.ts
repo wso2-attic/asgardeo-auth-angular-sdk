@@ -16,21 +16,27 @@
  * under the License.
  *
  */
- /* To learn more about this file see: https://angular.io/config/tsconfig. */
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./out-tsc/spec",
-    "types": [
-      "jasmine"
-    ]
-  },
-  "files": [
-    "src/test.ts",
-    "src/polyfills.ts"
-  ],
-  "include": [
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
-  ]
+
+import { Component } from "@angular/core";
+import { AsgardeoAuthService } from "@asgardeo/oidc-angular";
+
+@Component({
+    selector: "app-home",
+    templateUrl: "./home.component.html",
+    styleUrls: ["./home.component.css"]
+})
+export class HomeComponent {
+    isAuthenticated: boolean;
+
+    constructor(private auth: AsgardeoAuthService) {
+        this.isAuthenticated = this.auth.isAuthenticated();
+    }
+
+    signIn(): void {
+        this.auth.signInWithRedirect();
+    }
+
+    signOut(): void {
+        this.auth.signOut();
+    }
 }

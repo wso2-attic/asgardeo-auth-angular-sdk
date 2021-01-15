@@ -33,7 +33,7 @@ export class AsgardeoAuthGuard implements CanActivate, CanActivateChild {
             return true;
         }
         await this.auth.signInWithRedirect();
-        
+
         return false;
     }
 
