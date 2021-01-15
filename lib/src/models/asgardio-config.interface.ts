@@ -17,12 +17,7 @@
  *
  */
 
-import { Injectable } from "@angular/core";
+import { ConfigInterface } from "@asgardio/oidc-js";
 
-@Injectable({
-    providedIn: "root"
-})
-export class OidcAngularService {
+export type AsgardioConfigInterface = ConfigInterface;
 
-    constructor() { }
-}

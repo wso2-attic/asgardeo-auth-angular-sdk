@@ -19,14 +19,14 @@
 
 import { TestBed } from "@angular/core/testing";
 
-import { OidcAngularService } from "./oidc-angular.service";
+import { AsgardioAuthService } from "./asgardio-auth.service";
 
-describe("OidcAngularService", () => {
-    let service: OidcAngularService;
+describe("AsgardioAuthService", () => {
+    let service: AsgardioAuthService;
 
     beforeEach(() => {
         TestBed.configureTestingModule({});
-        service = TestBed.inject(OidcAngularService);
+        service = TestBed.inject(AsgardioAuthService);
     });
 
     it("should be created", () => {

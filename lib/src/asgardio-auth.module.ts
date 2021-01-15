@@ -16,27 +16,24 @@
  * under the License.
  *
  */
-{
-    "compileOnSave": false,
-    "compilerOptions": {
-        "baseUrl": "./",
-        "outDir": "./dist/out-tsc",
-        "sourceMap": true,
-        "declaration": false,
-        "downlevelIteration": true,
-        "experimentalDecorators": true,
-        "moduleResolution": "node",
-        "importHelpers": true,
-        "target": "es2015",
-        "module": "es2020",
-        "lib": [
-            "es2018",
-            "dom"
-        ],
-        "paths": {
-            "oidc-angular": [
-                "dist/oidc-angular"
+
+import { ModuleWithProviders, NgModule } from "@angular/core";
+import { ASGARDIO_CONFIG } from "./configs/asgardio-config";
+import { AsgardioConfigInterface } from "./models/asgardio-config.interface";
+import { AsgardioAuthService } from "./services/asgardio-auth.service";
+
+@NgModule()
+export class AsgardioAuthModule {
+    static forRoot(config?: AsgardioConfigInterface): ModuleWithProviders<AsgardioAuthModule> {
+        return {
+            ngModule: AsgardioAuthModule,
+            providers: [
+                AsgardioAuthService,
+                {
+                    provide: ASGARDIO_CONFIG,
+                    useValue: config
+                }
             ]
-        }
+        };
     }
 }

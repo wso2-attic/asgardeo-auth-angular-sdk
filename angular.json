@@ -99,7 +99,8 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "basic-usage:build"
+                        "browserTarget": "basic-usage:build",
+                        "ssl": true
                     },
                     "configurations": {
                         "production": {

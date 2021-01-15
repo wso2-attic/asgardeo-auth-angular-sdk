@@ -17,23 +17,7 @@
  *
  */
 
-import { Component, OnInit } from "@angular/core";
+import { InjectionToken } from "@angular/core";
+import { AsgardioConfigInterface } from "../models/asgardio-config.interface";
 
-@Component({
-    selector: "lib-oidc-angular",
-    template: `
-        <p>
-        oidc-angular works!
-        </p>
-    `,
-    styles: [
-    ]
-})
-export class OidcAngularComponent implements OnInit {
-
-    constructor() { }
-
-    ngOnInit(): void {
-    }
-
-}
+export const ASGARDIO_CONFIG = new InjectionToken<AsgardioConfigInterface>("Asgardio.config.angular");
