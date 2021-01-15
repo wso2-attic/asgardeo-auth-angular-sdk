@@ -18,17 +18,17 @@
  */
 
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
-import { ASGARDIO_CONFIG } from "../configs/asgardio-config";
-import { AsgardioConfigInterface } from "../models/asgardio-config.interface";
-import { AsgardioAuthService } from "./asgardio-auth.service";
-import { AsgardioNavigatorService } from "./asgardio-navigator.service";
+import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
+import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
+import { AsgardeoAuthService } from "./asgardeo-auth.service";
+import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 
-describe("AsgardioAuthService", () => {
-    let service: AsgardioAuthService;
-    let config: AsgardioConfigInterface;
+describe("AsgardeoAuthService", () => {
+    let service: AsgardeoAuthService;
+    let config: AsgardeoConfigInterface;
 
-    let navigatorService: AsgardioNavigatorService;
-    let navigatorServiceStub: Partial<AsgardioNavigatorService>;
+    let navigatorService: AsgardeoNavigatorService;
+    let navigatorServiceStub: Partial<AsgardeoNavigatorService>;
 
     beforeEach(() => {
 
@@ -40,19 +40,19 @@ describe("AsgardioAuthService", () => {
         TestBed.configureTestingModule({
             providers: [
                 {
-                    provide: ASGARDIO_CONFIG,
+                    provide: ASGARDEO_CONFIG,
                     useValue: {}
                 },
                 {
-                    provide: AsgardioNavigatorService,
+                    provide: AsgardeoNavigatorService,
                     useValue: navigatorServiceStub
                 }
             ]
         });
 
-        service = TestBed.inject(AsgardioAuthService);
-        config = TestBed.inject(ASGARDIO_CONFIG);
-        navigatorService = TestBed.inject(AsgardioNavigatorService);
+        service = TestBed.inject(AsgardeoAuthService);
+        config = TestBed.inject(ASGARDEO_CONFIG);
+        navigatorService = TestBed.inject(AsgardeoNavigatorService);
     });
 
     it("should be created", () => {
@@ -60,10 +60,10 @@ describe("AsgardioAuthService", () => {
         expect(service["auth"]).toBeDefined();
     });
 
-    it("should catch when auth.intialize throws an error", fakeAsync(() => {
+    it("should catch when auth.initialize throws an error", fakeAsync(() => {
         const initializeSpy = spyOn(service["auth"], "initialize").and.returnValue(Promise.reject("fakeReject"));
 
-        new AsgardioAuthService(config, navigatorService);
+        new AsgardeoAuthService(config, navigatorService);
 
         tick();
         expect(initializeSpy).toHaveBeenCalled();

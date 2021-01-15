@@ -18,7 +18,7 @@
  */
 
 import { Component } from "@angular/core";
-import { AsgardioAuthService } from "@asgardio/oidc-angular";
+import { AsgardeoAuthService } from "@asgardeo/oidc-angular";
 
 @Component({
     selector: "app-home",
@@ -28,7 +28,7 @@ import { AsgardioAuthService } from "@asgardio/oidc-angular";
 export class HomeComponent {
     isAuthenticated: boolean;
 
-    constructor(private auth: AsgardioAuthService) {
+    constructor(private auth: AsgardeoAuthService) {
         this.isAuthenticated = this.auth.isAuthenticated();
     }
 

@@ -18,18 +18,18 @@
  */
 
 import { TestBed } from "@angular/core/testing";
-import { AsgardioAuthService } from "../services/asgardio-auth.service";
-import { AsgardioNavigatorService } from "../services/asgardio-navigator.service";
-import { AsgardioAuthGuard } from "./asgardio-auth.guard";
+import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
+import { AsgardeoNavigatorService } from "../services/asgardeo-navigator.service";
+import { AsgardeoAuthGuard } from "./asgardeo-auth.guard";
 
-describe("AsgardioAuthGuard", () => {
-    let guard: AsgardioAuthGuard;
+describe("AsgardeoAuthGuard", () => {
+    let guard: AsgardeoAuthGuard;
 
-    let authService: AsgardioAuthService;
-    let authServiceStub: Partial<AsgardioAuthService>;
+    let authService: AsgardeoAuthService;
+    let authServiceStub: Partial<AsgardeoAuthService>;
 
-    let navigatorService: AsgardioNavigatorService;
-    let navigatorServiceStub: Partial<AsgardioNavigatorService>;
+    let navigatorService: AsgardeoNavigatorService;
+    let navigatorServiceStub: Partial<AsgardeoNavigatorService>;
 
     beforeEach(() => {
         authServiceStub = {
@@ -44,18 +44,18 @@ describe("AsgardioAuthGuard", () => {
         TestBed.configureTestingModule({
             providers: [
                 {
-                    provide: AsgardioAuthService,
+                    provide: AsgardeoAuthService,
                     useValue: authServiceStub
                 },
                 {
-                    provide: AsgardioNavigatorService,
+                    provide: AsgardeoNavigatorService,
                     useValue: navigatorServiceStub
                 }
             ]
         });
-        guard = TestBed.inject(AsgardioAuthGuard);
-        authService = TestBed.inject(AsgardioAuthService);
-        navigatorService = TestBed.inject(AsgardioNavigatorService);
+        guard = TestBed.inject(AsgardeoAuthGuard);
+        authService = TestBed.inject(AsgardeoAuthService);
+        navigatorService = TestBed.inject(AsgardeoNavigatorService);
     });
 
     it("should be created", () => {

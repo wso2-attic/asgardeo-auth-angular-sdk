@@ -19,10 +19,10 @@
 
 import { fakeAsync, TestBed, tick } from "@angular/core/testing";
 import { Router } from "@angular/router";
-import { AsgardioNavigatorService } from "./asgardio-navigator.service";
+import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 
-describe("AsgardioNavigatorService", () => {
-    let service: AsgardioNavigatorService;
+describe("AsgardeoNavigatorService", () => {
+    let service: AsgardeoNavigatorService;
 
     let router: Router;
     let routerStub: Partial<Router>;
@@ -40,7 +40,7 @@ describe("AsgardioNavigatorService", () => {
                 }
             ]
         });
-        service = TestBed.inject(AsgardioNavigatorService);
+        service = TestBed.inject(AsgardeoNavigatorService);
         router = TestBed.inject(Router);
     });
 

@@ -67,12 +67,10 @@
                     },
                     "configurations": {
                         "production": {
-                            "fileReplacements": [
-                                {
-                                    "replace": "samples/basic-usage/src/environments/environment.ts",
-                                    "with": "samples/basic-usage/src/environments/environment.prod.ts"
-                                }
-                            ],
+                            "fileReplacements": [{
+                                "replace": "samples/basic-usage/src/environments/environment.ts",
+                                "with": "samples/basic-usage/src/environments/environment.prod.ts"
+                            }],
                             "optimization": true,
                             "outputHashing": "all",
                             "sourceMap": false,
@@ -81,8 +79,7 @@
                             "extractLicenses": true,
                             "vendorChunk": false,
                             "buildOptimizer": true,
-                            "budgets": [
-                                {
+                            "budgets": [{
                                     "type": "initial",
                                     "maximumWarning": "2mb",
                                     "maximumError": "5mb"
@@ -99,7 +96,8 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "basic-usage:build"
+                        "browserTarget": "basic-usage:build",
+                        "port": 3000
                     },
                     "configurations": {
                         "production": {
