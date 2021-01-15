@@ -17,12 +17,27 @@
  *
  */
 
-/*
- * Public API Surface of @asgardio/oidc-angular
- */
+import { Injectable } from "@angular/core";
+import { CanActivate, CanActivateChild } from "@angular/router";
+import { AsgardioAuthService } from "../services/asgardio-auth.service";
 
-export * from "./asgardio-auth.module";
-export * from "./components/asgardio-sign-in-redirect.component";
-export * from "./guards/asgardio-auth.guard";
-export * from "./services/asgardio-auth.service";
+@Injectable({
+    providedIn: "root"
+})
+export class AsgardioAuthGuard implements CanActivate, CanActivateChild {
 
+    constructor(private auth: AsgardioAuthService) { }
+
+    async canActivate(): Promise<boolean> {
+        if (this.auth.isAuthenticated()) {
+            return true;
+        }
+        await this.auth.signInWithRedirect();
+        
+        return false;
+    }
+
+    async canActivateChild(): Promise<boolean> {
+        return this.canActivate();
+    }
+}
