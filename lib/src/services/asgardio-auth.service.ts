@@ -46,7 +46,7 @@ export class AsgardioAuthService {
         this.navigator.navigateByUrl("signin/redirect");
     }
 
-    signOut(){
+    signOut() {
         this.auth.signOut();
     }
 }
