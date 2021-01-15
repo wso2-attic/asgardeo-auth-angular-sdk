@@ -49,7 +49,7 @@ export class AsgardioAuthService {
     signIn(): Promise<any> {
         return this.auth.signIn();
     }
-
+  
     signInWithRedirect(): void {
         sessionStorage.setItem("redirectUrl", this.navigator.getUrl());
         this.navigator.navigateByUrl(this.config.signInRedirectURL);
@@ -77,5 +77,4 @@ export class AsgardioAuthService {
 
     refreshToken(): Promise<string> {
         return this.auth.refreshToken();
-    }
 }
