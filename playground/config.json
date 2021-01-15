@@ -1,5 +1,5 @@
 {
-    "clientID": "34DgR6wzQleFD7EiNhAnEG0w33Ia",
+    "clientID": "<<CLIENT_ID>>",
     "serverOrigin": "https://localhost:9443",
     "signInRedirectURL": "http://localhost:3000/signin/redirect",
 
