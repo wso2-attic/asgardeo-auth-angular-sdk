@@ -1,7 +1,7 @@
 # [WIP] Asgardeo Angular OIDC SDK & Samples
 Repository containing the source of Asgardeo Angular OIDC SDK & Samples.
 
-![Builder](https://github.com/asgardeo/asgardeo-js-oidc-sdk/workflows/Builder/badge.svg)
+<!-- ![Builder](https://github.com/asgardeo/asgardeo-js-oidc-sdk/workflows/Builder/badge.svg) -->
 [![Stackoverflow](https://img.shields.io/badge/Ask%20for%20help%20on-Stackoverflow-orange)](https://stackoverflow.com/questions/tagged/wso2is)
 [![Join the chat at https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE](https://img.shields.io/badge/Join%20us%20on-Slack-%23e01563.svg)](https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/wso2/product-is/blob/master/LICENSE)
@@ -18,11 +18,17 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Install](#install)
 - [Getting Started](#getting-started)
 - [APIs](#apis)
-    - [`Configuration`](#configuration)
+    - [`AsgardeoAuthModule`](#asgardeoauthmodule)
+        - `Configuration`
     - [`AsgardeoAuthService`](#asgardeoauthservice)
-        - [`SignIn`](#signin)
-        - [`SignInWithRedirect`](#signinwithredirect)
-        - [`SignOut`](#signout)
+        - `signIn`
+        - `signInWithRedirect`
+        - `signOut`
+        - `getAccessToken`
+        - `getDecodedIDToken`
+        - `getServiceEndpoints`
+        - `getUserInfo`
+    - [`AsgardeoAuthGuard`](#asgardeoauthguard)
 - [Develop](#develop)
     - [Prerequisites](#prerequisites)
     - [Installing Dependencies](#installing-dependencies)
@@ -35,39 +41,22 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Asgardeo's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-js-oidc-sdk).  
 
-Integaration with [@angular/router](https://angular.io/api/router) of this SDK will help the developers to add identity management to their Angular Applications in a jiffy.
+Integration with [@angular/router](https://angular.io/api/router) of this SDK will help the developers to add identity management to their Angular Applications in a jiffy.
 
 ## Install
-<!-- Install the Angular library from the npm registry.
+Install the Angular library from the npm registry.
 ```bash
 npm install --save @asgardeo/oidc-angular
-``` -->
+```
 ## Getting Started
 
-- Getting started with Angular
-    - [Quickstart Guide](https://angular.io/start)
-    - [In-app navigation](https://angular.io/guide/router)
-- Try Out the Sample Apps
-    - [Basic Usage](samples/basic-usage)
-
-## APIs
-
-### `Configuration`
-
-Pass configuration parameters for authentication into `AsgardoAuthModule` using `forRoot` method.
-
-Following parameters are **required**.
-
-- `signInRedirectURL` - URL to redirect to after the user authorizes the client app. (Refer [here](#signinwithredirect))
-- `clientID`: The client ID of the OIDC application hosted in the Asgardeo.
-- `serverOrigin`: The origin of the Identity Provider. eg: https://www.asgardeo.io
-
+### Import `AsgardeoAuthModule` and Provide Configuration Parameters
 ```javascript
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 
-// Import Asgardeo Auth Module
+// Import Auth Module
 import { AsgardeoAuthModule } from "@asgardeo/oidc-angular";
 
 @NgModule({
@@ -77,7 +66,7 @@ import { AsgardeoAuthModule } from "@asgardeo/oidc-angular";
     imports: [
         BrowserModule,
 
-        // Add the module as a Import providing the configs (See API Docs)
+        // Add the module as an import providing the configs (See API Docs)
         AsgardeoAuthModule.forRoot({
             signInRedirectURL: "https://localhost:9443/myaccount/login",
             clientID: "client ID",
@@ -90,49 +79,89 @@ import { AsgardeoAuthModule } from "@asgardeo/oidc-angular";
 export class AppModule { }
 ```
 
-This SDK supports all configuration parameters defined in [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-js-oidc-sdk) 
+### Use `AsgardeoAuthService` for Authentication Functions
+
+```javascript
+import { Component } from "@angular/core";
+import { AsgardeoAuthService } from "@asgardeo/oidc-angular";
+
+@Component({
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"]
+})
+export class AppComponent {
+    isAuthenticated: boolean;
+
+    constructor(private auth: AsgardeoAuthService) {
+        this.isAuthenticated = this.auth.isAuthenticated();
+    }
+
+    handleSignIn(): void {
+        this.auth.signInWithRedirect();
+    }
+```
+
+
+### Helpful Links
+- Getting started with Angular
+
+    - [Angular Quick Start Guide](https://angular.io/start)
+    - [Angular In-app navigation](https://angular.io/guide/router)
+
+- WSO2 Identity Server [Docs](https://is.docs.wso2.com/en/latest/)
+
+- Try Out the Sample App Here - [Basic Usage](samples/basic-usage)
+
+
+## APIs
+
+### `AsgardeoAuthModule`
+
+This is the top-level Angular module for the SDK.
+
+#### `Configuration`
+
+Pass configuration parameters for authentication into `AsgardeoAuthModule` using `forRoot` method.
+
+<!-- Following parameters are **required**.
+
+- `signInRedirectURL` - URL to redirect to after the user authorizes the client app. (Refer [here](#signinwithredirect))
+- `clientID`: The client ID of the OIDC application hosted in the Asgardeo.
+- `serverOrigin`: The origin of the Identity Provider. eg: https://www.asgardeo.io -->
+
+This SDK currently supports following configuration parameters defined in [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-js-oidc-sdk) 
 
 |Attribute| Type | Default Value| Description|
 |:-----|:----|:----|:----|
 |`signInRedirectURL`|`string`|""|The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
 |`clientID`| `string` |""|The client ID of the OIDC application hosted in the Asgardeo.|
 |`serverOrigin`|`string`|""|The origin of the Identity Provider. eg: `https://www.asgardeo.io`|
-|`signOutRedirectURL` (optional)|`string`|`signInRedirectURL` |The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout` |
-|`clientHost` (optional)|`string`|The origin of the client app obtained using `window.origin`|The hostname of the client app.  eg: `https://contoso.com`|
-|`clientSecret` (optional)|`string`|""|The client secret of the OIDC application|
-|`enablePKCE` (optional)|`boolean`|`true`|Specifies if a PKCE should be sent with the request for the authorization code. |
-|`prompt` (optional)|`string`|""|Specifies the prompt type of an OIDC request|
-|`responseMode` (optional)|`string`|`"query"`| Specifies the response mode. The value can either be `query` or `form_post`|
-|`scope` (optional)|`string[]`|`["openid"]`|Specifies the requested scopes|
-|[`storage`](#storage) (optional)| `"sessionStorage"`, `"webWorker"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored.|
-|`baseUrls` (required if the `storage` is set to `webWorker`|`string[]`|""|The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied.|
-|`endpoints` (optional)|[`ServiceResourceTypes`](#serviceresourcetypes)|[ServiceResource Default Values](#serviceresourcetypes)| The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be used.|
-|`authorizationCode` (optional)| `string`|""|When the `responseMode` is set to `from_post`, the authorization code is returned as a `POST` request. Apps can use this attribute to pass the obtained authorization code to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the authorization code and send it back to the SDK.|
-| `sessionState` (optional) | `string`|""| When the `responseMode` is set to `from_post`, the session state is returned as a `POST` request. Apps can use this attribute to pass the obtained session state to the SDK. Since client applications can't handle `POST` requests, the application's backend should implement the logic to receive the session state and send it back to the SDK.|
-|`validateIDToken`(optional)|`boolean`|`true`|Allows you to enable/disable JWT ID token validation after obtaining the ID token.|
-|`clockTolerance`(optional)|`number`|`60`|Allows you to configure the leeway when validating the id_token.|
+|`signOutRedirectURL` (opt.)|`string`|`signInRedirectURL` |The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout` |
+|`clientHost` (opt.)|`string`|The origin of the client app obtained using `window.origin`|The hostname of the client app.  eg: `https://contoso.com`|
+|`clientSecret` (opt.)|`string`|""|The client secret of the OIDC application|
+|`enablePKCE` (opt.)|`boolean`|`true`|Specifies if a PKCE should be sent with the request for the authorization code. |
+|`prompt` (opt.)|`string`|""|Specifies the prompt type of an OIDC request|
+|`scope` (opt.)|`string[]`|`["openid"]`|Specifies the requested scopes|
+|[`storage`](#storage) (opt.)| `"sessionStorage"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored. |
+|`validateIDToken`(opt.)|`boolean`|`true`|Allows you to enable/disable JWT ID token validation after obtaining the ID token.|
+|`clockTolerance`(opt.)|`number`|`60`|Allows you to configure the leeway when validating the id_token.|
 
 ### `AsgardeoAuthService`
 
-#### `SignIn`
+In the components, `AsgardeoAuthService` can be used to take advantage of all of supported authentication features provided. This service inherits from the `IdentityClient` of the [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-js-oidc-sdk).
 
-This method initiates the authentication flow using [signIn](https://github.com/asgardeo/asgardeo-js-oidc-sdk/tree/master/packages/oidc-js#signin) function of [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-js-oidc-sdk) . Developer can use this method to customize their own redirect flow. 
+#### `signIn(): Promise`
 
-#### `SignInWithRedirect`
+This method initiates the authentication flow. Developer can use this method to customize their own redirect flow. 
 
-This method redirects the user to the route where the authentication flow was initiated. To use this function following steps needs to be fullfilled.
-- `signInRedirectURL` 
+#### `signInWithRedirect(): Promise`
 
-Change Sign In Redirect URL as follows
-```javascript
-AsgardeoAuthModule.forRoot({
-    signInRedirectURL: window.location.origin + "/signin/redirect",
-    ...
-})
-```    
+This method redirects the user to the route where the authentication flow was initiated. To use this function following steps needs to be fulfilled.
+
 - `app-routing.module.ts`
 
-Register `AsgardeoLoginRedirectComponent` for the the following route.
+Register `AsgardeoSignInRedirectComponent` for an unique route.
 
 ```javascript
 import { AsgardeoSignInRedirectComponent } from "@asgardeo/oidc-angular";
@@ -142,9 +171,106 @@ const routes: Routes = [
     ...
 ];
 ``` 
-#### `SignOut`
+
+- `signInRedirectURL` 
+
+Change Sign In Redirect URL as follows.
+
+```javascript
+AsgardeoAuthModule.forRoot({
+    signInRedirectURL: window.location.origin + "/signin/redirect",
+    ...
+})
+```    
+
+#### `signOut(): Promise`
 
 This method ends the user session at the identity provider and logs the user out.
+
+#### `getAccessToken(): Promise`
+
+This returns a promise that resolves with the access token. 
+
+```javascript
+auth.getAccessToken().then((token) => {
+    // console.log(token);
+}).error((error) => {
+    // console.error(error);
+});
+```
+
+#### `getDecodedIDToken(): Promise`
+
+This method returns a promise that resolves with the decoded payload of the JWT ID token.
+
+```javascript
+auth.getDecodedIDToken().then((idToken) => {
+    // console.log(idToken);
+}).error((error) => {
+    // console.error(error);
+});
+```
+
+#### `getServiceEndpoints(): Promise`
+
+This method returns a promise that resolves with an object containing the OIDC endpoints obtained from the `.well-known` endpoint. The object contains the following attributes.
+
+|Attribute| Description|
+|---|--|
+|`"authorize"`| The endpoint to which the authorization request should be sent. |
+|`"jwks"`| The endpoint from which JSON Web Key Set can be obtained.|
+|`"oidcSessionIFrame"`| The URL of the page that should be loaded in an IFrame to get session information. |
+|`"revoke"`| The endpoint to which the revoke-token request should be sent. |
+|`"token"`| The endpoint to which the token request should be sent. |
+|`"wellKnown"`|The well-known endpoint from which OpenID endpoints of the server can be obtained. |
+
+```javascript
+auth.getServiceEndpoints().then((endpoints) => {
+    // console.log(endpoints);
+}).error((error) => {
+    // console.error(error);
+});
+```
+
+#### `getUserInfo(): Promise`
+
+This method returns a promise that resolves with the information about the authenticated user as an object. The object has the following attributes.
+
+|Attribute| Type | Description|
+|:--|:--|:--|
+|`email`|`string`|The email address of the user|
+|`username`|`string`| The username of the user|
+|`displayName`| `string`| The display name of the user|
+`allowedScopes`|`string`| The scopes the user has authorized the client to access|
+
+```javascript
+auth.getUserInfo().then((response) => {
+    // console.log(response);
+}).catch((error) => {
+    // console.error(error);
+});
+```
+
+### `AsgardeoAuthGuard`
+
+`AsgardeoAuthGuard` can be used to protect routes from unauthorized access. 
+
+Add the `canActivate` guard to route as follows.
+
+```javascript
+import { AsgardeoAuthGuard } from "@asgardeo/oidc-angular";
+import { ProfileComponent } from "./profile/profile.component";
+
+const routes: Routes = [
+    ...,
+    {
+        path: "profile",
+        component: ProfileComponent,
+        canActivate: [AsgardeoAuthGuard]
+    },
+    ...
+];
+```
 
 ## Develop
 

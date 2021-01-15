@@ -16,7 +16,31 @@
  * under the License.
  *
  */
+import { ConfigInterface, WebWorkerConfigInterface } from "@asgardio/oidc-js";
 
-import { ConfigInterface, WebWorkerClientConfigInterface } from "@asgardio/oidc-js";
+/**
+ * SDK client config parameters
+ */
+export type AsgardeoConfigInterface = ConfigInterface | WebWorkerConfigInterface;
 
-export type AsgardeoConfigInterface = ConfigInterface | WebWorkerClientConfigInterface;
+// export type AsgardeoConfigInterface = any;
+
+// ------Supported Params------
+// authorizationCode?: string;
+// authorizationType?: string;
+// baseUrls: string[];
+// clientHost?: string;
+// clientID: string;
+// clientSecret?: string;
+// clockTolerance?: number;
+// consentDenied?: boolean;
+// enablePKCE?: boolean;
+// prompt?: string;
+// responseMode?: string;
+// scope?: string[];
+// serverOrigin: string;
+// sessionState?: string;
+// signInRedirectURL: string;
+// signOutRedirectURL?: string;
+// storage?: Storage;
+// validateIDToken?: boolean;
