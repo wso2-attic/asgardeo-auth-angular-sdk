@@ -17,34 +17,45 @@
  *
  */
 
-/* You can add global styles to this file, and also import other style files */
+/*
+ * Cover
+ */
 
-@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
-html, body {
-    height: 100vh;
+ .cover {
+    padding: 0 1.5rem;
 }
 
-body {
-    align-items: center;
-    background-color: #212a32;
-    background-position: center;
-    display: -ms-flexbox;
-    display: -webkit-box;
-    display: flex;
-    font-family: 'Roboto', sans-serif !important;
-    justify-content: center;
+div {
     text-align: center;
+    background-color: #212a32;
 }
 
-app-root {
-    height: 100%;
-    width: 100%;
-}
-
-@font-face {
-    font-display: swap;
-    font-family: 'Roboto';
-    font-style: normal;
+h1 {
+    color: #fff;
     font-weight: 500;
-    src: url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4.woff2) format('woff2');
+    margin-bottom: 10%;
+}
+
+a.cButton {
+    box-sizing: border-box;
+    font: inherit;
+    vertical-align: baseline;
+    cursor: pointer!important;
+    display: inline-block;
+    text-transform: uppercase;
+    transition: all .2s;
+    text-decoration: none;
+    text-align: center;
+    background-image: none;
+    font-weight: 500;
+    background-color: #ff7300;
+    color: #fff;
+    letter-spacing: .05rem;
+    margin-right: 15px;
+    width: 100%;
+    padding: 12px 30px;
+    max-width: 260px!important;
+    margin-bottom: 1.5rem;
+    font-size: 1.1rem;
+    border-radius: 3px;
 }

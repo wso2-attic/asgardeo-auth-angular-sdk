@@ -17,18 +17,27 @@
  *
  */
 
-import { TestBed } from "@angular/core/testing";
-import { AsgardioAuthService } from "./asgardio-auth.service";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ProfileComponent } from "./profile.component";
 
-describe("AsgardioAuthService", () => {
-    let service: AsgardioAuthService;
+describe("ProfileComponent", () => {
+    let component: ProfileComponent;
+    let fixture: ComponentFixture<ProfileComponent>;
 
-    beforeEach(() => {
-        TestBed.configureTestingModule({});
-        service = TestBed.inject(AsgardioAuthService);
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            declarations: [ ProfileComponent ]
+        })
+            .compileComponents();
     });
 
-    it("should be created", () => {
-        expect(service).toBeTruthy();
+    beforeEach(() => {
+        fixture = TestBed.createComponent(ProfileComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    });
+
+    it("should create", () => {
+        expect(component).toBeTruthy();
     });
 });

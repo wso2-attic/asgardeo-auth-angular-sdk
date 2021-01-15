@@ -17,11 +17,18 @@
  *
  */
 
-/*
- * Public API Surface of @asgardio/oidc-angular
- */
+import { TestBed } from "@angular/core/testing";
+import { AsgardioNavigatorService } from "./asgardio-navigator.service";
 
-export * from "./asgardio-auth.module";
-export * from "./components/asgardio-sign-in-redirect.component";
-export * from "./services/asgardio-auth.service";
+describe("AsgardioNavigatorService", () => {
+    let service: AsgardioNavigatorService;
 
+    beforeEach(() => {
+        TestBed.configureTestingModule({});
+        service = TestBed.inject(AsgardioNavigatorService);
+    });
+
+    it("should be created", () => {
+        expect(service).toBeTruthy();
+    });
+});

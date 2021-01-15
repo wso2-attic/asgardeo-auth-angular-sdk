@@ -17,11 +17,23 @@
  *
  */
 
-/*
- * Public API Surface of @asgardio/oidc-angular
- */
+import { Component } from "@angular/core";
+import { AsgardioAuthService } from "@asgardio/oidc-angular";
 
-export * from "./asgardio-auth.module";
-export * from "./components/asgardio-sign-in-redirect.component";
-export * from "./services/asgardio-auth.service";
+@Component({
+    selector: "app-home",
+    templateUrl: "./home.component.html",
+    styleUrls: ["./home.component.css"]
+})
+export class HomeComponent{
 
+    constructor(private auth: AsgardioAuthService) { }
+
+    signIn() {
+        this.auth.signInWithRedirect();
+    }
+
+    signOut() {
+        this.auth.signOut();
+    }
+}

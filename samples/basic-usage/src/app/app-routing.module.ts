@@ -18,9 +18,16 @@
  */
 
 import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { RouterModule, Routes } from "@angular/router";
+import { AsgardioSignInRedirectComponent } from "@asgardio/oidc-angular";
+import { HomeComponent } from "./home/home.component";
+import { ProfileComponent } from "./profile/profile.component";
 
-const routes: Routes = [];
+const routes: Routes = [
+    { path: "", component: HomeComponent },
+    { path: "signin/redirect", component: AsgardioSignInRedirectComponent },
+    { path: "profile", component: ProfileComponent }
+];
 
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

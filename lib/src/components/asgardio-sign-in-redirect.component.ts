@@ -17,11 +17,20 @@
  *
  */
 
-/*
- * Public API Surface of @asgardio/oidc-angular
- */
+import { Component, OnInit } from "@angular/core";
+import { AsgardioAuthService } from "../services/asgardio-auth.service";
+import { AsgardioNavigatorService } from "../services/asgardio-navigator.service";
 
-export * from "./asgardio-auth.module";
-export * from "./components/asgardio-sign-in-redirect.component";
-export * from "./services/asgardio-auth.service";
+@Component({
+    selector: "lib-asgardio-sign-in-redirect",
+    template: ""
+})
+export class AsgardioSignInRedirectComponent implements OnInit {
 
+    constructor(private auth: AsgardioAuthService, private navigator: AsgardioNavigatorService) { }
+
+    ngOnInit(): void {
+        this.auth.signIn().then(() => this.navigator.navigateByUrl(localStorage.getItem("redirectUrl")));
+    }
+
+}

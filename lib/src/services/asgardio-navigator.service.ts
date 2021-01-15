@@ -17,11 +17,32 @@
  *
  */
 
-/*
- * Public API Surface of @asgardio/oidc-angular
- */
+import { Injectable, Injector } from "@angular/core";
+import { Router } from "@angular/router";
 
-export * from "./asgardio-auth.module";
-export * from "./components/asgardio-sign-in-redirect.component";
-export * from "./services/asgardio-auth.service";
+@Injectable({
+    providedIn: "root"
+})
+export class AsgardioNavigatorService {
 
+    private readonly router: Router;
+
+    constructor(injector: Injector) {
+        try {
+            this.router = injector.get(Router);
+        }
+        catch {
+            console.warn("Router is Not Provided");
+        }
+    }
+
+    getUrl(): string {
+        return this.router.url;
+    }
+
+    navigateByUrl(url: string) : Promise<boolean> {
+        if (this.router) {
+            return this.router.navigateByUrl(url);
+        }
+    }
+}

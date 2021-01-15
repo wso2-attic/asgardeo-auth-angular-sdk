@@ -18,11 +18,14 @@
  */
 
 import { ModuleWithProviders, NgModule } from "@angular/core";
+import { AsgardioSignInRedirectComponent } from "./components/asgardio-sign-in-redirect.component";
 import { ASGARDIO_CONFIG } from "./configs/asgardio-config";
 import { AsgardioConfigInterface } from "./models/asgardio-config.interface";
 import { AsgardioAuthService } from "./services/asgardio-auth.service";
 
-@NgModule()
+@NgModule({
+    declarations: [AsgardioSignInRedirectComponent]
+})
 export class AsgardioAuthModule {
     static forRoot(config?: AsgardioConfigInterface): ModuleWithProviders<AsgardioAuthModule> {
         return {
