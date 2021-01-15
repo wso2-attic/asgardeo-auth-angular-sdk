@@ -17,12 +17,6 @@
  *
  */
 
-h2 {
-    color: #fff;
-    font-weight: 500;
-    margin-bottom: 10%;
-}
-
 a.cButton {
     background-color: #ff7300;
     background-image: none;
@@ -35,14 +29,18 @@ a.cButton {
     font-weight: 500;
     font: inherit;
     letter-spacing: .05rem;
+    margin-top: 15px;
     margin-bottom: 1.5rem;
     margin-right: 15px;
     max-width: 260px!important;
     padding: 12px 30px;
     text-align: center;
-    text-decoration: none;
     text-transform: uppercase;
     transition: all .2s;
     vertical-align: baseline;
     width: 100%;
+}
+
+a.cButtonDark {
+    background-color:#465867;
 }

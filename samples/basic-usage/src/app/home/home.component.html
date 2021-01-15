@@ -18,7 +18,16 @@
 -->
 
 <div>
-    <h2>Basic Usage (Home) Sample App Deployed!</h2>
-    <p><a (click)="signIn()" class="cButton">Sign In</a></p>
-    <p><a (click)="signOut()" class="cButton">Sign Out</a></p>
+    <div *ngIf="isAuthenticated; then signedIn else notSignedIn"></div>
+
+    <ng-template #notSignedIn>
+        <h3>You are not signed in!!!</h3>
+        <a (click)="signIn()" class="cButton">Sign In</a>
+    </ng-template>
+
+    <ng-template #signedIn>
+        <h3>Awesome. You are signed in!!!</h3>
+        <p>{{accessToken}}</p>
+        <a (click)="signOut()" class="cButton cButtonDark">Sign Out</a>
+    </ng-template>
 </div>
