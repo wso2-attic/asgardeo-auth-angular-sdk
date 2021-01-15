@@ -56,8 +56,7 @@ export class AsgardeoNavigatorService {
         if (this.router) {
             try {
                 return this.router.navigateByUrl(url);
-            } catch (err) {
-                console.warn(err);
+            } catch (e) {
                 return this.router.navigateByUrl("/");
             }
         }
