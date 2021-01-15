@@ -19,7 +19,7 @@
 
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { AsgardeoAuthGuard, AsgardeoSignInRedirectComponent } from "@asgardeo/oidc-angular";
+import { AsgardeoAuthGuard, AsgardeoSignInRedirectComponent } from "@asgardeo/auth-angular";
 import { HomeComponent } from "./home/home.component";
 import { ProfileComponent } from "./profile/profile.component";
 

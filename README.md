@@ -1,7 +1,7 @@
-# [WIP] Asgardeo Angular OIDC SDK & Samples
-Repository containing the source of Asgardeo Angular OIDC SDK & Samples.
+# [WIP] Asgardeo Auth Angular SDK & Samples
+Repository containing the source of Asgardeo Auth Angular SDK & Samples.
 
-<!-- ![Builder](https://github.com/asgardeo/asgardeo-js-oidc-sdk/workflows/Builder/badge.svg) -->
+![Builder](https://github.com/asgardeo/asgardeo-auth-angular-sdk/workflows/Builder/badge.svg)
 [![Stackoverflow](https://img.shields.io/badge/Ask%20for%20help%20on-Stackoverflow-orange)](https://stackoverflow.com/questions/tagged/wso2is)
 [![Join the chat at https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE](https://img.shields.io/badge/Join%20us%20on-Slack-%23e01563.svg)](https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/wso2/product-is/blob/master/LICENSE)
@@ -39,14 +39,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Introduction
 
-Asgardeo's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-js-oidc-sdk).  
+Asgardeo's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-auth-js-sdk).  
 
 Integration with [@angular/router](https://angular.io/api/router) of this SDK will help the developers to add identity management to their Angular Applications in a jiffy.
 
 ## Install
 Install the Angular library from the npm registry.
 ```bash
-npm install --save @asgardeo/oidc-angular
+npm install --save @asgardeo/auth-angular
 ```
 ## Getting Started
 
@@ -57,7 +57,7 @@ import { NgModule } from "@angular/core";
 import { AppComponent } from "./app.component";
 
 // Import Auth Module
-import { AsgardeoAuthModule } from "@asgardeo/oidc-angular";
+import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
 
 @NgModule({
     declarations: [
@@ -83,7 +83,7 @@ export class AppModule { }
 
 ```javascript
 import { Component } from "@angular/core";
-import { AsgardeoAuthService } from "@asgardeo/oidc-angular";
+import { AsgardeoAuthService } from "@asgardeo/auth-angular";
 
 @Component({
     selector: "app-root",
@@ -130,7 +130,7 @@ Pass configuration parameters for authentication into `AsgardeoAuthModule` using
 - `clientID`: The client ID of the OIDC application hosted in the Asgardeo.
 - `serverOrigin`: The origin of the Identity Provider. eg: https://www.asgardeo.io -->
 
-This SDK currently supports following configuration parameters defined in [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-js-oidc-sdk) 
+This SDK currently supports following configuration parameters defined in [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-auth-js-sdk) 
 
 |Attribute| Type | Default Value| Description|
 |:-----|:----|:----|:----|
@@ -143,13 +143,13 @@ This SDK currently supports following configuration parameters defined in [@asga
 |`enablePKCE` (opt.)|`boolean`|`true`|Specifies if a PKCE should be sent with the request for the authorization code. |
 |`prompt` (opt.)|`string`|""|Specifies the prompt type of an OIDC request|
 |`scope` (opt.)|`string[]`|`["openid"]`|Specifies the requested scopes|
-|[`storage`](#storage) (opt.)| `"sessionStorage"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored. |
+|`storage` (opt.)| `"sessionStorage"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored. |
 |`validateIDToken`(opt.)|`boolean`|`true`|Allows you to enable/disable JWT ID token validation after obtaining the ID token.|
 |`clockTolerance`(opt.)|`number`|`60`|Allows you to configure the leeway when validating the id_token.|
 
 ### `AsgardeoAuthService`
 
-In the components, `AsgardeoAuthService` can be used to take advantage of all of supported authentication features provided. This service inherits from the `IdentityClient` of the [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-js-oidc-sdk).
+In the components, `AsgardeoAuthService` can be used to take advantage of all of supported authentication features provided. This service inherits from the `IdentityClient` of the [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-auth-js-sdk).
 
 #### `signIn(): Promise`
 
@@ -164,7 +164,7 @@ This method redirects the user to the route where the authentication flow was in
 Register `AsgardeoSignInRedirectComponent` for an unique route.
 
 ```javascript
-import { AsgardeoSignInRedirectComponent } from "@asgardeo/oidc-angular";
+import { AsgardeoSignInRedirectComponent } from "@asgardeo/auth-angular";
 
 const routes: Routes = [
     { path: "signin/redirect", component: AsgardeoSignInRedirectComponent },
@@ -258,7 +258,7 @@ auth.getUserInfo().then((response) => {
 Add the `canActivate` guard to route as follows.
 
 ```javascript
-import { AsgardeoAuthGuard } from "@asgardeo/oidc-angular";
+import { AsgardeoAuthGuard } from "@asgardeo/auth-angular";
 import { ProfileComponent } from "./profile/profile.component";
 
 const routes: Routes = [
@@ -293,7 +293,7 @@ Please read [Contributing to the Code Base](http://wso2.github.io/) for details 
 
 ### Reporting Issues
 
-We encourage you to report issues, improvements, and feature requests creating [Github Issues](https://github.com/asgardeo/asgardeo-angular-oidc-sdk/issues).
+We encourage you to report issues, improvements, and feature requests creating [Github Issues](https://github.com/asgardeo/asgardeo-auth-angular-sdk/issues).
 
 Important: And please be advised that security issues must be reported to security@wso2com, not as GitHub issues, in order to reach the proper audience. We strongly advise following the WSO2 Security Vulnerability Reporting Guidelines when reporting the security issues.
 

@@ -34,8 +34,8 @@
             "dom"
         ],
         "paths": {
-            "@asgardeo/oidc-angular": [
-                "dist/oidc-angular"
+            "@asgardeo/auth-angular": [
+                "dist/auth-angular"
             ]
         }
     }
