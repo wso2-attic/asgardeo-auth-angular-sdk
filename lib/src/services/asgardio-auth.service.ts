@@ -41,7 +41,7 @@ export class AsgardioAuthService {
         return this.auth.signIn();
     }
 
-    signInWithRedirect(){
+    signInWithRedirect() {
         localStorage.setItem("redirectUrl", this.navigator.getUrl());
         this.navigator.navigateByUrl("signin/redirect");
     }
