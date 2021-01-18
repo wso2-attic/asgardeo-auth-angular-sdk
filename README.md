@@ -1,4 +1,4 @@
-# [WIP] Asgardeo Auth Angular SDK & Samples
+# Asgardeo Auth Angular SDK & Samples
 Repository containing the source of Asgardeo Auth Angular SDK & Samples.
 
 ![Builder](https://github.com/asgardeo/asgardeo-auth-angular-sdk/workflows/Builder/badge.svg)
@@ -7,8 +7,6 @@ Repository containing the source of Asgardeo Auth Angular SDK & Samples.
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/wso2/product-is/blob/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/follow/wso2.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=wso2)
 ---
-
-:construction:&ensp;&ensp;This project is a work in progress. Please do not use this yet!
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
@@ -19,15 +17,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Getting Started](#getting-started)
 - [APIs](#apis)
     - [`AsgardeoAuthModule`](#asgardeoauthmodule)
-        - `Configuration`
+        - [`Configuration`](#configuration)
     - [`AsgardeoAuthService`](#asgardeoauthservice)
-        - `signIn`
-        - `signInWithRedirect`
-        - `signOut`
-        - `getAccessToken`
-        - `getDecodedIDToken`
-        - `getServiceEndpoints`
-        - `getUserInfo`
+        - [`signIn`](#signin-promise)
+        - [`signInWithRedirect`](#signinwithredirect-promise)
+        - [`signOut`](#signout-promise)
+        - [`getAccessToken`](#getaccesstoken-promise)
+        - [`getDecodedIDToken`](#getdecodedidtoken-promise)
+        - [`getServiceEndpoints`](#getserviceendpoints-promise)
+        - [`getUserInfo`](#getuserinfo-promise)
     - [`AsgardeoAuthGuard`](#asgardeoauthguard)
 - [Develop](#develop)
     - [Prerequisites](#prerequisites)
@@ -39,7 +37,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Introduction
 
-Asgardeo's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-auth-js-sdk).  
+Asgardeo's OIDC SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardio/oidc-js](https://github.com/asgardeo/asgardeo-auth-js-sdk).  
 
 Integration with [@angular/router](https://angular.io/api/router) of this SDK will help the developers to add identity management to their Angular Applications in a jiffy.
 
@@ -137,15 +135,15 @@ This SDK currently supports following configuration parameters defined in [@asga
 |`signInRedirectURL`|`string`|""|The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
 |`clientID`| `string` |""|The client ID of the OIDC application hosted in the Asgardeo.|
 |`serverOrigin`|`string`|""|The origin of the Identity Provider. eg: `https://www.asgardeo.io`|
-|`signOutRedirectURL` (opt.)|`string`|`signInRedirectURL` |The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout` |
-|`clientHost` (opt.)|`string`|The origin of the client app obtained using `window.origin`|The hostname of the client app.  eg: `https://contoso.com`|
-|`clientSecret` (opt.)|`string`|""|The client secret of the OIDC application|
-|`enablePKCE` (opt.)|`boolean`|`true`|Specifies if a PKCE should be sent with the request for the authorization code. |
-|`prompt` (opt.)|`string`|""|Specifies the prompt type of an OIDC request|
-|`scope` (opt.)|`string[]`|`["openid"]`|Specifies the requested scopes|
-|`storage` (opt.)| `"sessionStorage"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored. |
-|`validateIDToken`(opt.)|`boolean`|`true`|Allows you to enable/disable JWT ID token validation after obtaining the ID token.|
-|`clockTolerance`(opt.)|`number`|`60`|Allows you to configure the leeway when validating the id_token.|
+|`signOutRedirectURL` (optional)|`string`|`signInRedirectURL` |The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout` |
+|`clientHost` (optional)|`string`|The origin of the client app obtained using `window.origin`|The hostname of the client app.  eg: `https://contoso.com`|
+|`clientSecret` (optional)|`string`|""|The client secret of the OIDC application|
+|`enablePKCE` (optional)|`boolean`|`true`|Specifies if a PKCE should be sent with the request for the authorization code. |
+|`prompt` (optional)|`string`|""|Specifies the prompt type of an OIDC request|
+|`scope` (optional)|`string[]`|`["openid"]`|Specifies the requested scopes|
+|`storage` (optional)| `"sessionStorage"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored. |
+|`validateIDToken`(optional)|`boolean`|`true`|Allows you to enable/disable JWT ID token validation after obtaining the ID token.|
+|`clockTolerance`(optional)|`number`|`60`|Allows you to configure the leeway when validating the id_token.|
 
 ### `AsgardeoAuthService`
 

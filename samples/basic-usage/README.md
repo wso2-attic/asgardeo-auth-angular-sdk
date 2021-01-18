@@ -1,7 +1,5 @@
-# [WIP] Sample Angular Application for Basic Usage
+# Sample Angular Application for Basic Usage
 This sample application is developed to demonstrate basic usage of Asgardeo Auth Angular SDK.
-
-:construction:&ensp;&ensp;This sample application is a work in progress. Please do not use this yet!
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
