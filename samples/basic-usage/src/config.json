@@ -1,7 +1,7 @@
 {
-    "clientID": "<<CLIENT_ID>>",
+    "clientID": "",
     "signInRedirectURL": "https://localhost:5000/signin/redirect",
     "signOutRedirectURL": "https://localhost:5000",
-    "serverOrigin": "<<SERVER_ORIGIN>>",
+    "serverOrigin": "",
     "enablePKCE": true
 }
