@@ -1,40 +1,41 @@
-# Asgardeo Auth Angular SDK & Samples
+<!-- omit in toc -->
+# Asgardeo Auth Angular SDK & Samples 
+
 Repository containing the source of Asgardeo Auth Angular SDK & Samples.
 
 ![Builder](https://github.com/asgardeo/asgardeo-auth-angular-sdk/workflows/Builder/badge.svg)
 [![Stackoverflow](https://img.shields.io/badge/Ask%20for%20help%20on-Stackoverflow-orange)](https://stackoverflow.com/questions/tagged/wso2is)
 [![Join the chat at https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE](https://img.shields.io/badge/Join%20us%20on-Slack-%23e01563.svg)](https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/wso2/product-is/blob/master/LICENSE)
-[![Twitter](https://img.shields.io/twitter/follow/wso2.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=wso2)
----
+[![Twitter](https://img.shields.io/twitter/follow/wso2.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=wso2) 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
-
+<!-- omit in toc -->
 ## Table of Contents
 
-  - [Introduction](#introduction)
-  - [Install](#install)
-  - [Getting Started](#getting-started)
-  - [Try Out the Sample Apps](#try-out-the-sample-apps)
-  - [APIs](#apis)
-    - [`AsgardeoAuthModule`](#asgardeoauthmodule)
-      - [`Configuration`](#configuration)
-    - [`AsgardeoAuthService`](#asgardeoauthservice)
-      - [`signIn(): Promise`](#signin-promise)
-      - [`signInWithRedirect(): Promise`](#signinwithredirect-promise)
-      - [`signOut(): Promise`](#signout-promise)
-      - [`getAccessToken(): Promise`](#getaccesstoken-promise)
-      - [`getDecodedIDToken(): Promise`](#getdecodedidtoken-promise)
-      - [`getServiceEndpoints(): Promise`](#getserviceendpoints-promise)
-      - [`getUserInfo(): Promise`](#getuserinfo-promise)
-    - [`AsgardeoAuthGuard`](#asgardeoauthguard)
-  - [Develop](#develop)
-    - [Prerequisites](#prerequisites)
-    - [Installing Dependencies](#installing-dependencies)
-  - [Contribute](#contribute)
-    - [Reporting Issues](#reporting-issues)
-  - [License](#license)
+- [Introduction](#introduction)
+- [Install](#install)
+- [Getting Started](#getting-started)
+- [Try Out the Sample Apps](#try-out-the-sample-apps)
+- [APIs](#apis)
+  - [`AsgardeoAuthModule`](#asgardeoauthmodule)
+    - [`Configuration`](#configuration)
+  - [`AsgardeoAuthService`](#asgardeoauthservice)
+    - [`signIn(): Promise`](#signin-promise)
+    - [`signInWithRedirect(): Promise`](#signinwithredirect-promise)
+    - [`signOut(): Promise`](#signout-promise)
+    - [`getAccessToken(): Promise`](#getaccesstoken-promise)
+    - [`getDecodedIDToken(): Promise`](#getdecodedidtoken-promise)
+    - [`getServiceEndpoints(): Promise`](#getserviceendpoints-promise)
+    - [`getUserInfo(): Promise`](#getuserinfo-promise)
+  - [`AsgardeoAuthGuard`](#asgardeoauthguard)
+- [Develop](#develop)
+  - [Prerequisites](#prerequisites)
+  - [Installing Dependencies](#installing-dependencies)
+- [Contribute](#contribute)
+  - [Reporting Issues](#reporting-issues)
+- [License](#license)
 
 ## Introduction
 
@@ -49,6 +50,7 @@ npm install --save @asgardeo/auth-angular
 ```
 ## Getting Started
 
+<!-- omit in toc -->
 ### 1. Import `AsgardeoAuthModule` and Provide Configuration Parameters
 ```javascript
 import { BrowserModule } from "@angular/platform-browser";
@@ -78,6 +80,7 @@ import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
 export class AppModule { }
 ```
 
+<!-- omit in toc -->
 ### 2. Use `AsgardeoAuthService` for Authentication Functions
 
 ```javascript
@@ -103,6 +106,7 @@ export class AppComponent {
 
 [Learn more](#apis).
 
+<!-- omit in toc -->
 ### 3. Helpful Links
 - Getting started with Angular
 
@@ -113,6 +117,7 @@ export class AppComponent {
 
 ## Try Out the Sample Apps
 
+<!-- omit in toc -->
 ### 1. Create a Service Provider
 
 Before trying out the sample apps, you need to a create a service provider in the Identity Server.
@@ -135,6 +140,7 @@ Before trying out the sample apps, you need to a create a service provider in th
 
 9. Enable CORS for the client application by following this guide (https://is.docs.wso2.com/en/5.11.0/learn/cors/).
 
+<!-- omit in toc -->
 ### 2. Running the sample apps
 
 Build the apps by running the following command at the root directory.
@@ -143,6 +149,7 @@ Build the apps by running the following command at the root directory.
 npm install && npm start
 ```
 
+<!-- omit in toc -->
 #### a. Basic Usage
 
 The *Callback URLs* for this app,

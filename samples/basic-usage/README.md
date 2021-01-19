@@ -1,14 +1,16 @@
+<!-- omit in toc -->
 # Sample Angular Application for Basic Usage
 This sample application is developed to demonstrate basic usage of Asgardeo Auth Angular SDK.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
+<!-- omit in toc -->
 ## Table of Contents
 
-  - [Instructions](#instructions)
-  - [Contribute](#contribute)
-    - [Reporting Issues](#reporting-issues)
-  - [License](#license)
+- [Instructions](#instructions)
+- [Contribute](#contribute)
+  - [Reporting Issues](#reporting-issues)
+- [License](#license)
 
 ## Instructions
 
@@ -18,12 +20,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 3. Paste the copied `OAuth Client Key` in front of the `"clientID"`. You will be replacing a value called `<<CLIENT_ID>>`
 
+
 ```json
 {
     "clientID": "<<CLIENT_ID>>",
     "signInRedirectURL": "https://localhost:5000/signin/redirect",
     "signOutRedirectURL": "https://localhost:5000",
-    "serverOrigin": "<<SERVER_ORIGIN>>",
+    "serverOrigin": "https://localhost:9443",
     "enablePKCE": true
 }
 ```
