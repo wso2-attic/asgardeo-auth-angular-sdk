@@ -10,7 +10,7 @@ Repository containing the source of Asgardeo Auth Angular SDK & Samples.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
-
+<!-- omit in toc -->
 ## Table of Contents
 
 - [Introduction](#introduction)

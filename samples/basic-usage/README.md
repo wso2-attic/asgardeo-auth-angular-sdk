@@ -22,6 +22,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 4. Paste the copied `OAuth Client Key` in front of the `"clientID"`. You will be replacing a value called `<<CLIENT_ID>>`
 
+
 ```json
 {
     "clientID": "<<CLIENT_ID>>",
