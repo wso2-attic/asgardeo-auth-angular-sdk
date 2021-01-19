@@ -10,30 +10,31 @@ Repository containing the source of Asgardeo Auth Angular SDK & Samples.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
+
 ## Table of Contents
 
-- [Introduction](#introduction)
-- [Install](#install)
-- [Getting Started](#getting-started)
-- [APIs](#apis)
+  - [Introduction](#introduction)
+  - [Install](#install)
+  - [Getting Started](#getting-started)
+  - [Try Out the Sample Apps](#try-out-the-sample-apps)
+  - [APIs](#apis)
     - [`AsgardeoAuthModule`](#asgardeoauthmodule)
-        - [`Configuration`](#configuration)
+      - [`Configuration`](#configuration)
     - [`AsgardeoAuthService`](#asgardeoauthservice)
-        - [`signIn`](#signin-promise)
-        - [`signInWithRedirect`](#signinwithredirect-promise)
-        - [`signOut`](#signout-promise)
-        - [`getAccessToken`](#getaccesstoken-promise)
-        - [`getDecodedIDToken`](#getdecodedidtoken-promise)
-        - [`getServiceEndpoints`](#getserviceendpoints-promise)
-        - [`getUserInfo`](#getuserinfo-promise)
+      - [`signIn(): Promise`](#signin-promise)
+      - [`signInWithRedirect(): Promise`](#signinwithredirect-promise)
+      - [`signOut(): Promise`](#signout-promise)
+      - [`getAccessToken(): Promise`](#getaccesstoken-promise)
+      - [`getDecodedIDToken(): Promise`](#getdecodedidtoken-promise)
+      - [`getServiceEndpoints(): Promise`](#getserviceendpoints-promise)
+      - [`getUserInfo(): Promise`](#getuserinfo-promise)
     - [`AsgardeoAuthGuard`](#asgardeoauthguard)
-- [Develop](#develop)
+  - [Develop](#develop)
     - [Prerequisites](#prerequisites)
     - [Installing Dependencies](#installing-dependencies)
-- [Contribute](#contribute)
+  - [Contribute](#contribute)
     - [Reporting Issues](#reporting-issues)
-- [License](#license)
-
+  - [License](#license)
 
 ## Introduction
 
@@ -142,11 +143,11 @@ Build the apps by running the following command at the root directory.
 npm install && npm start
 ```
 
-#### Basic Usage
+#### a. Basic Usage
 
 The *Callback URLs* for this app,
-- `http://localhost:5000`
-- `http://localhost:5000/signin/redirect`
+- `https://localhost:5000`
+- `https://localhost:5000/signin/redirect`
 
 You can try out the Basic Usage App from the [samples/basic-usage](/samples/basic-usage). The instructions to run the app can be found [here](/samples/basic-usage/README.md)
 
@@ -168,20 +169,20 @@ Pass configuration parameters for authentication into `AsgardeoAuthModule` using
 
 This SDK currently supports following configuration parameters defined in [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-auth-js-sdk) 
 
-|Attribute| Type | Default Value| Description|
-|:-----|:----|:----|:----|
-|`signInRedirectURL`|`string`|""|The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
-|`clientID`| `string` |""|The client ID of the OIDC application hosted in the Asgardeo.|
-|`serverOrigin`|`string`|""|The origin of the Identity Provider. eg: `https://www.asgardeo.io`|
-|`signOutRedirectURL` (optional)|`string`|`signInRedirectURL` |The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout` |
-|`clientHost` (optional)|`string`|The origin of the client app obtained using `window.origin`|The hostname of the client app.  eg: `https://contoso.com`|
-|`clientSecret` (optional)|`string`|""|The client secret of the OIDC application|
-|`enablePKCE` (optional)|`boolean`|`true`|Specifies if a PKCE should be sent with the request for the authorization code. |
-|`prompt` (optional)|`string`|""|Specifies the prompt type of an OIDC request|
-|`scope` (optional)|`string[]`|`["openid"]`|Specifies the requested scopes|
-|`storage` (optional)| `"sessionStorage"`, `"localStorage"`|`"sessionStorage"`| The storage medium where the session information such as the access token should be stored. |
-|`validateIDToken`(optional)|`boolean`|`true`|Allows you to enable/disable JWT ID token validation after obtaining the ID token.|
-|`clockTolerance`(optional)|`number`|`60`|Allows you to configure the leeway when validating the id_token.|
+| Attribute                       | Type                                 | Default Value                                               | Description                                                                                       |
+| :------------------------------ | :----------------------------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
+| `signInRedirectURL`             | `string`                             | ""                                                          | The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
+| `clientID`                      | `string`                             | ""                                                          | The client ID of the OIDC application hosted in the Asgardeo.                                     |
+| `serverOrigin`                  | `string`                             | ""                                                          | The origin of the Identity Provider. eg: `https://www.asgardeo.io`                                |
+| `signOutRedirectURL` (optional) | `string`                             | `signInRedirectURL`                                         | The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout`                |
+| `clientHost` (optional)         | `string`                             | The origin of the client app obtained using `window.origin` | The hostname of the client app.  eg: `https://contoso.com`                                        |
+| `clientSecret` (optional)       | `string`                             | ""                                                          | The client secret of the OIDC application                                                         |
+| `enablePKCE` (optional)         | `boolean`                            | `true`                                                      | Specifies if a PKCE should be sent with the request for the authorization code.                   |
+| `prompt` (optional)             | `string`                             | ""                                                          | Specifies the prompt type of an OIDC request                                                      |
+| `scope` (optional)              | `string[]`                           | `["openid"]`                                                | Specifies the requested scopes                                                                    |
+| `storage` (optional)            | `"sessionStorage"`, `"localStorage"` | `"sessionStorage"`                                          | The storage medium where the session information such as the access token should be stored.       |
+| `validateIDToken`(optional)     | `boolean`                            | `true`                                                      | Allows you to enable/disable JWT ID token validation after obtaining the ID token.                |
+| `clockTolerance`(optional)      | `number`                             | `60`                                                        | Allows you to configure the leeway when validating the id_token.                                  |
 
 ### `AsgardeoAuthService`
 
@@ -251,14 +252,14 @@ auth.getDecodedIDToken().then((idToken) => {
 
 This method returns a promise that resolves with an object containing the OIDC endpoints obtained from the `.well-known` endpoint. The object contains the following attributes.
 
-|Attribute| Description|
-|---|--|
-|`"authorize"`| The endpoint to which the authorization request should be sent. |
-|`"jwks"`| The endpoint from which JSON Web Key Set can be obtained.|
-|`"oidcSessionIFrame"`| The URL of the page that should be loaded in an IFrame to get session information. |
-|`"revoke"`| The endpoint to which the revoke-token request should be sent. |
-|`"token"`| The endpoint to which the token request should be sent. |
-|`"wellKnown"`|The well-known endpoint from which OpenID endpoints of the server can be obtained. |
+| Attribute             | Description                                                                        |
+| --------------------- | ---------------------------------------------------------------------------------- |
+| `"authorize"`         | The endpoint to which the authorization request should be sent.                    |
+| `"jwks"`              | The endpoint from which JSON Web Key Set can be obtained.                          |
+| `"oidcSessionIFrame"` | The URL of the page that should be loaded in an IFrame to get session information. |
+| `"revoke"`            | The endpoint to which the revoke-token request should be sent.                     |
+| `"token"`             | The endpoint to which the token request should be sent.                            |
+| `"wellKnown"`         | The well-known endpoint from which OpenID endpoints of the server can be obtained. |
 
 ```javascript
 auth.getServiceEndpoints().then((endpoints) => {
@@ -272,12 +273,12 @@ auth.getServiceEndpoints().then((endpoints) => {
 
 This method returns a promise that resolves with the information about the authenticated user as an object. The object has the following attributes.
 
-|Attribute| Type | Description|
-|:--|:--|:--|
-|`email`|`string`|The email address of the user|
-|`username`|`string`| The username of the user|
-|`displayName`| `string`| The display name of the user|
-`allowedScopes`|`string`| The scopes the user has authorized the client to access|
+| Attribute       | Type     | Description                                             |
+| :-------------- | :------- | :------------------------------------------------------ |
+| `email`         | `string` | The email address of the user                           |
+| `username`      | `string` | The username of the user                                |
+| `displayName`   | `string` | The display name of the user                            |
+| `allowedScopes` | `string` | The scopes the user has authorized the client to access |
 
 ```javascript
 auth.getUserInfo().then((response) => {
