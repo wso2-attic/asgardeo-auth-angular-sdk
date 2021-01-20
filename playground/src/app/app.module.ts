@@ -19,8 +19,7 @@
 
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { AsgardeoAuthModule, AsgardeoConfigInterface } from "@asgardeo/auth-angular";
-import { default as authConfig } from "../../config.json";
+import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
@@ -35,7 +34,13 @@ import { ProfileComponent } from "./profile/profile.component";
     imports: [
         BrowserModule,
         AppRoutingModule,
-        AsgardeoAuthModule.forRoot(authConfig as AsgardeoConfigInterface)
+        AsgardeoAuthModule.forRoot({
+            clientID: "",
+            signInRedirectURL: "https://localhost:5000/signin/redirect",
+            signOutRedirectURL: "https://localhost:5000",
+            serverOrigin: "",
+            enablePKCE: true
+        })
     ],
     providers: [],
     bootstrap: [AppComponent]

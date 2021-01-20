@@ -31,10 +31,10 @@ export class ProfileComponent {
     userInfo: any;
 
     constructor(private auth: AsgardeoAuthService) {
-        this.isAuthenticated = this.auth.isAuthenticated();
+        this.auth.isAuthenticated().then((bool) => this.isAuthenticated = bool);
         if (this.isAuthenticated) {
             this.auth.getAccessToken().then((token) => this.accessToken = token);
-            auth.getUserInfo().then((value) => this.userInfo = value);
+            auth.getBasicUserInfo().then((value) => this.userInfo = value);
         }
 
     }

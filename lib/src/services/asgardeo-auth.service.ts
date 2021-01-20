@@ -18,7 +18,7 @@
  */
 
 import { Inject, Injectable } from "@angular/core";
-import { DecodedIdTokenPayloadInterface, Hooks, IdentityClient, ServiceResourcesType, UserInfo } from "@asgardio/oidc-js";
+import { AsgardeoSPAClient, BasicUserInfo, DecodedIDTokenPayload, Hooks, OIDCEndpoints } from "@asgardeo/auth-spa";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
@@ -27,13 +27,12 @@ import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
     providedIn: "root"
 })
 export class AsgardeoAuthService {
-    private auth: IdentityClient;
     private signInRedirectUrl: string;
 
     constructor(
-    @Inject(ASGARDEO_CONFIG) authConfig: AsgardeoConfigInterface,
-                             private navigator: AsgardeoNavigatorService) {
-        this.auth = IdentityClient.getInstance();
+        @Inject(ASGARDEO_CONFIG) authConfig: AsgardeoConfigInterface,
+        private navigator: AsgardeoNavigatorService,
+        private auth: AsgardeoSPAClient) {
         this.auth.initialize(authConfig)
             .then(() => this.signInRedirectUrl = navigator.getRouteWithoutParams(authConfig.signInRedirectURL))
             .catch((error) => console.warn("Failed to Initialize - " + error));
@@ -47,14 +46,8 @@ export class AsgardeoAuthService {
         });
     }
 
-    isAuthenticated(): boolean {
-        // *** This is a temporary function ***
-        if (sessionStorage.getItem("isAuthenticated") === "true") {
-            return true;
-        }
-        else {
-            return false;
-        }
+    getBasicUserInfo(): Promise<BasicUserInfo> {
+        return this.auth.getBasicUserInfo();
     }
 
     signIn(): Promise<any> {
@@ -70,23 +63,27 @@ export class AsgardeoAuthService {
         return this.auth.signOut();
     }
 
+    revokeAccessToken(): Promise<boolean> {
+        return this.auth.revokeAccessToken();
+    }
+
+    getOIDCServiceEndpoints(): Promise<OIDCEndpoints> {
+        return this.auth.getOIDCServiceEndpoints();
+    }
+
+    getDecodedIDToken(): Promise<DecodedIDTokenPayload> {
+        return this.auth.getDecodedIDToken();
+    }
+
     getAccessToken(): Promise<string> {
         return this.auth.getAccessToken();
     }
 
-    getDecodedIDToken(): Promise<DecodedIdTokenPayloadInterface> {
-        return this.auth.getDecodedIDToken();
+    refreshAccessToken(): Promise<BasicUserInfo> {
+        return this.auth.refreshAccessToken();
     }
 
-    getServiceEndpoints(): Promise<ServiceResourcesType> {
-        return this.auth.getServiceEndpoints();
-    }
-
-    getUserInfo(): Promise<UserInfo> {
-        return this.auth.getUserInfo();
-    }
-
-    refreshToken(): Promise<string> {
-        return this.auth.refreshToken();
+    isAuthenticated(): Promise<boolean> {
+        return this.auth.isAuthenticated();
     }
 }

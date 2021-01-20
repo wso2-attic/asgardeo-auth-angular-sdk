@@ -29,7 +29,7 @@ export class HomeComponent {
     isAuthenticated: boolean;
 
     constructor(private auth: AsgardeoAuthService) {
-        this.isAuthenticated = this.auth.isAuthenticated();
+        this.auth.isAuthenticated().then((bool) => this.isAuthenticated = bool);
     }
 
     signIn(): void {

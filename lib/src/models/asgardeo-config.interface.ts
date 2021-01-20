@@ -16,12 +16,12 @@
  * under the License.
  *
  */
-import { ConfigInterface, WebWorkerConfigInterface } from "@asgardio/oidc-js";
+import { AuthClientConfig } from "@asgardeo/auth-spa";
 
 /**
  * SDK client config parameters
  */
-export type AsgardeoConfigInterface = ConfigInterface | WebWorkerConfigInterface;
+export type AsgardeoConfigInterface = AuthClientConfig;
 
 // export type AsgardeoConfigInterface = any;
 
