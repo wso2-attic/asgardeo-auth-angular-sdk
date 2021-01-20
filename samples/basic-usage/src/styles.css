@@ -17,12 +17,10 @@
  *
  */
 
-
 /* You can add global styles to this file, and also import other style files */
 
 @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
-html,
-body {
+html, body {
     height: 100vh;
 }
 
@@ -33,7 +31,7 @@ body {
     display: -ms-flexbox;
     display: -webkit-box;
     display: flex;
-    font-family: 'Roboto', sans-serif !important;
+    font-family: "Roboto", sans-serif !important;
     justify-content: center;
     text-align: center;
     color: white;
@@ -46,8 +44,8 @@ app-root {
 
 @font-face {
     font-display: swap;
-    font-family: 'Roboto';
+    font-family: "Roboto";
     font-style: normal;
     font-weight: 500;
-    src: url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4.woff2) format('woff2');
+    src: url(https://fonts.gstatic.com/s/roboto/v20/KFOlCnqEu92Fr1MmEU9fBBc4.woff2) format("woff2");
 }
