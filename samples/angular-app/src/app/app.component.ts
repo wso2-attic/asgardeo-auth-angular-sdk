@@ -37,7 +37,6 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         if (this.isAuthenticated) { this.auth.signIn(); }
-        console.log(this.auth.getUserInfo()["__zone_symbol__value"]);
     }
 
     getClientIdStatus() {
