@@ -15,10 +15,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Instructions
 
 1. Before getting started with running this app, make sure you have followed the common instructions in the [Try Out the Sample Apps](../../README.md#try-out-the-sample-apps) section.
+   
+2. Download and extract the zip file from [here](https://github.com/asgardeo/asgardeo-auth-angular-sdk/releases/latest/download/basic-usage.zip).
 
 3. Open the [src/config.json](src/config.json) file.
 
-3. Paste the copied `OAuth Client Key` in front of the `"clientID"`. You will be replacing a value called `<<CLIENT_ID>>`
+4. Paste the copied `OAuth Client Key` in front of the `"clientID"`. You will be replacing a value called `<<CLIENT_ID>>`
 
 
 ```json
@@ -31,13 +33,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 }
 ```
 
-4. Build the apps by running the following command at the root directory.
+5. Build the apps by running the following command at the root directory.
 
 ```bash
 npm install && npm start
 ```
 
-5. Navigate to https://localhost:5000
+6. Navigate to https://localhost:5000
 
 
 ## Contribute

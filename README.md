@@ -1,4 +1,3 @@
-<!-- omit in toc -->
 # Asgardeo Auth Angular SDK & Samples 
 
 Repository containing the source of Asgardeo Auth Angular SDK & Samples.
@@ -11,7 +10,6 @@ Repository containing the source of Asgardeo Auth Angular SDK & Samples.
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
-<!-- omit in toc -->
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -19,17 +17,6 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Getting Started](#getting-started)
 - [Try Out the Sample Apps](#try-out-the-sample-apps)
 - [APIs](#apis)
-  - [`AsgardeoAuthModule`](#asgardeoauthmodule)
-    - [`Configuration`](#configuration)
-  - [`AsgardeoAuthService`](#asgardeoauthservice)
-    - [`signIn(): Promise`](#signin-promise)
-    - [`signInWithRedirect(): Promise`](#signinwithredirect-promise)
-    - [`signOut(): Promise`](#signout-promise)
-    - [`getAccessToken(): Promise`](#getaccesstoken-promise)
-    - [`getDecodedIDToken(): Promise`](#getdecodedidtoken-promise)
-    - [`getServiceEndpoints(): Promise`](#getserviceendpoints-promise)
-    - [`getUserInfo(): Promise`](#getuserinfo-promise)
-  - [`AsgardeoAuthGuard`](#asgardeoauthguard)
 - [Develop](#develop)
   - [Prerequisites](#prerequisites)
   - [Installing Dependencies](#installing-dependencies)
@@ -43,15 +30,63 @@ Asgardeo's Auth SDK for Angular allows Angular Applications to use OIDC or OAuth
 
 Integration with [@angular/router](https://angular.io/api/router) of this SDK will help the developers to add identity management to their Angular Applications in a jiffy.
 
-## Install
+## Try Out the Sample Apps
+
+### 1. Create an Application in Your Identity Provider
+
+Before trying out the sample apps, you need to a create an application in the identity provider
+
+#### a. WSO2 Identity Server - Using Management Console
+
+1. So, navigate to `https://localhost:9443/carbon"` and click on `Add` under `Service Providers` in the left-hand menu panel.
+
+2. Enter `Sample` as the name of the app and click on `Register`.
+
+3. Then, expand the `Inbound Authentication Configuration` section. Under that, expand `OAuth/OpenID Connect Configuration` section and click on `Configure`.
+
+4. Under `Allowed Grant Types` uncheck everything except `Code` and `Refresh Token`.
+
+5. Enter the Callback URL(s). You can find the relevant callback URL(s) of each sample app in the [Running the sample apps](#2.-running-the-sample-apps) section.
+
+6. Check `Allow authentication without the client secret`.
+
+7. Click `Add` at the bottom.
+
+8. Copy the `OAuth Client Key`.
+
+9. Enable CORS for the client application by following this guide (https://is.docs.wso2.com/en/5.11.0/learn/cors/).
+
+#### a. WSO2 Identity Server - Using Management Console
+
+### 2. Running the sample apps
+
+Build the apps by running the following command at the root directory.
+
+```bash
+npm install && npm start
+```
+
+#### a. Basic Usage
+
+The *Callback URLs* for this app,
+- `https://localhost:5000`
+- `https://localhost:5000/signin/redirect`
+
+You can try out the Basic Usage App from the [samples/basic-usage](/samples/basic-usage). The instructions to run the app can be found [here](/samples/basic-usage/README.md)
+
+## Getting Started
+
+### 1. Installing the Package
+
 Install the Angular library from the npm registry.
 ```bash
 npm install --save @asgardeo/auth-angular
 ```
-## Getting Started
 
-<!-- omit in toc -->
-### 1. Import `AsgardeoAuthModule` and Provide Configuration Parameters
+### 2. Import `AsgardeoAuthModule` and Provide Configuration Parameters
+
+<!-- Description Here -->
+
 ```javascript
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
@@ -80,8 +115,9 @@ import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
 export class AppModule { }
 ```
 
-<!-- omit in toc -->
-### 2. Use `AsgardeoAuthService` for Authentication Functions
+### 3. Use `AsgardeoAuthService` for Authentication Functions
+
+<!-- Description Here -->
 
 ```javascript
 import { Component } from "@angular/core";
@@ -106,7 +142,7 @@ export class AppComponent {
 
 [Learn more](#apis).
 
-<!-- omit in toc -->
+
 ### 3. Helpful Links
 - Getting started with Angular
 
@@ -115,48 +151,6 @@ export class AppComponent {
 
 - WSO2 Identity Server [Docs](https://is.docs.wso2.com/en/latest/)
 
-## Try Out the Sample Apps
-
-<!-- omit in toc -->
-### 1. Create a Service Provider
-
-Before trying out the sample apps, you need to a create a service provider in the Identity Server.
-
-1. So, navigate to `https://localhost:9443/carbon" and click on `Add`under`Service Providers` in the left-hand menu panel.
-
-2. Enter `Sample` as the name of the app and click on `Register`.
-
-3. Then, expand the `Inbound Authentication Configuration` section. Under that, expand `OAuth/OpenID Connect Configuration` section and click on `Configure`.
-
-4. Under `Allowed Grant Types` uncheck everything except `Code` and `Refresh Token`.
-
-5. Enter the Callback URL(s). You can find the relevant callback URL(s) of each sample app in the [Running the sample apps](#2.-running-the-sample-apps) section.
-
-6. Check `Allow authentication without the client secret`.
-
-7. Click `Add` at the bottom.
-
-8. Copy the `OAuth Client Key`.
-
-9. Enable CORS for the client application by following this guide (https://is.docs.wso2.com/en/5.11.0/learn/cors/).
-
-<!-- omit in toc -->
-### 2. Running the sample apps
-
-Build the apps by running the following command at the root directory.
-
-```bash
-npm install && npm start
-```
-
-<!-- omit in toc -->
-#### a. Basic Usage
-
-The *Callback URLs* for this app,
-- `https://localhost:5000`
-- `https://localhost:5000/signin/redirect`
-
-You can try out the Basic Usage App from the [samples/basic-usage](/samples/basic-usage). The instructions to run the app can be found [here](/samples/basic-usage/README.md)
 
 ## APIs
 
