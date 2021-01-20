@@ -56,8 +56,6 @@ Before trying out the sample apps, you need to a create an application in the id
 
 9. Enable CORS for the client application by following this guide (https://is.docs.wso2.com/en/5.11.0/learn/cors/).
 
-#### a. WSO2 Identity Server - Using Management Console
-
 ### 2. Running the sample apps
 
 Build the apps by running the following command at the root directory.
@@ -170,20 +168,20 @@ Pass configuration parameters for authentication into `AsgardeoAuthModule` using
 
 This SDK currently supports following configuration parameters defined in [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-auth-js-sdk) 
 
-| Attribute                       | Type                                 | Default Value                                               | Description                                                                                       |
-| :------------------------------ | :----------------------------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------------------------------ |
-| `signInRedirectURL`             | `string`                             | ""                                                          | The URL to redirect to after the user authorizes the client app. eg: `https://conotoso.com/login` |
-| `clientID`                      | `string`                             | ""                                                          | The client ID of the OIDC application hosted in the Asgardeo.                                     |
-| `serverOrigin`                  | `string`                             | ""                                                          | The origin of the Identity Provider. eg: `https://www.asgardeo.io`                                |
-| `signOutRedirectURL` (optional) | `string`                             | `signInRedirectURL`                                         | The URL to redirect to after the user signs out. eg: `https://conotoso.com/logout`                |
-| `clientHost` (optional)         | `string`                             | The origin of the client app obtained using `window.origin` | The hostname of the client app.  eg: `https://contoso.com`                                        |
-| `clientSecret` (optional)       | `string`                             | ""                                                          | The client secret of the OIDC application                                                         |
-| `enablePKCE` (optional)         | `boolean`                            | `true`                                                      | Specifies if a PKCE should be sent with the request for the authorization code.                   |
-| `prompt` (optional)             | `string`                             | ""                                                          | Specifies the prompt type of an OIDC request                                                      |
-| `scope` (optional)              | `string[]`                           | `["openid"]`                                                | Specifies the requested scopes                                                                    |
-| `storage` (optional)            | `"sessionStorage"`, `"localStorage"` | `"sessionStorage"`                                          | The storage medium where the session information such as the access token should be stored.       |
-| `validateIDToken`(optional)     | `boolean`                            | `true`                                                      | Allows you to enable/disable JWT ID token validation after obtaining the ID token.                |
-| `clockTolerance`(optional)      | `number`                             | `60`                                                        | Allows you to configure the leeway when validating the id_token.                                  |
+| Attribute                       | Type                                 | Default Value                                               | Description                                                                                 |
+| :------------------------------ | :----------------------------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------------------------ |
+| `signInRedirectURL`             | `string`                             | ""                                                          | The URL to redirect to after the user authorizes the client app.                            |
+| `clientID`                      | `string`                             | ""                                                          | The client ID of the OIDC application hosted in the Asgardeo.                               |
+| `serverOrigin`                  | `string`                             | ""                                                          | The origin of the Identity Provider.                                                        |
+| `signOutRedirectURL` (optional) | `string`                             | `signInRedirectURL`                                         | The URL to redirect to after the user signs out.                                            |
+| `clientHost` (optional)         | `string`                             | The origin of the client app obtained using `window.origin` | The hostname of the client app.                                                             |
+| `clientSecret` (optional)       | `string`                             | ""                                                          | The client secret of the OIDC application                                                   |
+| `enablePKCE` (optional)         | `boolean`                            | `true`                                                      | Specifies if a PKCE should be sent with the request for the authorization code.             |
+| `prompt` (optional)             | `string`                             | ""                                                          | Specifies the prompt type of an OIDC request                                                |
+| `scope` (optional)              | `string[]`                           | `["openid"]`                                                | Specifies the requested scopes                                                              |
+| `storage` (optional)            | `"sessionStorage"`, `"localStorage"` | `"sessionStorage"`                                          | The storage medium where the session information such as the access token should be stored. |
+| `validateIDToken`(optional)     | `boolean`                            | `true`                                                      | Allows you to enable/disable JWT ID token validation after obtaining the ID token.          |
+| `clockTolerance`(optional)      | `number`                             | `60`                                                        | Allows you to configure the leeway when validating the id_token.                            |
 
 ### `AsgardeoAuthService`
 
