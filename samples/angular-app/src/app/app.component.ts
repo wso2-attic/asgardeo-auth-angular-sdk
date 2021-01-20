@@ -27,7 +27,6 @@ import { default as authConfig } from "../config.json";
     styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit {
-    title = "angular-app";
     isAuthenticated: boolean;
     isConfigured: boolean;
 
