@@ -17,8 +17,13 @@
 
 -->
 
-<img src="/assets/asgardeo-logo.png" class="logo-image" />
+<img
+    src="/assets/asgardeo-logo.png"
+    class="logo-image"
+/>
+
 <div class="container">
+
     <div *ngIf="isConfigured; then configured else notConfigured"></div>
 
     <ng-template #notConfigured>
@@ -32,7 +37,6 @@
     </ng-template>
 
     <ng-template #configured>
-
         <div class="header-title">
             <h1>
                 Angular SPA Authentication Sample <br /> (OIDC - Authorization Code Grant)
@@ -40,44 +44,63 @@
         </div>
 
         <div class="content">
-            <div *ngIf="isAuthenticated; then signedIn else notSignedIn"></div>
+
+            <div *ngIf="isInitLogin; then signedIn else notSignedIn"></div>
 
             <ng-template #notSignedIn>
-
                 <div class="home-image">
-                    <img src="/assets/angular-logo.png" class="logo" />
+                    <img
+                        src="/assets/angular-logo.png"
+                        class="logo"
+                    />
                 </div>
-
                 <h3>
                     Sample demo to showcase how authenticate a simple client side application using <br />
                     <b>Asgardeo</b> with the
-                    <a href="https://github.com/asgardeo/asgardeo-auth-angular-sdk" target="_blank">
+                    <a
+                        href="https://github.com/asgardeo/asgardeo-auth-angular-sdk"
+                        target="_blank"
+                    >
                         Asgardeo Auth Angular SDK</a>
                 </h3>
-
-                <button class="btn primary" (click)="handleLogin()">Login</button>
-
+                <button
+                    class="btn primary"
+                    (click)="handleLogin()"
+                >Login</button>
             </ng-template>
 
             <ng-template #signedIn>
 
-                <h2>Authentication response</h2>
+                <div *ngIf="userInfo != undefined || idToken != undefined; then defined else notDefined"></div>
 
-                <div class="json">
-                    <ngx-json-viewer [json]="userInfo()"></ngx-json-viewer>
-                </div>
+                <ng-template #notDefined>
+                    <div>Loading ...</div>
+                </ng-template>
 
-                <h2 class="mb-0 mt-4">ID token</h2>
+                <ng-template #defined>
+                    <h2>Authentication response</h2>
+                    <div class="json">
+                        <ngx-json-viewer [json]="userInfo"></ngx-json-viewer>
+                    </div>
 
-                <div class="json">
-                    <h5><b>Decoded:</b> Payload</h5>
-                    <ngx-json-viewer [json]="idToken()"></ngx-json-viewer>
-                </div>
+                    <h2 class="mb-0 mt-4">ID token</h2>
+                    <div class="json">
+                        <h5><b>Decoded:</b> Payload</h5>
+                        <ngx-json-viewer [json]="idToken"></ngx-json-viewer>
+                    </div>
 
-                <button class="btn primary mt-4" (click)="handleLogout()">Logout</button>
+                    <button
+                        class="btn primary mt-4"
+                        (click)="handleLogout()"
+                    >Logout</button>
+                </ng-template>
+
             </ng-template>
         </div>
     </ng-template>
-
 </div>
-<img src="/assets/footer.png" class="footer-image" />
+
+<img
+    src="/assets/footer.png"
+    class="footer-image"
+/>
