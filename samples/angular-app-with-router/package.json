@@ -1,5 +1,5 @@
 {
-    "name": "basic-usage",
+    "name": "angular-app-with-router",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
@@ -19,6 +19,7 @@
         "@angular/platform-browser-dynamic": "~10.2.0",
         "@angular/router": "~10.2.0",
         "@asgardeo/auth-angular": "0.1.0",
+        "ngx-json-viewer": "^3.0.2",
         "rxjs": "~6.6.0",
         "tslib": "^2.0.0",
         "zone.js": "~0.10.2"

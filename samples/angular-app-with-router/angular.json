@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "basic-usage": {
+        "angular-app-with-router": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:class": {
@@ -38,7 +38,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/basic-usage",
+                        "outputPath": "dist/angular-app-with-router",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -88,20 +88,20 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "basic-usage:build",
+                        "browserTarget": "angular-app-with-router:build",
                         "port": 5000,
                         "ssl": true
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "basic-usage:build:production"
+                            "browserTarget": "angular-app-with-router:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "basic-usage:build"
+                        "browserTarget": "angular-app-with-router:build"
                     }
                 },
                 "test": {
@@ -134,16 +134,16 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "basic-usage:serve"
+                        "devServerTarget": "angular-app-with-router:serve"
                     },
                     "configurations": {
                         "production": {
-                            "devServerTarget": "basic-usage:serve:production"
+                            "devServerTarget": "angular-app-with-router:serve:production"
                         }
                     }
                 }
             }
         }
     },
-    "defaultProject": "basic-usage"
+    "defaultProject": "angular-app-with-router"
 }

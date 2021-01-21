@@ -17,17 +17,29 @@
 
 -->
 
-<div>
-    <div *ngIf="isAuthenticated; then signedIn else notSignedIn"></div>
+<div class="content">
+    <div *ngIf="userInfo != undefined || idToken != undefined; then defined else notDefined"></div>
 
-    <ng-template #notSignedIn>
-        <h3>You are not signed in!!!</h3>
-        <a (click)="signIn()" class="cButton">Sign In</a>
+    <ng-template #notDefined>
+        <div>Loading ...</div>
     </ng-template>
 
-    <ng-template #signedIn>
-        <h3>Awesome. You are signed in!!!</h3>
-        <a routerLink="/profile" class="btn cButton cButtonDark">Profile</a>
-        <a (click)="signOut()" class="btn cButton cButtonDark">Sign Out</a>
+    <ng-template #defined>
+        <h2>Authentication response</h2>
+        <div class="json">
+            <ngx-json-viewer [json]="userInfo"></ngx-json-viewer>
+        </div>
+
+        <h2 class="mb-0 mt-4">ID token</h2>
+        <div class="json">
+            <h5><b>Decoded:</b> Payload</h5>
+            <ngx-json-viewer [json]="idToken"></ngx-json-viewer>
+        </div>
     </ng-template>
+
+    <button
+        class="btn primary mt-4"
+        routerLink=""
+    >Back</button>
+
 </div>

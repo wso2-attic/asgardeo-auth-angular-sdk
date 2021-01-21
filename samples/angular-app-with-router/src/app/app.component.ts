@@ -18,24 +18,22 @@
  */
 
 import { Component } from "@angular/core";
-import { AsgardeoAuthService } from "@asgardeo/auth-angular";
+import { default as authConfig } from "../config.json";
 
 @Component({
-    selector: "app-profile",
-    templateUrl: "./profile.component.html",
-    styleUrls: ["./profile.component.css"]
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"]
 })
-export class ProfileComponent {
-    accessToken: string;
-    isAuthenticated: boolean;
-    userInfo: any;
+export class AppComponent {
+    isConfigured: boolean;
 
-    constructor(private auth: AsgardeoAuthService) {
-        this.isAuthenticated = this.auth.isAuthenticated();
-        if (this.isAuthenticated) {
-            this.auth.getAccessToken().then((token) => this.accessToken = token);
-            auth.getUserInfo().then((value) => this.userInfo = value);
-        }
+    constructor() {
+        this.isConfigured = this.getClientIdStatus();
+    }
 
+    getClientIdStatus() {
+        if (authConfig.clientID === "") { this.isConfigured = false; }
+        else { return true; }
     }
 }

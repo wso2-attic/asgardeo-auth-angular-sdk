@@ -18,15 +18,25 @@
  */
 
 import { Component } from "@angular/core";
+import { AsgardeoAuthService } from "@asgardeo/auth-angular";
 
 @Component({
-    selector: "app-root",
-    templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.css"]
+    selector: "app-home",
+    templateUrl: "./home.component.html",
+    styleUrls: ["./home.component.css"]
 })
-export class AppComponent {
-    title = "basic-usage";
+export class HomeComponent {
+    isAuthenticated: boolean;
 
-    constructor() { }
+    constructor(private auth: AsgardeoAuthService) {
+        this.isAuthenticated = this.auth.isAuthenticated();
+    }
 
+    handleLogin(): void {
+        this.auth.signInWithRedirect();
+    }
+
+    handleLogout(): void {
+        this.auth.signOut();
+    }
 }
