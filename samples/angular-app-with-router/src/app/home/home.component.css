@@ -17,30 +17,6 @@
  *
  */
 
-a.cButton {
-    background-color: #ff7300;
-    background-image: none;
-    border-radius: 3px;
-    box-sizing: border-box;
-    color: #fff;
-    cursor: pointer!important;
-    display: inline-block;
-    font-size: 1.1rem;
-    font-weight: 500;
-    font: inherit;
-    letter-spacing: .05rem;
-    margin-top: 15px;
-    margin-bottom: 1.5rem;
-    margin-right: 15px;
-    max-width: 260px!important;
-    padding: 12px 30px;
-    text-align: center;
-    text-transform: uppercase;
-    transition: all .2s;
-    vertical-align: baseline;
-    width: 100%;
-}
-
-a.cButtonDark {
-    background-color:#465867;
+.btn {
+    margin: 3%;
 }
