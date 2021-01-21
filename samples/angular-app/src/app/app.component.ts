@@ -27,16 +27,23 @@ import { default as authConfig } from "../config.json";
     styleUrls: ["./app.component.css"]
 })
 export class AppComponent implements OnInit {
-    isAuthenticated: boolean;
+    isInitLogin: boolean;
     isConfigured: boolean;
+    userInfo: any;
+    idToken: any;
 
     constructor(private auth: AsgardeoAuthService) {
         this.isConfigured = this.getClientIdStatus();
-        this.isAuthenticated = this.getIsAuthenticated();
+        this.isInitLogin = this.getIsInitLogin();
     }
 
     ngOnInit() {
-        if (this.isAuthenticated) { this.auth.signIn(); }
+        if (this.isInitLogin) {
+            this.auth.signIn().then(() => {
+                this.getUserInfo();
+                this.getIdToken();
+            });
+        }
     }
 
     getClientIdStatus() {
@@ -44,7 +51,7 @@ export class AppComponent implements OnInit {
         else { return true; }
     }
 
-    getIsAuthenticated() {
+    getIsInitLogin() {
         if (sessionStorage.getItem("isInitLogin") === "true") { return true; }
         else { return false; }
     }
@@ -57,13 +64,11 @@ export class AppComponent implements OnInit {
         this.auth.signOut().then(() => sessionStorage.setItem("isInitLogin", "false"));
     }
 
-    userInfo() {
-        return this.auth.getUserInfo()["__zone_symbol__value"];
+    getUserInfo() {
+        this.auth.getUserInfo().then((payload) => this.userInfo = payload);
     }
 
-    idToken() {
-        return this.auth.getDecodedIDToken()["__zone_symbol__value"];
+    getIdToken() {
+        this.auth.getDecodedIDToken().then((payload) => this.idToken = payload);
     }
 }
-
-
