@@ -20,6 +20,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Develop](#develop)
   - [Prerequisites](#prerequisites)
   - [Installing Dependencies](#installing-dependencies)
+  - [Helpful Links](#helpfullinks)
 - [Contribute](#contribute)
   - [Reporting Issues](#reporting-issues)
 - [License](#license)
@@ -34,11 +35,25 @@ Integration with [@angular/router](https://angular.io/api/router) of this SDK wi
 
 ### 1. Create an Application in Your Identity Provider
 
-Before trying out the sample apps, you need to a create an application in the identity provider
+Before trying out the sample apps, you need to a create an application in your preferred identity provider. Follow the instructions below for WSO2 identity providers.
 
-#### a. WSO2 Identity Server - Using Management Console
+#### a. WSO2 Identity Server - React Console
 
-1. So, navigate to `https://localhost:9443/carbon"` and click on `Add` under `Service Providers` in the left-hand menu panel.
+1. Navigate to [`https://localhost:9443/console`](https://localhost:9443/console) and click on `Applications` under `Develop` tab
+   
+2. Click on `New Application` and then `Single Page Application`.
+   
+3. Enter `Sample` as the name of the app and the add Callback URL(s). You can find the relevant callback URL(s) of each sample app in the [Running the sample apps](#2.-running-the-sample-apps) section.
+   
+4. Click on Register. You will be navigated to management page of the `sample` application.
+   
+5. Add `https://localhost:5000` to `Allowed Origins` under `Access` tab and check `Public client`.
+   
+6. Copy the `Client ID` and click on `Update` button at the bottom.
+
+#### b. WSO2 Identity Server - Carbon Console
+
+1. Navigate to [`https://localhost:9443/carbon`](https://localhost:9443/carbon) and click on `Add` under `Service Providers` in the left-hand menu panel.
 
 2. Enter `Sample` as the name of the app and click on `Register`.
 
@@ -58,19 +73,27 @@ Before trying out the sample apps, you need to a create an application in the id
 
 ### 2. Running the sample apps
 
-Build the apps by running the following command at the root directory.
+1. Download the sample.
+
+2. Follow the instructions described below to correctly configure each sample.
+
+3. Build the apps by running the following command at the root directory.
 
 ```bash
 npm install && npm start
 ```
 
+3. Navigate to `https://localhost:5000`
+
 #### a. Basic Usage
 
-The *Callback URLs* for this app,
-- `https://localhost:5000`
-- `https://localhost:5000/signin/redirect`
+- Download the Sample: [samples/basic-usage](/samples/basic-usage)
 
-You can try out the Basic Usage App from the [samples/basic-usage](/samples/basic-usage). The instructions to run the app can be found [here](/samples/basic-usage/README.md)
+- Configuration: [README](/samples/basic-usage/README.md)
+
+- `Callback URLs`:
+  - `https://localhost:5000`
+  - `https://localhost:5000/signin/redirect`
 
 ## Getting Started
 
@@ -82,8 +105,6 @@ npm install --save @asgardeo/auth-angular
 ```
 
 ### 2. Import `AsgardeoAuthModule` and Provide Configuration Parameters
-
-<!-- Description Here -->
 
 ```javascript
 import { BrowserModule } from "@angular/platform-browser";
@@ -141,16 +162,12 @@ export class AppComponent {
 [Learn more](#apis).
 
 
-### 3. Helpful Links
-- Getting started with Angular
 
-    - [Angular Quick Start Guide](https://angular.io/start)
-    - [Angular In-app navigation](https://angular.io/guide/router)
-
-- WSO2 Identity Server [Docs](https://is.docs.wso2.com/en/latest/)
 
 
 ## APIs
+
+
 
 ### `AsgardeoAuthModule`
 
@@ -187,11 +204,11 @@ This SDK currently supports following configuration parameters defined in [@asga
 
 In the components, `AsgardeoAuthService` can be used to take advantage of all of supported authentication features provided. This service inherits from the `IdentityClient` of the [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-auth-js-sdk).
 
-#### `signIn(): Promise`
+#### `signIn`
 
 This method initiates the authentication flow. Developer can use this method to customize their own redirect flow. 
 
-#### `signInWithRedirect(): Promise`
+#### `signInWithRedirect`
 
 This method redirects the user to the route where the authentication flow was initiated. To use this function following steps needs to be fulfilled.
 
@@ -219,11 +236,11 @@ AsgardeoAuthModule.forRoot({
 })
 ```    
 
-#### `signOut(): Promise`
+#### `signOut`
 
 This method ends the user session at the identity provider and logs the user out.
 
-#### `getAccessToken(): Promise`
+#### `getAccessToken`
 
 This returns a promise that resolves with the access token. 
 
@@ -235,7 +252,7 @@ auth.getAccessToken().then((token) => {
 });
 ```
 
-#### `getDecodedIDToken(): Promise`
+#### `getDecodedIDToken`
 
 This method returns a promise that resolves with the decoded payload of the JWT ID token.
 
@@ -247,7 +264,7 @@ auth.getDecodedIDToken().then((idToken) => {
 });
 ```
 
-#### `getServiceEndpoints(): Promise`
+#### `getServiceEndpoints`
 
 This method returns a promise that resolves with an object containing the OIDC endpoints obtained from the `.well-known` endpoint. The object contains the following attributes.
 
@@ -268,7 +285,7 @@ auth.getServiceEndpoints().then((endpoints) => {
 });
 ```
 
-#### `getUserInfo(): Promise`
+#### `getUserInfo`
 
 This method returns a promise that resolves with the information about the authenticated user as an object. The object has the following attributes.
 
@@ -322,6 +339,14 @@ You can install the dependencies by running the following command at the root.
 ```bash
 npm run build
 ```
+### Helpful Links
+
+- Getting started with Angular
+
+    - [Angular Quick Start Guide](https://angular.io/start)
+    - [Angular In-app navigation](https://angular.io/guide/router)
+
+- WSO2 Identity Server [Docs](https://is.docs.wso2.com/en/latest/)
 
 ## Contribute
 
