@@ -116,7 +116,7 @@ npm install && npm start
 - **Callback URL(s):**
   - `https://localhost:5000`
 
-#### a. Angular Sample With Router
+#### b. Angular Sample With Router
 
 - Download the Sample: [samples/angular-app-with-router](/samples/angular-app-with-router)
 
