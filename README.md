@@ -51,7 +51,7 @@ There are two methods to add an application to **WSO2 Identity Server**.
    
 2. Click on **New Application** and then **Single Page Application**.
    
-3. Enter **Sample** as the name of the app and the add Callback URL(s). You can find the relevant callback URL(s) of each sample app in the [Running the sample apps](#2.-running-the-sample-apps) section.
+3. Enter **Sample** as the name of the app and the add Callback URL(s). You can find the relevant callback URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
    
 4. Click on Register. You will be navigated to management page of the **sample** application.
    
@@ -71,7 +71,7 @@ There are two methods to add an application to **WSO2 Identity Server**.
 
 4. Under **Allowed Grant Types** uncheck everything except **Code** and **Refresh Token**.
 
-5. Enter the Callback URL(s). You can find the relevant callback URL(s) of each sample app in the [Running the sample apps](#2.-running-the-sample-apps) section.
+5. Enter the Callback URL(s). You can find the relevant callback URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
 
 6. Check **Allow authentication without the client secret**.
 
