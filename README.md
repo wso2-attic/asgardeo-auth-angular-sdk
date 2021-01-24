@@ -157,8 +157,8 @@ import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
         BrowserModule,
 
         AsgardeoAuthModule.forRoot({
-            signInRedirectURL: "https://localhost:9443/myaccount/login",
-            clientID: "client ID",
+            signInRedirectURL: "https://localhost:5000",
+            clientID: "clientID",
             serverOrigin: "https://localhost:9443"
         })
     ],
@@ -366,7 +366,7 @@ this.auth.getUserInfo().then((response) => {
 });
 ```
 
-### refreshToken
+#### refreshToken
 
 ```typescript
 refreshToken();
