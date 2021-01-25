@@ -2,6 +2,6 @@
     "clientID": "",
     "signInRedirectURL": "https://localhost:5000",
     "signOutRedirectURL": "https://localhost:5000",
-    "serverOrigin": "",
+    "serverOrigin": "https://localhost:9443",
     "enablePKCE": true
 }
