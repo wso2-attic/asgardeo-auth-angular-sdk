@@ -47,5 +47,6 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       run: |
+        cp README.md dist/auth-angular
         cd dist/auth-angular
         npm publish --access public
