@@ -1,9 +1,46 @@
-# [WIP] Sample Angular Application for Basic Usage
+<!-- omit in toc -->
+# Sample Angular Application for Basic Usage
 This sample application is developed to demonstrate basic usage of Asgardeo Auth Angular SDK.
 
-:construction:&ensp;&ensp;This sample application is a work in progress. Please do not use this yet!
-
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
+
+<!-- omit in toc -->
+## Table of Contents
+
+- [Instructions](#instructions)
+- [Contribute](#contribute)
+  - [Reporting Issues](#reporting-issues)
+- [License](#license)
+
+## Instructions
+
+1. Before getting started with running this app, make sure you have followed the common instructions in the [Try Out the Sample Apps](../../README.md#try-out-the-sample-apps) section.
+   
+2. Download and extract the zip file from [here](https://github.com/asgardeo/asgardeo-auth-angular-sdk/releases/latest/download/basic-usage.zip).
+
+3. Open the [src/config.json](src/config.json) file.
+
+4. Paste the copied `OAuth Client Key` in front of the `"clientID"`. You will be replacing a value called `<<CLIENT_ID>>`
+
+
+```json
+{
+    "clientID": "<<CLIENT_ID>>",
+    "signInRedirectURL": "https://localhost:5000/signin/redirect",
+    "signOutRedirectURL": "https://localhost:5000",
+    "serverOrigin": "https://localhost:9443",
+    "enablePKCE": true
+}
+```
+
+5. Build the apps by running the following command at the root directory.
+
+```bash
+npm install && npm start
+```
+
+6. Navigate to https://localhost:5000
+
 
 ## Contribute
 
