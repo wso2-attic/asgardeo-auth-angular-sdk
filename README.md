@@ -55,7 +55,7 @@ There are two methods to add an application to **WSO2 Identity Server**.
    
 4. Click on Register. You will be navigated to management page of the **sample** application.
    
-5. Add `https://localhost:5000` to **Allowed Origins** under **Access** tab and check **Public client** option.
+5. Add `https://localhost:5000/` to **Allowed Origins** under **Access** tab and check **Public client** option.
    
 6. Click on **Update** at the bottom.
    
