@@ -16,10 +16,11 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-<img
+<!-- <img
     src="/assets/asgardeo-logo.png"
     class="logo-image"
-/>
+/> -->
+
 <div class="container">
     <div *ngIf="isConfigured; then configured else notConfigured"></div>
 
@@ -37,7 +38,7 @@ under the License.
     <ng-template #configured>
         <div class="header-title">
             <h1>
-                Angular SPA Authentication Sample - With Router <br /> (OIDC - Authorization Code Grant)
+                Angular SPA Authentication Sample (With Router) <br /> (OIDC - Authorization Code Grant)
             </h1>
         </div>
 
@@ -45,6 +46,7 @@ under the License.
 
     </ng-template>
 </div>
+
 <img
     src="/assets/footer.png"
     class="footer-image"
