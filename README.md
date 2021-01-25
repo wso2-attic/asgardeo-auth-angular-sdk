@@ -14,13 +14,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - [Introduction](#introduction)
 - [Package Information](#package-information)
-- [Getting Started](#getting-started)
 - [Try Out the Sample Apps](#try-out-the-sample-apps)
+- [Getting Started](#getting-started)
 - [APIs](#apis)
 - [Develop](#develop)
   - [Prerequisites](#prerequisites)
   - [Installing Dependencies](#installing-dependencies)
-  - [Helpful Links](#helpfullinks)
+  - [Helpful Links](#helpful-links)
 - [Contribute](#contribute)
   - [Reporting Issues](#reporting-issues)
 - [License](#license)
@@ -137,7 +137,7 @@ npm install --save @asgardeo/auth-angular
 
 ### 2. Import `AsgardeoAuthModule` and Provide Configuration Parameters
 
-Add the `AsgardeoAuthModule` to the imports array of your app module. Pass the config object to the `forRoot` function. See all the available configurations list [here](#configuration).
+Add the `AsgardeoAuthModule` to the imports array of your root app module. Pass the config object to the `forRoot` function. See all the available configurations list [here](#configuration).
 
 ```typescript
 // app.module.ts
@@ -196,6 +196,19 @@ export class AppComponent {
 ```
 
 ## APIs
+
+- [`AsgardeoAuthModule`](#asgardeoauthmodule)
+  - [Configuration](#configuration)
+- [`AsgardeoAuthService`](#asgardeoauthservice)
+  - [signIn](#signin)
+  - [signInWithRedirect](#signinwithredirect)
+  - [signOut](#signout)
+  - [getAccessToken](#getaccesstoken)
+  - [getDecodedIDToken](#getdecodedidtoken)
+  - [getServiceEndpoints](#getserviceendpoints)
+  - [getUserInfo](#getuserinfo)
+  - [refreshToken](#refreshtoken)
+- [`AsgardeoAuthGuard`](#asgardeoauthguard)
 
 ### `AsgardeoAuthModule`
 
