@@ -33,16 +33,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-            token: ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}}
+            token: ${{secrets.ASGARDEO_GITHUB_BOT_TOKEN}}
         if: github.repository == 'asgardeo/asgardeo-auth-angular-sdk'
         
       - uses: actions/checkout@v2
-        if: github.repository != 'asgardeo/asgardeo-auth-angular-sdk'
 
       - name: Install Packages
         run: |
           npm ci
-      - name: Bump Library Version
+
+      - name: Bump library version
         working-directory: lib
         run: |
           git config --global user.email "version.bump@github.action.com"
@@ -50,11 +50,8 @@ jobs:
           npm version ${{ github.event.inputs.Type }}
           git add .
           git commit -m "Bump @asgardeo/auth-angular Version"
-        if: github.repository == 'asgardeo/asgardeo-auth-angular-sdk'
-      - name: Bump Version
+
+      - name: Bump parent version
         run: |
-          git config --global user.email "version.bump@github.action.com"
-          git config --global user.name "asgardeo-github-bot"
           npm version ${{ github.event.inputs.Type }} -m "[WSO2 Release] [GitHub Actions] [Release %s] Bump Parent Version"
           git push --follow-tags
-        if: github.repository == 'asgardeo/asgardeo-auth-angular-sdk'
