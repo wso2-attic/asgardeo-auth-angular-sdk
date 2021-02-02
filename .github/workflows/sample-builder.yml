@@ -44,7 +44,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - name: Build samples
+    - name: Build Samples
       working-directory: samples
       run: |
         for dir in */ ; do
