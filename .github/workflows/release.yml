@@ -44,7 +44,7 @@ jobs:
         npm ci
         npm run build:prod --if-present
 
-    - name: Publish OIDC Angular SDK
+    - name: Publish Auth Angular SDK
       env:
         NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       run: |
