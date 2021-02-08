@@ -30,15 +30,15 @@ export class ProfileComponent implements OnInit {
     isAuthenticated = false;
     userInfo: any = null;
 
-    constructor(private auth: AsgardeoAuthService) {
-        auth.isAuthenticated().then((bool) => this.isAuthenticated = bool);
-    }
+    constructor(private auth: AsgardeoAuthService) { }
 
     ngOnInit() {
-        if (this.isAuthenticated) {
-            this.auth.getAccessToken().then((token) => this.accessToken = token);
-            this.auth.getBasicUserInfo().then((value) => { this.userInfo = value; console.log(this.userInfo); });
-
-        }
+        this.auth.isAuthenticated().then((status) => {
+            this.isAuthenticated = status;
+            if (this.isAuthenticated) {
+                this.auth.getAccessToken().then((token) => this.accessToken = token);
+                this.auth.getBasicUserInfo().then((useInfo) => this.userInfo = useInfo);
+            }
+        });
     }
 }

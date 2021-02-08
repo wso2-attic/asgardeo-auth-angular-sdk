@@ -17,7 +17,7 @@
  *
  */
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { AsgardeoAuthService } from "@asgardeo/auth-angular";
 
 @Component({
@@ -25,11 +25,15 @@ import { AsgardeoAuthService } from "@asgardeo/auth-angular";
     templateUrl: "./home.component.html",
     styleUrls: ["./home.component.css"]
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
     isAuthenticated = false;
 
-    constructor(private auth: AsgardeoAuthService) {
-        this.auth.isAuthenticated().then((bool) => this.isAuthenticated = bool);
+    constructor(private auth: AsgardeoAuthService) { }
+
+    ngOnInit() {
+        this.auth.isAuthenticated().then((status) => {
+            this.isAuthenticated = status;
+        });
     }
 
     signIn(): void {
