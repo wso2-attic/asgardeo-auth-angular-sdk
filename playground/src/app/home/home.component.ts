@@ -26,7 +26,7 @@ import { AsgardeoAuthService } from "@asgardeo/auth-angular";
     styleUrls: ["./home.component.css"]
 })
 export class HomeComponent {
-    isAuthenticated: boolean;
+    isAuthenticated = false;
 
     constructor(private auth: AsgardeoAuthService) {
         this.auth.isAuthenticated().then((bool) => this.isAuthenticated = bool);

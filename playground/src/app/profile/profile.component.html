@@ -26,11 +26,17 @@
 
     <ng-template #signedIn>
 
-        <div class="card text-white bg-dark d-flex mx-auto" style="width: fit-content;">
+        <div
+            class="card text-white bg-dark d-flex mx-auto"
+            style="width: fit-content;"
+        >
             <div class="card-header">
                 <h3>{{userInfo.displayName}}</h3>
             </div>
-            <div class="card-body" style="text-align: left;">
+            <div
+                class="card-body"
+                style="text-align: left;"
+            >
                 <li>Access Token - {{accessToken}}</li>
                 <!-- <li>Email - {{userInfo.email}}</li> -->
                 <li>Username - {{userInfo.username}}</li>

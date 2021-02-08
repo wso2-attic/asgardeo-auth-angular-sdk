@@ -35,10 +35,10 @@ import { ProfileComponent } from "./profile/profile.component";
         BrowserModule,
         AppRoutingModule,
         AsgardeoAuthModule.forRoot({
-            clientID: "",
-            signInRedirectURL: "https://localhost:5000/signin/redirect",
-            signOutRedirectURL: "https://localhost:5000",
-            serverOrigin: "",
+            clientID: "GkUTqngwJ4SLJ1iUMyystk8Qhxsa",
+            signInRedirectURL: "http://localhost:3000/signin/redirect",
+            signOutRedirectURL: "http://localhost:3000",
+            serverOrigin: "https://dev.portal.asgardeo.io/t/angular.dev",
             enablePKCE: true
         })
     ],

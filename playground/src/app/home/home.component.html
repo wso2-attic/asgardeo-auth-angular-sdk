@@ -22,12 +22,21 @@
 
     <ng-template #notSignedIn>
         <h3>You are not signed in!!!</h3>
-        <a (click)="signIn()" class="cButton">Sign In</a>
+        <a
+            (click)="signIn()"
+            class="cButton"
+        >Sign In</a>
     </ng-template>
 
     <ng-template #signedIn>
         <h3>Awesome. You are signed in!!!</h3>
-        <a routerLink="/profile" class="btn cButton cButtonDark">Profile</a>
-        <a (click)="signOut()" class="btn cButton cButtonDark">Sign Out</a>
+        <a
+            routerLink="/profile"
+            class="btn cButton cButtonDark"
+        >Profile</a>
+        <a
+            (click)="signOut()"
+            class="btn cButton cButtonDark"
+        >Sign Out</a>
     </ng-template>
 </div>
