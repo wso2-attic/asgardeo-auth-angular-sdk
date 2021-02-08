@@ -17,9 +17,21 @@
  *
  */
 
-import { fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 import { Router } from "@angular/router";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
+
+describe("AsgardeoNavigatorService", () => {
+    let service: AsgardeoNavigatorService;
+
+    beforeEach(() => {
+        service = TestBed.inject(AsgardeoNavigatorService);
+    });
+
+    it("should be created even if the router module is not provided ", () => {
+        expect(service).toBeTruthy();
+    });
+});
 
 describe("AsgardeoNavigatorService", () => {
     let service: AsgardeoNavigatorService;
@@ -29,7 +41,8 @@ describe("AsgardeoNavigatorService", () => {
 
     beforeEach(() => {
         routerStub = {
-            navigateByUrl: () => Promise.resolve(true),
+            url: "fakeUrl?fakeParams",
+            navigateByUrl: () => Promise.resolve(true)
         };
 
         TestBed.configureTestingModule({
@@ -48,31 +61,58 @@ describe("AsgardeoNavigatorService", () => {
         expect(service).toBeTruthy();
     });
 
-    it("should return the location.pathname when getUrl is called", () => {
-        const getUrlSpy = spyOn(service, "getCurrentRoute");
-
-        service.getCurrentRoute();
-
-        expect(getUrlSpy).toHaveBeenCalled();
-    });
-
     it("should navigate the user to the provided route", () => {
         const navigateByurlRSpy = spyOn(router, "navigateByUrl").and.returnValue(Promise.resolve(true));
 
         service.navigateByUrl("fakePath");
 
-        expect(navigateByurlRSpy).toHaveBeenCalled();
+        expect(navigateByurlRSpy).toHaveBeenCalledWith("fakePath");
     });
 
-    it("should navigate the user to root if the provided route does not exist", fakeAsync(() => {
-        const navigateByurlRSpy = spyOn(router, "navigateByUrl").and.callFake((url: string): Promise<boolean> => {
-            if (url !== "/") {return Promise.reject("fakeReject");}
-            else {return Promise.resolve(true);}
-        });
+    it("should set the redirectUrl property on session storage when setRedirectUrl is called", () => {
+        const store = {};
+        const setItemSpy = spyOn(sessionStorage, "setItem").and.callFake((key, value) => store[key] = value + "");
+        const getCurrentRouteSpy = spyOn(service, "getCurrentRoute").and.returnValue("fakeUrl");
 
-        service.navigateByUrl("fakePath");
+        service.setRedirectUrl();
 
-        tick();
-        expect(navigateByurlRSpy).toHaveBeenCalledWith("/");
-    }));
+        expect(getCurrentRouteSpy).toHaveBeenCalled();
+        expect(setItemSpy).toHaveBeenCalledWith("redirectUrl", "fakeUrl");
+        expect(store).toEqual({ redirectUrl: "fakeUrl" });
+    });
+
+
+    it("should get the redirectUrl property on session storage when getRedirectUrl is called", () => {
+        const store = { redirectUrl: "fakeUrl" };
+        const getItemSpy = spyOn(sessionStorage, "getItem").and.callFake((key) => store[key]);
+
+        const result = service.getRedirectUrl();
+
+        expect(getItemSpy).toHaveBeenCalled();
+        expect(result).toEqual("fakeUrl");
+    });
+
+    it("should return root route if the redirectUrl property does not exist on session storage when getRedirectUrl is called", () => {
+        const store = {};
+        const getItemSpy = spyOn(sessionStorage, "getItem").and.callFake((key) => store[key]);
+
+        const result = service.getRedirectUrl();
+
+        expect(getItemSpy).toHaveBeenCalled();
+        expect(result).toEqual("/");
+    });
+
+    it("should return the route without parameters when getRouteWithoutParams is called", () => {
+        const urlSpy = spyOn(window, "URL");
+
+        service.getRouteWithoutParams("fakeUrl?fakeParams");
+
+        expect(urlSpy).toHaveBeenCalled();
+    });
+
+    it("should return the current route when getCurrentRoute is called", () => {
+        const result = service.getCurrentRoute();
+
+        expect(result).toEqual("fakeUrl");
+    });
 });
