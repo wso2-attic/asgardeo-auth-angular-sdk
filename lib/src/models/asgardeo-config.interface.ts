@@ -16,12 +16,12 @@
  * under the License.
  *
  */
-import { AuthClientConfig } from "@asgardeo/auth-spa";
+import { AuthClientConfig, Config } from "@asgardeo/auth-spa";
 
 /**
  * SDK client config parameters
  */
-export type AsgardeoConfigInterface = AuthClientConfig;
+export type AsgardeoConfigInterface = AuthClientConfig<Config>;
 
 // export type AsgardeoConfigInterface = any;
 

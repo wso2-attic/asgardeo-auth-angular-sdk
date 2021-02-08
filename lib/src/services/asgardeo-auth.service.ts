@@ -18,7 +18,7 @@
  */
 
 import { Inject, Injectable } from "@angular/core";
-import { AsgardeoSPAClient, BasicUserInfo, DecodedIDTokenPayload, Hooks, OIDCEndpoints } from "@asgardeo/auth-spa";
+import { AsgardeoSPAClient, BasicUserInfo, DecodedIDTokenPayload, OIDCEndpoints } from "@asgardeo/auth-spa";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
@@ -28,22 +28,16 @@ import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 })
 export class AsgardeoAuthService {
     private signInRedirectUrl: string;
+    private auth: AsgardeoSPAClient;
 
     constructor(
-        @Inject(ASGARDEO_CONFIG) authConfig: AsgardeoConfigInterface,
-        private navigator: AsgardeoNavigatorService,
-        private auth: AsgardeoSPAClient) {
+    @Inject(ASGARDEO_CONFIG) authConfig: AsgardeoConfigInterface,
+                             private navigator: AsgardeoNavigatorService) {
+
+        this.auth = AsgardeoSPAClient.getInstance();
+
         this.auth.initialize(authConfig)
-            .then(() => this.signInRedirectUrl = navigator.getRouteWithoutParams(authConfig.signInRedirectURL))
-            .catch((error) => console.warn("Failed to Initialize - " + error));
-
-        this.auth.on(Hooks.SignIn, () => {
-            sessionStorage.setItem("isAuthenticated", "true");
-        });
-
-        this.auth.on(Hooks.SignOut, () => {
-            sessionStorage.setItem("isAuthenticated", "false");
-        });
+            .then(() => this.signInRedirectUrl = navigator.getRouteWithoutParams(authConfig.signInRedirectURL));
     }
 
     getBasicUserInfo(): Promise<BasicUserInfo> {
