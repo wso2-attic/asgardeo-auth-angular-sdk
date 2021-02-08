@@ -30,7 +30,8 @@ export class AsgardeoSignInRedirectComponent implements OnInit {
     constructor(private auth: AsgardeoAuthService, private navigator: AsgardeoNavigatorService) { }
 
     ngOnInit(): void {
-        this.auth.signIn()
-            .then(() => this.navigator.navigateByUrl(this.navigator.getRedirectUrl()));
+        this.auth.signIn().then(() => {
+            this.navigator.navigateByUrl(this.navigator.getRedirectUrl());
+        });
     }
 }

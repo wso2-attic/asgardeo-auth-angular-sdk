@@ -27,21 +27,16 @@ import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
     providedIn: "root"
 })
 export class AsgardeoAuthService {
-    private signInRedirectUrl: string;
     private auth: AsgardeoSPAClient;
 
-    constructor(
-    @Inject(ASGARDEO_CONFIG) authConfig: AsgardeoConfigInterface,
-                             private navigator: AsgardeoNavigatorService) {
-
-        this.auth = AsgardeoSPAClient.getInstance();
-
-        this.auth.initialize(authConfig)
-            .then(() => this.signInRedirectUrl = navigator.getRouteWithoutParams(authConfig.signInRedirectURL));
+    constructor(@Inject(ASGARDEO_CONFIG) private authConfig: AsgardeoConfigInterface,
+                private navigator: AsgardeoNavigatorService) {
+        this.intializeSPAClient();
     }
 
-    getBasicUserInfo(): Promise<BasicUserInfo> {
-        return this.auth.getBasicUserInfo();
+    intializeSPAClient() {
+        this.auth = AsgardeoSPAClient.getInstance();
+        this.auth.initialize(this.authConfig);
     }
 
     signIn(): Promise<any> {
@@ -50,34 +45,39 @@ export class AsgardeoAuthService {
 
     signInWithRedirect(): Promise<boolean> {
         this.navigator.setRedirectUrl();
-        return this.navigator.navigateByUrl(this.signInRedirectUrl);
+        const redirectRoute = this.navigator.getRouteWithoutParams(this.authConfig.signInRedirectURL);
+        return this.navigator.navigateByUrl(redirectRoute);
     }
 
     signOut(): Promise<any> {
         return this.auth.signOut();
     }
 
-    revokeAccessToken(): Promise<boolean> {
-        return this.auth.revokeAccessToken();
+    isAuthenticated(): Promise<boolean> {
+        return this.auth.isAuthenticated();
     }
 
-    getOIDCServiceEndpoints(): Promise<OIDCEndpoints> {
-        return this.auth.getOIDCServiceEndpoints();
-    }
-
-    getDecodedIDToken(): Promise<DecodedIDTokenPayload> {
-        return this.auth.getDecodedIDToken();
+    getBasicUserInfo(): Promise<BasicUserInfo> {
+        return this.auth.getBasicUserInfo();
     }
 
     getAccessToken(): Promise<string> {
         return this.auth.getAccessToken();
     }
 
+    getDecodedIDToken(): Promise<DecodedIDTokenPayload> {
+        return this.auth.getDecodedIDToken();
+    }
+
+    getOIDCServiceEndpoints(): Promise<OIDCEndpoints> {
+        return this.auth.getOIDCServiceEndpoints();
+    }
+
     refreshAccessToken(): Promise<BasicUserInfo> {
         return this.auth.refreshAccessToken();
     }
 
-    isAuthenticated(): Promise<boolean> {
-        return this.auth.isAuthenticated();
+    revokeAccessToken(): Promise<boolean> {
+        return this.auth.revokeAccessToken();
     }
 }
