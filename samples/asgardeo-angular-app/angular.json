@@ -3,7 +3,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "angular-app": {
+        "asgardeo-angular-app": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:class": {
@@ -38,7 +38,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/angular-app",
+                        "outputPath": "dist/asgardeo-angular-app",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -87,20 +87,20 @@
                 "serve": {
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
-                        "browserTarget": "angular-app:build",
+                        "browserTarget": "asgardeo-angular-app:build",
                         "port": 5000,
                         "ssl": true
                     },
                     "configurations": {
                         "production": {
-                            "browserTarget": "angular-app:build:production"
+                            "browserTarget": "asgardeo-angular-app:build:production"
                         }
                     }
                 },
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "angular-app:build"
+                        "browserTarget": "asgardeo-angular-app:build"
                     }
                 },
                 "test": {
@@ -133,16 +133,16 @@
                     "builder": "@angular-devkit/build-angular:protractor",
                     "options": {
                         "protractorConfig": "e2e/protractor.conf.js",
-                        "devServerTarget": "angular-app:serve"
+                        "devServerTarget": "asgardeo-angular-app:serve"
                     },
                     "configurations": {
                         "production": {
-                            "devServerTarget": "angular-app:serve:production"
+                            "devServerTarget": "asgardeo-angular-app:serve:production"
                         }
                     }
                 }
             }
         }
     },
-    "defaultProject": "angular-app"
+    "defaultProject": "asgardeo-angular-app"
 }
