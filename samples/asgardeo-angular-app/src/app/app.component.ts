@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         if (this.isInitLogin) {
             this.auth.signIn().then(() => {
-                this.getUserInfo();
+                this.getBasicUserInfo();
                 this.getIdToken();
             });
         }
@@ -64,8 +64,8 @@ export class AppComponent implements OnInit {
         this.auth.signOut().then(() => sessionStorage.setItem("isInitLogin", "false"));
     }
 
-    getUserInfo() {
-        this.auth.getUserInfo().then((payload) => this.userInfo = payload);
+    getBasicUserInfo() {
+        this.auth.getBasicUserInfo().then((payload) => this.userInfo = payload);
     }
 
     getIdToken() {
