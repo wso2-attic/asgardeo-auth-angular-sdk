@@ -1,7 +1,7 @@
 {
     "name": "@asgardeo/auth-angular",
     "version": "0.1.0",
-    "description": "Authentication module for Asgardeo Angular SPA",
+    "description": "Asgardeo Auth Angular SDK for Angular Applications.",
     "keywords": [
         "Asgardeo",
         "authentication",
@@ -9,12 +9,16 @@
         "oauth2",
         "angular"
     ],
-    "author": "Asgardeo",
-    "license": "Apache-2.0",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/asgardeo/asgardeo-auth-angular-sdk.git"
     },
+    "bugs": {
+        "url": "https://github.com/asgardeo/asgardeo-auth-angular-sdk/issues"
+    },
+    "homepage": "https://github.com/asgardeo/asgardeo-auth-angular-sdk#readme",
+    "author": "Asgardeo",
+    "license": "Apache-2.0",
     "peerDependencies": {
         "@angular/common": ">=10",
         "@angular/core": ">=10"
