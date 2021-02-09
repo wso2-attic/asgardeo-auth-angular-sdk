@@ -1,4 +1,4 @@
-#  Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+#  Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 #
 #  WSO2 Inc. licenses this file to you under the Apache License,
 #  Version 2.0 (the "License"); you may not use this file except
@@ -14,18 +14,24 @@
 #  specific language governing permissions and limitations
 #  under the License.
 
-# This workflow builds the repo and then publishes the SDK to the NPM registry following a release.
+# This builds sample applications for PRs and pushes raised to the main branch.
 
-name: Release
+name: Sample Builder
 
 on:
-  release:
-    types: [released]
+  workflow_dispatch:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**/package.json'
+      - '**/package-lock.json'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     strategy:
       matrix:
         node-version: [14.x]
@@ -37,17 +43,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-        registry-url: https://registry.npmjs.org/
 
-    - name: Build
+    - name: Build Samples
+      working-directory: samples
       run: |
-        npm ci
-        npm run build:prod --if-present
-
-    - name: Publish Auth Angular SDK
-      env:
-        NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      run: |
-        cp README.md dist/auth-angular
-        cd dist/auth-angular
-        npm publish --access public
+        for dir in */ ; do
+          npm ci --prefix "$dir" 
+          npm run build --prefix "$dir" --if-present 
+        done
