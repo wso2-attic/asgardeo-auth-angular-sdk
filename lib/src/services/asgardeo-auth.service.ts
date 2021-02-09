@@ -29,14 +29,10 @@ import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 export class AsgardeoAuthService {
     private auth: AsgardeoSPAClient;
 
-    constructor(@Inject(ASGARDEO_CONFIG) private authConfig: AsgardeoConfigInterface,
-                private navigator: AsgardeoNavigatorService) {
+    constructor(
+        @Inject(ASGARDEO_CONFIG) private authConfig: AsgardeoConfigInterface,
+        private navigator: AsgardeoNavigatorService) {
         this.intializeSPAClient();
-    }
-
-    intializeSPAClient() {
-        this.auth = AsgardeoSPAClient.getInstance();
-        this.auth.initialize(this.authConfig);
     }
 
     signIn(): Promise<any> {
@@ -79,5 +75,10 @@ export class AsgardeoAuthService {
 
     revokeAccessToken(): Promise<boolean> {
         return this.auth.revokeAccessToken();
+    }
+
+    private intializeSPAClient() {
+        this.auth = AsgardeoSPAClient.getInstance();
+        this.auth.initialize(this.authConfig);
     }
 }
