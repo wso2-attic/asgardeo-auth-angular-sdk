@@ -42,6 +42,7 @@ jobs:
       - name: Install Packages
         run: |
           npm ci
+          
       - name: Bump Library Version
         working-directory: lib
         run: |
@@ -51,7 +52,8 @@ jobs:
           git add .
           git commit -m "Bump @asgardeo/auth-angular Version"
         if: github.repository == 'asgardeo/asgardeo-auth-angular-sdk'
-      - name: Bump Version
+        
+      - name: Bump Parent Version
         run: |
           git config --global user.email "version.bump@github.action.com"
           git config --global user.name "asgardeo-github-bot"
