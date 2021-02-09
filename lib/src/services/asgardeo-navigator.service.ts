@@ -36,6 +36,10 @@ export class AsgardeoNavigatorService {
         }
     }
 
+    navigateByUrl(url: string): Promise<boolean> {
+        return this.router.navigateByUrl(url);
+    }
+
     setRedirectUrl(): void {
         sessionStorage.setItem("redirectUrl", this.getCurrentRoute());
     }
@@ -44,21 +48,11 @@ export class AsgardeoNavigatorService {
         return sessionStorage.getItem("redirectUrl") || "/";
     }
 
-    getCurrentRoute(): string {
-        return this.router.url.split("?")[0];
-    }
-
     getRouteWithoutParams(url: string): string {
         return new URL(url).pathname;
     }
 
-    navigateByUrl(url: string): Promise<boolean> {
-        if (this.router) {
-            try {
-                return this.router.navigateByUrl(url);
-            } catch (e) {
-                return this.router.navigateByUrl("/");
-            }
-        }
+    getCurrentRoute(): string {
+        return this.router.url.split("?")[0];
     }
 }

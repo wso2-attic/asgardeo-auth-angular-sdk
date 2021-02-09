@@ -29,11 +29,10 @@ export class AsgardeoAuthGuard implements CanActivate, CanActivateChild {
     constructor(private auth: AsgardeoAuthService) { }
 
     async canActivate(): Promise<boolean> {
-        if (this.auth.isAuthenticated()) {
+        const isAuthenticated = await this.auth.isAuthenticated();
+        if (isAuthenticated) {
             return true;
         }
-        await this.auth.signInWithRedirect();
-
         return false;
     }
 

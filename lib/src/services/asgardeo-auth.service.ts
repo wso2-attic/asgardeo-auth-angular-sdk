@@ -18,7 +18,7 @@
  */
 
 import { Inject, Injectable } from "@angular/core";
-import { DecodedIdTokenPayloadInterface, Hooks, IdentityClient, ServiceResourcesType, UserInfo } from "@asgardio/oidc-js";
+import { AsgardeoSPAClient, BasicUserInfo, DecodedIDTokenPayload, OIDCEndpoints } from "@asgardeo/auth-spa";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
@@ -27,34 +27,12 @@ import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
     providedIn: "root"
 })
 export class AsgardeoAuthService {
-    private auth: IdentityClient;
-    private signInRedirectUrl: string;
+    private auth: AsgardeoSPAClient;
 
     constructor(
-    @Inject(ASGARDEO_CONFIG) authConfig: AsgardeoConfigInterface,
-                             private navigator: AsgardeoNavigatorService) {
-        this.auth = IdentityClient.getInstance();
-        this.auth.initialize(authConfig)
-            .then(() => this.signInRedirectUrl = navigator.getRouteWithoutParams(authConfig.signInRedirectURL))
-            .catch((error) => console.warn("Failed to Initialize - " + error));
-
-        this.auth.on(Hooks.SignIn, () => {
-            sessionStorage.setItem("isAuthenticated", "true");
-        });
-
-        this.auth.on(Hooks.SignOut, () => {
-            sessionStorage.setItem("isAuthenticated", "false");
-        });
-    }
-
-    isAuthenticated(): boolean {
-        // *** This is a temporary function ***
-        if (sessionStorage.getItem("isAuthenticated") === "true") {
-            return true;
-        }
-        else {
-            return false;
-        }
+        @Inject(ASGARDEO_CONFIG) private authConfig: AsgardeoConfigInterface,
+        private navigator: AsgardeoNavigatorService) {
+        this.intializeSPAClient();
     }
 
     signIn(): Promise<any> {
@@ -63,30 +41,44 @@ export class AsgardeoAuthService {
 
     signInWithRedirect(): Promise<boolean> {
         this.navigator.setRedirectUrl();
-        return this.navigator.navigateByUrl(this.signInRedirectUrl);
+        const redirectRoute = this.navigator.getRouteWithoutParams(this.authConfig.signInRedirectURL);
+        return this.navigator.navigateByUrl(redirectRoute);
     }
 
     signOut(): Promise<any> {
         return this.auth.signOut();
     }
 
+    isAuthenticated(): Promise<boolean> {
+        return this.auth.isAuthenticated();
+    }
+
+    getBasicUserInfo(): Promise<BasicUserInfo> {
+        return this.auth.getBasicUserInfo();
+    }
+
     getAccessToken(): Promise<string> {
         return this.auth.getAccessToken();
     }
 
-    getDecodedIDToken(): Promise<DecodedIdTokenPayloadInterface> {
+    getDecodedIDToken(): Promise<DecodedIDTokenPayload> {
         return this.auth.getDecodedIDToken();
     }
 
-    getServiceEndpoints(): Promise<ServiceResourcesType> {
-        return this.auth.getServiceEndpoints();
+    getOIDCServiceEndpoints(): Promise<OIDCEndpoints> {
+        return this.auth.getOIDCServiceEndpoints();
     }
 
-    getUserInfo(): Promise<UserInfo> {
-        return this.auth.getUserInfo();
+    refreshAccessToken(): Promise<BasicUserInfo> {
+        return this.auth.refreshAccessToken();
     }
 
-    refreshToken(): Promise<string> {
-        return this.auth.refreshToken();
+    revokeAccessToken(): Promise<boolean> {
+        return this.auth.revokeAccessToken();
+    }
+
+    private intializeSPAClient() {
+        this.auth = AsgardeoSPAClient.getInstance();
+        this.auth.initialize(this.authConfig);
     }
 }

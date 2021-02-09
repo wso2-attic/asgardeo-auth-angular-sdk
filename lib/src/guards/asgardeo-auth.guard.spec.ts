@@ -19,7 +19,6 @@
 
 import { TestBed } from "@angular/core/testing";
 import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
-import { AsgardeoNavigatorService } from "../services/asgardeo-navigator.service";
 import { AsgardeoAuthGuard } from "./asgardeo-auth.guard";
 
 describe("AsgardeoAuthGuard", () => {
@@ -28,17 +27,9 @@ describe("AsgardeoAuthGuard", () => {
     let authService: AsgardeoAuthService;
     let authServiceStub: Partial<AsgardeoAuthService>;
 
-    let navigatorService: AsgardeoNavigatorService;
-    let navigatorServiceStub: Partial<AsgardeoNavigatorService>;
-
     beforeEach(() => {
         authServiceStub = {
-            signIn: () => Promise.resolve(),
-            isAuthenticated: () => true
-        };
-
-        navigatorServiceStub = {
-            navigateByUrl: (params) => Promise.resolve(true)
+            isAuthenticated: () => Promise.resolve(true)
         };
 
         TestBed.configureTestingModule({
@@ -46,21 +37,47 @@ describe("AsgardeoAuthGuard", () => {
                 {
                     provide: AsgardeoAuthService,
                     useValue: authServiceStub
-                },
-                {
-                    provide: AsgardeoNavigatorService,
-                    useValue: navigatorServiceStub
                 }
             ]
         });
         guard = TestBed.inject(AsgardeoAuthGuard);
         authService = TestBed.inject(AsgardeoAuthService);
-        navigatorService = TestBed.inject(AsgardeoNavigatorService);
     });
 
     it("should be created", () => {
         expect(guard).toBeTruthy();
     });
+
+    it("should return false when canActivate is called if the user is not authenticated ", (async () => {
+        spyOn(authService, "isAuthenticated").and.resolveTo(false);
+
+        const result = await guard.canActivate();
+
+        expect(result).toBeFalse();
+    }));
+
+
+    it("should return true when canActivate is called if the user is not authenticated ", (async () => {
+        spyOn(authService, "isAuthenticated").and.resolveTo(true);
+
+        const result = await guard.canActivate();
+
+        expect(result).toBeTrue();
+    }));
+
+    it("should return false when canActivateChild is called if the user is not authenticated ", (async () => {
+        spyOn(authService, "isAuthenticated").and.resolveTo(false);
+
+        const result = await guard.canActivateChild();
+
+        expect(result).toBeFalse();
+    }));
+
+    it("should return true when canActivateChild is called if the user is not authenticated ", (async () => {
+        spyOn(authService, "isAuthenticated").and.resolveTo(true);
+
+        const result = await guard.canActivateChild();
+
+        expect(result).toBeTrue();
+    }));
 });
-
-

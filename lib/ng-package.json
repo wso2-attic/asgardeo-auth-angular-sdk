@@ -4,8 +4,11 @@
     "lib": {
         "entryFile": "src/public-api.ts",
         "umdModuleIds": {
-            "@asgardio/oidc-js": "oidcJs"
+            "@asgardeo/auth-spa": "i2"
         }
     },
-    "whitelistedNonPeerDependencies": ["tslib", "@asgardio/oidc-js"]
+    "whitelistedNonPeerDependencies": [
+        "tslib",
+        "@asgardeo/auth-spa"
+    ]
 }

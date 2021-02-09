@@ -17,7 +17,7 @@
  *
  */
 
-import { fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
 import { AsgardeoAuthService } from "./asgardeo-auth.service";
@@ -35,7 +35,8 @@ describe("AsgardeoAuthService", () => {
         navigatorServiceStub = {
             navigateByUrl: (params) => Promise.resolve(true),
             setRedirectUrl: () => "",
-            getCurrentRoute: () => "fakeUrl"
+            getCurrentRoute: () => "fakeUrl",
+            getRouteWithoutParams: () => "fakeRoute"
         };
 
         TestBed.configureTestingModule({
@@ -59,17 +60,8 @@ describe("AsgardeoAuthService", () => {
     it("should be created", () => {
         expect(service).toBeTruthy();
         expect(service["auth"]).toBeDefined();
+        expect();
     });
-
-    it("should catch when auth.initialize throws an error", fakeAsync(() => {
-        const initializeSpy = spyOn(service["auth"], "initialize").and.returnValue(Promise.reject("fakeReject"));
-
-        new AsgardeoAuthService(config, navigatorService);
-
-        tick();
-        expect(initializeSpy).toHaveBeenCalled();
-        expect(service).toBeTruthy();
-    }));
 
     it("should call auth.signIn when signIn is called", () => {
         const signInSpy = spyOn(service["auth"], "signIn");
@@ -79,20 +71,20 @@ describe("AsgardeoAuthService", () => {
         expect(signInSpy).toHaveBeenCalled();
     });
 
-    it("should navigate the user to signInRedirect component when signInWithRedirect is called", () => {
-        const navigateByURLSpy = spyOn(navigatorService, "navigateByUrl");
+    it("should store the url in session storage when signInWithRedirect is called", () => {
+        const setRedirectUrlSpy = spyOn(navigatorService, "setRedirectUrl");
 
         service.signInWithRedirect();
 
-        expect(navigateByURLSpy).toHaveBeenCalled();
+        expect(setRedirectUrlSpy).toHaveBeenCalled();
     });
 
-    it("should store the url in session storage when signInWithRedirect is called", () => {
-        const navigateByURLSpy = spyOn(navigatorService, "setRedirectUrl");
+    it("should navigate the user to signInRedirect component when signInWithRedirect is called", () => {
+        const navigateByUrlSpy = spyOn(navigatorService, "navigateByUrl");
 
         service.signInWithRedirect();
 
-        expect(navigateByURLSpy).toHaveBeenCalled();
+        expect(navigateByUrlSpy).toHaveBeenCalled();
     });
 
     it("should call auth.signOut when signOut is called", () => {
@@ -101,6 +93,22 @@ describe("AsgardeoAuthService", () => {
         service.signOut();
 
         expect(signOutSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.isAuthenticated when isAuthenticated is called", () => {
+        const isAuthenticatedSpy = spyOn(service["auth"], "isAuthenticated");
+
+        service.isAuthenticated();
+
+        expect(isAuthenticatedSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.getBasicUserInfo when getBasicUserInfo is called", () => {
+        const getBasicUserInfoSpy = spyOn(service["auth"], "getBasicUserInfo");
+
+        service.getBasicUserInfo();
+
+        expect(getBasicUserInfoSpy).toHaveBeenCalled();
     });
 
     it("should call auth.getAccessToken when getAccessToken is called", () => {
@@ -119,27 +127,27 @@ describe("AsgardeoAuthService", () => {
         expect(getDecodedIDTokenSpy).toHaveBeenCalled();
     });
 
-    it("should call auth.getServiceEndpoints when getServiceEndpoints is called", () => {
-        const getServiceEndpointsSpy = spyOn(service["auth"], "getServiceEndpoints");
+    it("should call auth.getOIDCServiceEndpoints when getOIDCServiceEndpoints is called", () => {
+        const getOIDCServiceEndpointsSpy = spyOn(service["auth"], "getOIDCServiceEndpoints");
 
-        service.getServiceEndpoints();
+        service.getOIDCServiceEndpoints();
 
-        expect(getServiceEndpointsSpy).toHaveBeenCalled();
+        expect(getOIDCServiceEndpointsSpy).toHaveBeenCalled();
     });
 
-    it("should call auth.getUserInfo when getUserInfo is called", () => {
-        const getUserInfoSpy = spyOn(service["auth"], "getUserInfo");
+    it("should call auth.refreshAccessToken when refreshAccessToken is called", () => {
+        const refreshAccessTokenSpy = spyOn(service["auth"], "refreshAccessToken");
 
-        service.getUserInfo();
+        service.refreshAccessToken();
 
-        expect(getUserInfoSpy).toHaveBeenCalled();
+        expect(refreshAccessTokenSpy).toHaveBeenCalled();
     });
 
-    it("should call auth.refreshToken when refreshToken is called", () => {
-        const refreshTokenSpy = spyOn(service["auth"], "refreshToken");
+    it("should call auth.revokeAccessToken when revokeAccessToken is called", () => {
+        const revokeAccessTokenSpy = spyOn(service["auth"], "revokeAccessToken");
 
-        service.refreshToken();
+        service.revokeAccessToken();
 
-        expect(refreshTokenSpy).toHaveBeenCalled();
+        expect(revokeAccessTokenSpy).toHaveBeenCalled();
     });
 });

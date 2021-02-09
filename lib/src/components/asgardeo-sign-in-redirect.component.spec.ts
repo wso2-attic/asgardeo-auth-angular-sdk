@@ -36,7 +36,7 @@ describe("AsgardeoSignInRedirectComponent", () => {
 
         authServiceStub = {
             signIn: () => Promise.resolve(),
-            isAuthenticated: () => true
+            isAuthenticated: () => Promise.resolve(true)
         };
 
         navigatorServiceStub = {
@@ -68,7 +68,7 @@ describe("AsgardeoSignInRedirectComponent", () => {
         navigatorService = TestBed.inject(AsgardeoNavigatorService);
     });
 
-    it("should create", () => {
+    it("should be created", () => {
         expect(component).toBeTruthy();
     });
 
@@ -81,35 +81,14 @@ describe("AsgardeoSignInRedirectComponent", () => {
     });
 
     it("should redirect back after signIn resolves", fakeAsync(() => {
-        const store = { redirectUrl: "fakeUrl" };
         const getRedirectUrlSpy = spyOn(navigatorService, "getRedirectUrl").and.returnValue("fakeRedirectUrl");
-        const navigateByURLSpy = spyOn(navigatorService, "navigateByUrl");
-        spyOn(authService, "isAuthenticated").and.returnValue(false);
+        const navigateByUrlSpy = spyOn(navigatorService, "navigateByUrl");
+        spyOn(authService, "isAuthenticated").and.resolveTo(false);
 
         fixture.detectChanges();
         tick();
 
         expect(getRedirectUrlSpy).toHaveBeenCalled();
-        expect(navigateByURLSpy).toHaveBeenCalledWith("fakeRedirectUrl");
+        expect(navigateByUrlSpy).toHaveBeenCalledWith("fakeRedirectUrl");
     }));
-
-    // it("should call signIn if the user is not authenticated", () => {
-    //     const signInSpy = spyOn(authService, "signIn").and.resolveTo("fakeSignIn");
-    //     spyOn(authService, "isAuthenticated").and.returnValue(false);
-
-    //     fixture.detectChanges();
-
-    //     expect(signInSpy).toHaveBeenCalled();
-    // });
-
-    // it("should redirect back if the user is authenticated", () => {
-    //     const signInSpy = spyOn(authService, "signIn");
-    //     const navigateByURLSpy = spyOn(navigatorService, "navigateByUrl");
-    //     spyOn(authService, "isAuthenticated").and.returnValue(true);
-
-    //     fixture.detectChanges();
-
-    //     expect(signInSpy).not.toHaveBeenCalled();
-    //     expect(navigateByURLSpy).toHaveBeenCalled();
-    // });
 });

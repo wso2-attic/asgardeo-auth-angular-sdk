@@ -17,7 +17,7 @@
  *
  */
 
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { AsgardeoAuthService } from "@asgardeo/auth-angular";
 
 @Component({
@@ -25,17 +25,20 @@ import { AsgardeoAuthService } from "@asgardeo/auth-angular";
     templateUrl: "./profile.component.html",
     styleUrls: ["./profile.component.css"]
 })
-export class ProfileComponent {
-    accessToken: string;
-    isAuthenticated: boolean;
-    userInfo: any;
+export class ProfileComponent implements OnInit {
+    accessToken = "";
+    isAuthenticated = false;
+    userInfo: any = null;
 
-    constructor(private auth: AsgardeoAuthService) {
-        this.isAuthenticated = this.auth.isAuthenticated();
-        if (this.isAuthenticated) {
-            this.auth.getAccessToken().then((token) => this.accessToken = token);
-            auth.getUserInfo().then((value) => this.userInfo = value);
-        }
+    constructor(private auth: AsgardeoAuthService) { }
 
+    ngOnInit() {
+        this.auth.isAuthenticated().then((status) => {
+            this.isAuthenticated = status;
+            if (this.isAuthenticated) {
+                this.auth.getAccessToken().then((token) => this.accessToken = token);
+                this.auth.getBasicUserInfo().then((useInfo) => this.userInfo = useInfo);
+            }
+        });
     }
 }
