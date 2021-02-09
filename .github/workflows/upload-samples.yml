@@ -47,7 +47,7 @@ jobs:
     - name: Upload Samples to Latest Release
       uses: svenstaro/upload-release-action@v2
       with:
-        repo_token: ${{ secrets.ASGARDEO_GITHUB_BOT_TOKEN }}
+        repo_token: ${{ secrets.ASGARDIO_GITHUB_BOT_TOKEN }}
         file: assets/*
         tag: ${{ steps.get-latest-release-tag.outputs.LATEST_RELEASE_TAG }}
         overwrite: true
