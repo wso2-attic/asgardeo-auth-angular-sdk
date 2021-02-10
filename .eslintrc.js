@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -22,56 +22,56 @@ module.exports = {
         "projects/**/*"
     ],
     "overrides": [{
-            "files": [
-                "*.ts"
+        "files": [
+            "*.ts"
+        ],
+        "parserOptions": {
+            "project": [
+                "tsconfig.json"
             ],
-            "parserOptions": {
-                "project": [
-                    "tsconfig.json"
-                ],
-                "createDefaultProgram": true
-            },
-            "extends": [
-                "plugin:@angular-eslint/ng-cli-compat",
-                "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
-                "plugin:@angular-eslint/template/process-inline-templates"
-            ],
-            "rules": {
-                "@typescript-eslint/indent": [
-                    "error",
-                    4,
-                    {
-                        "FunctionDeclaration": {
-                            "parameters": "first"
-                        },
-                        "FunctionExpression": {
-                            "parameters": "first"
-                        },
-                        "ObjectExpression": "first",
-                        "MemberExpression": 1
-                    }
-                ],
-                "@typescript-eslint/quotes": [
-                    "error",
-                    "double"
-                ],
-                "@typescript-eslint/semi": ["error"],
-                "@typescript-eslint/dot-notation": [
-                    "error",
-                    {
-                        "allowPrivateClassPropertyAccess": true
-                    }
-                ]
-            }
+            "createDefaultProgram": true
         },
-        {
-            "files": [
-                "*.html"
+        "extends": [
+            "plugin:@angular-eslint/ng-cli-compat",
+            "plugin:@angular-eslint/ng-cli-compat--formatting-add-on",
+            "plugin:@angular-eslint/template/process-inline-templates"
+        ],
+        "rules": {
+            "@typescript-eslint/indent": [
+                "error",
+                4,
+                {
+                    "FunctionDeclaration": {
+                        "parameters": "first"
+                    },
+                    "FunctionExpression": {
+                        "parameters": "first"
+                    },
+                    "ObjectExpression": "first",
+                    "MemberExpression": 1
+                }
             ],
-            "extends": [
-                "plugin:@angular-eslint/template/recommended"
+            "@typescript-eslint/quotes": [
+                "error",
+                "double"
             ],
-            "rules": {}
+            "@typescript-eslint/semi": ["error"],
+            "@typescript-eslint/dot-notation": [
+                "error",
+                {
+                    "allowPrivateClassPropertyAccess": true
+                }
+            ]
         }
+    },
+    {
+        "files": [
+            "*.html"
+        ],
+        "extends": [
+            "plugin:@angular-eslint/template/recommended"
+        ],
+        "rules": {}
+    }
     ]
 }
