@@ -55,7 +55,7 @@ There are two methods to add an application to **WSO2 Identity Server**.
    
 4. Click on Register. You will be navigated to management page of the **sample** application.
    
-5. Add `https://localhost:5000/` to **Allowed Origins** under **Access** tab and check **Public client** option.
+5. Add `https://localhost:5000` to **Allowed Origins** under **Access** tab and check **Public client** option.
    
 6. Click on **Update** at the bottom.
    
@@ -95,7 +95,8 @@ Read more about the SDK configurations [here](#configuration) .
 {
     "clientID": "",
     "serverOrigin": "https://localhost:9443",
-    "signInRedirectURL": "https://localhost:5000"
+    "signInRedirectURL": "https://localhost:5000",
+    "signOutRedirectURL": "https://localhost:5000"
 }
 ```
 
@@ -156,7 +157,7 @@ import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
     imports: [
         BrowserModule,
 
-        // Add Auth Moddule as an import providing the configs (See API Docs)
+        // Provide the configs (See API Docs)
         AsgardeoAuthModule.forRoot({
             signInRedirectURL: "https://localhost:5000",
             clientID: "clientID",
@@ -255,24 +256,24 @@ In the components, `AsgardeoAuthService` can be used to take advantage of all of
 #### signIn
 
 ```typescript
-signIn(): Promise<BasicUserInfo>;
+signIn(): Promise<BasicUserInfo>
 ```
 
-As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates generates the authorization URl and takes the user to the single-sign-on page of the identity server, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authentication themselves with the server. 
+As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates generates the authorization URL and takes the user to the identity provider, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authenticating themselves with the server. 
 
-Therefore, developers can use this method to custom implement their own redirect flow. 
+Therefore, developers can use this method to custom implement their own redirect flow after sign-in.
 
 #### signInWithRedirect
 
 ```typescript
-signInWithRedirect(): Promise;
+signInWithRedirect(): Promise<boolean>
 ```
 
 This method sign-in and redirects the user back to the route where the authentication flow was initiated. To use this function following steps needs to be fulfilled.
 
 - `app-routing.module.ts`
 
-Register `AsgardeoSignInRedirectComponent` for an unique route.
+Register `AsgardeoSignInRedirectComponent` for a unique route.
 
 ```typescript
 // app-routing.module.ts
@@ -301,14 +302,14 @@ AsgardeoAuthModule.forRoot({
 #### signOut
 
 ```typescript
-signOut(): Promise<boolean>;
+signOut(): Promise<boolean>
 ```
 This method ends the user session at the identity provider and logs the user out.
 
 
 #### isAuthenticated
 
-```TypeScript
+```typeScript
 isAuthenticated(): Promise<boolean>
 ```
 
@@ -317,10 +318,10 @@ This returns a promise that resolves into a boolean value that indicates if the 
 #### getBasicUserInfo
 
 ```typescript
-getBasicUserInfo(): Promise<BasicUserInfo>;
+getBasicUserInfo(): Promise<BasicUserInfo>
 ```
 
-This method returns a promise that resolves a [`BasicUserInfo`](https://github.com/asgardeo/asgardeo-auth-spa-sdk#BasicUserInfo) object with the following information about the authenticated user obtained from the id token as an object
+This method returns a promise that resolves with a [`BasicUserInfo`](https://github.com/asgardeo/asgardeo-auth-spa-sdk#BasicUserInfo) object which contains the following information about the authenticated user obtained from the id token as an object
 
 | Attribute       | Type     | Description                                                                                        |
 | :-------------- | :------- | :------------------------------------------------------------------------------------------------- |
@@ -334,7 +335,7 @@ This method returns a promise that resolves a [`BasicUserInfo`](https://github.c
 #### getAccessToken
 
 ```typescript
-getAccessToken(): Promise<string>;
+getAccessToken(): Promise<string>
 ```
 
 This returns a promise that resolves with the access token. 
@@ -353,7 +354,7 @@ This returns a promise that resolves with the id token.
 getDecodedIDToken(): Promise<DecodedIDTokenPayload>
 ```
 
-This method returns a promise that resolves with the [`DecodedIDTokenPayload`](https://github.com/asgardeo/asgardeo-auth-spa-sdk#decodedidtokenpayload) object, with the decoded payload of the JWT ID token as mentioned in the table below.
+This method returns a promise that resolves with a [`DecodedIDTokenPayload`](https://github.com/asgardeo/asgardeo-auth-spa-sdk#decodedidtokenpayload) object, which contains the decoded payload of the JWT ID token as mentioned in the table below.
 
 | Method             | Type                   | Description                                    |
 | ------------------ | ---------------------- | ---------------------------------------------- |
@@ -381,7 +382,6 @@ This method returns a promise that resolves with an [`OIDCEndpoints`](https://gi
 | `"token"`             | The endpoint to which the token request should be sent.                            |
 | `"wellKnown"`         | The well-known endpoint from which OpenID endpoints of the server can be obtained. |
 
-
 #### refreshAccessToken
 
 ```typescript
@@ -390,17 +390,7 @@ refreshAccessToken(): Promise<BasicUserInfo>;
 
 This refreshes the access token and stores the refreshed session information in either the session or local storage as per your configuration. Note that this method cannot be used when the storage type is set to `webWorker` since the web worker automatically refreshes the token and there is no need for the developer to do it.
 
-This method also returns a Promise that resolves with an [`BasicUserInfo`](#https://github.com/asgardeo/asgardeo-auth-spa-sdk#BasicUserInfo) object containing the attributes mentioned in the table below.
-
-| Attribute        | Description                         |
-| ---------------- | ----------------------------------- |
-| `"accessToken"`  | The new access token                |
-| `"expiresIn"`    | The expiry time in seconds          |
-| `"idToken"`      | The ID token                        |
-| `"refreshToken"` | The refresh token                   |
-| `"scope"`        | The scope of the access token       |
-| `"tokenType"`    | The type of the token. E.g.: Bearer |
-
+This method also returns a Promise that resolves with a [`BasicUserInfo`](#https://github.com/asgardeo/asgardeo-auth-spa-sdk#BasicUserInfo) object.
 
 #### revokeAccessToken
 
@@ -410,12 +400,12 @@ revokeAccessToken(): Promise<boolean>
 
 This method revokes the access token and clears the session information from the storage.
 
-
 ### `AsgardeoAuthGuard`
 
 `AsgardeoAuthGuard` can be used to protect routes from unauthorized access. 
 
 To ensure the user has been properly authenticated before accessing, add the `canActivate` guard to any route as follows.
+(Add `canActivateChild` guard to protect a child route.)
 
 ```typescript
 // app-routing.module.ts
