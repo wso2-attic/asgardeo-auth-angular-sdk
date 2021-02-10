@@ -16,25 +16,25 @@
  * under the License.
  *
  */
- /* To learn more about this file see: https://angular.io/config/tsconfig. */
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "target": "es2015",
-    "module": "es2021",
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "lib": [
-      "es2018",
-      "dom"
-    ]
-  }
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "downlevelIteration": true,
+        "experimentalDecorators": true,
+        "moduleResolution": "node",
+        "importHelpers": true,
+        "target": "es2015",
+        "module": "es2020",
+        "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "lib": [
+            "es2018",
+            "dom"
+        ]
+    }
 }
