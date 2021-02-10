@@ -33,7 +33,11 @@ export class AppComponent {
     }
 
     getClientIdStatus() {
-        if (authConfig.clientID === "") { this.isConfigured = false; }
-        else { return true; }
+        if (authConfig.clientID === "") {
+            this.isConfigured = false;
+        }
+        else {
+            return true;
+        }
     }
 }

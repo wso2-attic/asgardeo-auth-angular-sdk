@@ -47,13 +47,21 @@ export class AppComponent implements OnInit {
     }
 
     getClientIdStatus() {
-        if (authConfig.clientID === "") { this.isConfigured = false; }
-        else { return true; }
+        if (authConfig.clientID === "") {
+            this.isConfigured = false;
+        }
+        else {
+            return true;
+        }
     }
 
     getIsInitLogin() {
-        if (sessionStorage.getItem("isInitLogin") === "true") { return true; }
-        else { return false; }
+        if (sessionStorage.getItem("isInitLogin") === "true") {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     handleLogin() {
@@ -69,6 +77,31 @@ export class AppComponent implements OnInit {
     }
 
     getIdToken() {
-        this.auth.getDecodedIDToken().then((payload) => this.idToken = payload);
+        this.auth.getIDToken().then((payload) => this.idToken = this.parseIdToken(payload));
+    }
+
+    parseIdToken(idToken: string) {
+        if (!idToken) {
+            return;
+        }
+
+        if (typeof idToken !== "string") {
+            idToken = JSON.stringify(idToken);
+        }
+
+        const idTokenSplit = idToken.split(".");
+        let idTokenObject = {
+            "encoded": [],
+            "decoded": []
+        };
+
+        idTokenSplit.forEach(function (element) {
+            idTokenObject["encoded"].push(element);
+        });
+
+        idTokenObject["decoded"].push(JSON.parse(atob(idTokenObject.encoded[0])));
+        idTokenObject["decoded"].push(JSON.parse(atob(idTokenObject.encoded[1])));
+
+        return idTokenObject;
     }
 }

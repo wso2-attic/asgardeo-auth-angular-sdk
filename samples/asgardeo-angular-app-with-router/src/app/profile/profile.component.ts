@@ -47,6 +47,31 @@ export class ProfileComponent implements OnInit {
     }
 
     getIdToken() {
-        this.auth.getDecodedIDToken().then((payload) => this.idToken = payload);
+        this.auth.getIDToken().then((payload) => this.idToken = this.parseIdToken(payload));
+    }
+
+    parseIdToken(idToken: string) {
+        if (!idToken) {
+            return;
+        }
+
+        if (typeof idToken !== "string") {
+            idToken = JSON.stringify(idToken);
+        }
+
+        const idTokenSplit = idToken.split(".");
+        let idTokenObject = {
+            "encoded": [],
+            "decoded": []
+        };
+
+        idTokenSplit.forEach(function (element) {
+            idTokenObject["encoded"].push(element);
+        });
+
+        idTokenObject["decoded"].push(JSON.parse(atob(idTokenObject.encoded[0])));
+        idTokenObject["decoded"].push(JSON.parse(atob(idTokenObject.encoded[1])));
+
+        return idTokenObject;
     }
 }

@@ -55,13 +55,14 @@
                     />
                 </div>
                 <h3>
-                    Sample demo to showcase how authenticate a simple client side application using <br />
+                    Sample demo to showcase how to authenticate a simple client-side application using <br />
                     <b>Asgardeo</b> with the
                     <a
                         href="https://github.com/asgardeo/asgardeo-auth-angular-sdk"
                         target="_blank"
                     >
-                        Asgardeo Auth Angular SDK</a>
+                        Asgardeo Auth Angular SDK
+                    </a>
                 </h3>
                 <button
                     class="btn primary"
@@ -83,16 +84,50 @@
                         <app-json-formatter [json]="userInfo"></app-json-formatter>
                     </div>
 
-
                     <h2 class="mb-0 mt-4">ID token</h2>
 
-                    <div class="json">
-                        <h5><b>Decoded:</b> Payload</h5>
-                        <div class="json-container">
-                            <app-json-formatter [json]="idToken"></app-json-formatter>
+                    <div class="row">
+                        <div class="column">
+                            <h5><b>Encoded</b></h5>
+                            <div class="code">
+                                <code>
+                                    <span class="id-token-0" [innerText]="idToken.encoded[0]">
+                                    </span>.<span class="id-token-1" [innerText]="idToken.encoded[1]">
+                                    </span>.<span class="id-token-2" [innerText]="idToken.encoded[2]"></span>
+                                </code>
+                            </div>
+                        </div>
+
+                        <div class="column">
+                            <div class="json">
+                                <h5><b>Decoded:</b> Header</h5>
+                                <div class="json-container">
+                                    <app-json-formatter [json]="idToken.decoded[0]"></app-json-formatter>
+                                </div>
+                            </div>
+
+                            <h5><b>Decoded:</b> Payload</h5>
+                            <div class="json-container">
+                                <app-json-formatter [json]="idToken.decoded[1]"></app-json-formatter>
+                            </div>
+
+                            <div class="json">
+                                <h5><b>Signature:</b></h5>
+                                <div class="code">
+                                    <code>
+                                        HMACSHA256(
+                                            <br />
+                                            &nbsp;&nbsp;<span class="id-token-0">base64UrlEncode(
+                                                <span class="id-token-1">header</span>)</span> + "." + <br />
+                                            &nbsp;&nbsp;<span class="id-token-0">base64UrlEncode(
+                                                <span class="id-token-1">payload</span>)</span>,&nbsp;
+                                            <span class="id-token-1">your-256-bit-secret</span> <br />
+                                        );
+                                    </code>
+                                </div>
+                            </div>
                         </div>
                     </div>
-
                     <button
                         class="btn primary mt-4"
                         (click)="handleLogout()"
