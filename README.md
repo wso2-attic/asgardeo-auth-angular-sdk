@@ -13,7 +13,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Table of Contents
 
 - [Introduction](#introduction)
-- [Package Information](#package-information)
+- [Package](#package)
 - [Try Out the Sample Apps](#try-out-the-sample-apps)
 - [Getting Started](#getting-started)
 - [APIs](#apis)
@@ -27,11 +27,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Introduction
 
-Asgardeo's Auth SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardio/oidc-js](https://github.com/asgardeo/asgardeo-auth-js-sdk).
+Asgardeo's Auth SDK for Angular allows Angular Applications to use OIDC or OAuth2 authentication in a simple and secure way. This SDK is built on top of [@asgardeo/auth-spa](https://github.com/asgardeo/asgardeo-auth-spa-sdk).
 
 Integration with [@angular/router](https://angular.io/api/router) of this SDK will help the developers to add identity management to their Angular Applications in a jiffy.
 
-## Package Information
+## Package
 
 | Package                  | Version                                                                                                                             |
 | ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------- |
@@ -51,11 +51,11 @@ There are two methods to add an application to **WSO2 Identity Server**.
    
 2. Click on **New Application** and then **Single Page Application**.
    
-3. Enter **Sample** as the name of the app and the add Callback URL(s). You can find the relevant callback URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
+3. Enter **Sample** as the name of the app and the add redirect URL(s). You can find the relevant redirect URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
    
 4. Click on Register. You will be navigated to management page of the **sample** application.
    
-5. Add `https://localhost:5000/` to **Allowed Origins** under **Access** tab and check **Public client** option.
+5. Add `https://localhost:5000` to **Allowed Origins** under **Access** tab and check **Public client** option.
    
 6. Click on **Update** at the bottom.
    
@@ -71,7 +71,7 @@ There are two methods to add an application to **WSO2 Identity Server**.
 
 4. Under **Allowed Grant Types** uncheck everything except **Code** and **Refresh Token**.
 
-5. Enter the Callback URL(s). You can find the relevant callback URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
+5. Enter the callback URL(s). You can find the relevant callback(redirect) URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
 
 6. Check **Allow authentication without the client secret**.
 
@@ -95,7 +95,8 @@ Read more about the SDK configurations [here](#configuration) .
 {
     "clientID": "",
     "serverOrigin": "https://localhost:9443",
-    "signInRedirectURL": "https://localhost:5000"
+    "signInRedirectURL": "https://localhost:5000",
+    "signOutRedirectURL": "https://localhost:5000"
 }
 ```
 
@@ -109,20 +110,20 @@ npm install && npm start
 
 #### a. Basic Angular Sample
 
-- Download the Sample: [samples/angular-app](/samples/angular-app)
+- Download the Sample: [samples/asgardeo-angular-app](https://github.com/asgardeo/asgardeo-auth-angular-sdk/releases/latest/download/asgardeo-angular-app.zip)
 
-- Find More Info: [README](/samples/angular-app/README.md)
+- Find More Info: [README](/samples/asgardeo-angular-app/README.md)
 
-- **Callback URL(s):**
+- **Redirect URL(s):**
   - `https://localhost:5000`
 
 #### b. Angular Sample With Router
 
-- Download the Sample: [samples/angular-app-with-router](/samples/angular-app-with-router)
+- Download the Sample: [samples/asgardeo-angular-app-with-router](https://github.com/asgardeo/asgardeo-auth-angular-sdk/releases/latest/download/asgardeo-angular-app-with-router.zip)
 
-- Find More Info: [README](/samples/angular-app-with-router/README.md)
+- Find More Info: [README](/samples/asgardeo-angular-app-with-router/README.md)
 
-- **Callback URL(s):**
+- **Redirect URL(s):**
   - `https://localhost:5000`
   - `https://localhost:5000/signin/redirect`
 
@@ -156,6 +157,7 @@ import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
     imports: [
         BrowserModule,
 
+        // Provide the configs (See API Docs)
         AsgardeoAuthModule.forRoot({
             signInRedirectURL: "https://localhost:5000",
             clientID: "clientID",
@@ -186,13 +188,18 @@ import { AsgardeoAuthService } from "@asgardeo/auth-angular";
 export class AppComponent {
     isAuthenticated: boolean;
 
-    constructor(private auth: AsgardeoAuthService) {
-        this.isAuthenticated = this.auth.isAuthenticated();
+    constructor(private auth: AsgardeoAuthService) { }
+
+    // Use this function in a login button to simply sign-in.    
+    handleSignIn(): void {
+        this.auth.signIn();
     }
 
-    handleSignIn(): void {
-        this.auth.signInWithRedirect();
+    // Use this function in a logout button to simply sign-out.
+    handleSignOut(): void {
+        this.auth.signOut();
     }
+}
 ```
 
 ## APIs
@@ -203,11 +210,14 @@ export class AppComponent {
   - [signIn](#signin)
   - [signInWithRedirect](#signinwithredirect)
   - [signOut](#signout)
+  - [isAuthenticated](#isauthenticated)
+  - [getBasicUserInfo](#getbasicuserinfo)
   - [getAccessToken](#getaccesstoken)
+  - [getIDToken](#getidtoken)
   - [getDecodedIDToken](#getdecodedidtoken)
-  - [getServiceEndpoints](#getserviceendpoints)
-  - [getUserInfo](#getuserinfo)
-  - [refreshToken](#refreshtoken)
+  - [getOIDCServiceEndpoints](#getoidcserviceendpoints)
+  - [refreshAccessToken](#refreshaccesstoken)
+  - [revokeAccessToken](#revokeaccesstoken)
 - [`AsgardeoAuthGuard`](#asgardeoauthguard)
 
 ### `AsgardeoAuthModule`
@@ -215,20 +225,14 @@ export class AppComponent {
 This is the top-level Angular module for the SDK. This module provides following components and services.
 
 - [`AsgardeoAuthService`](#asgardeoauthservice) - Service containing wide range of authentication functions.
-- [`AsgardeoAuthGuard`](#asgardeoauthguard) A route guard to grant access to a page only after successful authentication.
+- [`AsgardeoAuthGuard`](#asgardeoauthguard) - A route guard to grant access to a page only after successful authentication.
 - [`AsgardeoSignInRedirectComponent`](#signinwithredirect) - Handles the authentication flow and redirects the user back.
 
 #### Configuration
 
 Pass configuration parameters for authentication into `AsgardeoAuthModule` using `forRoot` method.
 
-<!-- Following parameters are **required**.
-
-- `signInRedirectURL` - URL to redirect to after the user authorizes the client app. (Refer [here](#signinwithredirect))
-- `clientID`: The client ID of the OIDC application hosted in the Asgardeo.
-- `serverOrigin`: The origin of the Identity Provider. eg: https://www.asgardeo.io -->
-
-This SDK currently supports following configuration parameters defined in [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-auth-js-sdk) 
+This SDK currently supports following configuration parameters defined in [@asgardeo/oidc-spa](https://github.com/asgardeo/asgardeo-auth-spa-sdk) 
 
 | Attribute                       | Type                                 | Default Value                                               | Description                                                                                 |
 | :------------------------------ | :----------------------------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------------------------ |
@@ -247,27 +251,29 @@ This SDK currently supports following configuration parameters defined in [@asga
 
 ### `AsgardeoAuthService`
 
-In the components, `AsgardeoAuthService` can be used to take advantage of all of supported authentication features provided. This service inherits from the `IdentityClient` of the [@asgardeo/oidc-js](https://github.com/asgardeo/asgardeo-auth-js-sdk).
+In the components, `AsgardeoAuthService` can be used to take advantage of all of supported authentication features provided. This service inherits from the `IdentityClient` of the [@asgardeo/auth-spa](https://github.com/asgardeo/asgardeo-auth-spa-sdk).
 
 #### signIn
 
 ```typescript
-signIn(): Promise;
+signIn(): Promise<BasicUserInfo>
 ```
 
-This method initiates the authentication flow. Developer can use this method to custom implement their own redirect flow. 
+As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates generates the authorization URL and takes the user to the identity provider, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authenticating themselves with the server. 
+
+Therefore, developers can use this method to custom implement their own redirect flow after sign-in.
 
 #### signInWithRedirect
 
 ```typescript
-signInWithRedirect(): Promise;
+signInWithRedirect(): Promise<boolean>
 ```
 
-This method redirects the user to the route where the authentication flow was initiated. To use this function following steps needs to be fulfilled.
+This method signs in and redirects the user back to the route where the authentication flow was initiated. To use this function following steps need to be fulfilled.
 
 - `app-routing.module.ts`
 
-Register `AsgardeoSignInRedirectComponent` for an unique route.
+Register `AsgardeoSignInRedirectComponent` for a unique route.
 
 ```typescript
 // app-routing.module.ts
@@ -296,49 +302,75 @@ AsgardeoAuthModule.forRoot({
 #### signOut
 
 ```typescript
-signOut(): Promise;
+signOut(): Promise<boolean>
 ```
 This method ends the user session at the identity provider and logs the user out.
+
+
+#### isAuthenticated
+
+```typeScript
+isAuthenticated(): Promise<boolean>
+```
+
+This returns a promise that resolves into a boolean value that indicates if the user is authenticated or not.
+
+#### getBasicUserInfo
+
+```typescript
+getBasicUserInfo(): Promise<BasicUserInfo>
+```
+
+This method returns a promise that resolves with a [`BasicUserInfo`](https://github.com/asgardeo/asgardeo-auth-spa-sdk#BasicUserInfo) object which contains the following information about the authenticated user obtained from the id token as an object
+
+| Attribute       | Type     | Description                                                                                        |
+| :-------------- | :------- | :------------------------------------------------------------------------------------------------- |
+| `email`         | `string` | The email address of the user.                                                                     |
+| `username`      | `string` | The username of the user.                                                                          |
+| `displayName`   | `string` | The display name of the user. It is the `preferred_username` in the id token payload or the `sub`. |
+| `allowedScopes` | `string` | The scopes allowed for the user.                                                                   |
+| `tenantDomain`  | `string` | The tenant domain to which the user belongs.                                                       |
+| `sessionState`  | `string` | The session state.                                                                                 |
 
 #### getAccessToken
 
 ```typescript
-getAccessToken(): Promise;
+getAccessToken(): Promise<string>
 ```
 
 This returns a promise that resolves with the access token. 
 
-```typescript
-this.auth.getAccessToken().then((token) => {
-    // console.log(token);
-}).error((error) => {
-    // console.error(error);
-});
+#### getIDToken
+
+```TypeScript
+getIDToken(): Promise<string>
 ```
+
+This returns a promise that resolves with the id token.
 
 #### getDecodedIDToken
 
 ```typescript
-getDecodedIDToken(): Promise;
+getDecodedIDToken(): Promise<DecodedIDTokenPayload>
 ```
 
-This method returns a promise that resolves with the decoded payload of the JWT ID token.
+This method returns a promise that resolves with a [`DecodedIDTokenPayload`](https://github.com/asgardeo/asgardeo-auth-spa-sdk#decodedidtokenpayload) object, which contains the decoded payload of the JWT ID token as mentioned in the table below.
 
-```typescript
-this.auth.getDecodedIDToken().then((idToken) => {
-    // console.log(idToken);
-}).error((error) => {
-    // console.error(error);
-});
+| Method             | Type                   | Description                                    |
+| ------------------ | ---------------------- | ---------------------------------------------- |
+| aud                | `string` \| `string[]` | The audience.                                  |
+| sub                | `string`               | The subject. This is the username of the user. |
+| iss                | `string`               | The token issuer.                              |
+| email              | `string`               | The email address.                             |
+| preferred_username | `string`               | The preferred username.                        |
+
+#### getOIDCServiceEndpoints
+
+```TypeScript
+getOIDCServiceEndpoints(): Promise<OIDCEndpoints>
 ```
 
-#### getServiceEndpoints
-
-```typescript
-getServiceEndpoints(): Promise;
-```
-
-This method returns a promise that resolves with an object containing the OIDC endpoints obtained from the `.well-known` endpoint. The object contains the following attributes.
+This method returns a promise that resolves with an [`OIDCEndpoints`](https://github.com/asgardeo/asgardeo-auth-spa-sdk#OIDCEndpoints) object containing the OIDC endpoints obtained from the `.well-known` endpoint. The object contains the following attributes.
 
 | Attribute             | Description                                                                        |
 | --------------------- | ---------------------------------------------------------------------------------- |
@@ -349,58 +381,30 @@ This method returns a promise that resolves with an object containing the OIDC e
 | `"token"`             | The endpoint to which the token request should be sent.                            |
 | `"wellKnown"`         | The well-known endpoint from which OpenID endpoints of the server can be obtained. |
 
-```typescript
-this.auth.getServiceEndpoints().then((endpoints) => {
-    // console.log(endpoints);
-}).error((error) => {
-    // console.error(error);
-});
-```
-
-#### getUserInfo
+#### refreshAccessToken
 
 ```typescript
-getUserInfo(): Promise;
+refreshAccessToken(): Promise<BasicUserInfo>;
 ```
-This method returns a promise that resolves with the information about the authenticated user as an object. The object has the following attributes.
 
-| Attribute       | Type     | Description                                             |
-| :-------------- | :------- | :------------------------------------------------------ |
-| `email`         | `string` | The email address of the user                           |
-| `username`      | `string` | The username of the user                                |
-| `displayName`   | `string` | The display name of the user                            |
-| `allowedScopes` | `string` | The scopes the user has authorized the client to access |
+This refreshes the access token and stores the refreshed session information in either the session or local storage as per your configuration. Note that this method cannot be used when the storage type is set to `webWorker` since the web worker automatically refreshes the token and there is no need for the developer to do it.
+
+This method also returns a Promise that resolves with a [`BasicUserInfo`](#https://github.com/asgardeo/asgardeo-auth-spa-sdk#BasicUserInfo) object.
+
+#### revokeAccessToken
 
 ```typescript
-this.auth.getUserInfo().then((response) => {
-    // console.log(response);
-}).catch((error) => {
-    // console.error(error);
-});
+revokeAccessToken(): Promise<boolean>
 ```
 
-#### refreshToken
-
-```typescript
-refreshToken();
-```
-This refreshes the access token and stores the refreshed session information in either the session or local storage as per your configuration.
-
-This method also returns a Promise that resolves with an object containing the attributes mentioned in the table below.
-| Attribute        | Description                         |
-| ---------------- | ----------------------------------- |
-| `"accessToken"`  | The new access token                |
-| `"expiresIn"`    | The expiry time in seconds          |
-| `"idToken"`      | The ID token                        |
-| `"refreshToken"` | The refresh token                   |
-| `"scope"`        | The scope of teh access token       |
-| `"tokenType"`    | The type of the token. E.g.: Bearer |
+This method revokes the access token and clears the session information from the storage.
 
 ### `AsgardeoAuthGuard`
 
 `AsgardeoAuthGuard` can be used to protect routes from unauthorized access. 
 
 To ensure the user has been properly authenticated before accessing, add the `canActivate` guard to any route as follows.
+(Add `canActivateChild` guard to protect a child route.)
 
 ```typescript
 // app-routing.module.ts
