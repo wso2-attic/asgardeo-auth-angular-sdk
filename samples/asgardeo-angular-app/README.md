@@ -9,7 +9,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Getting Started](#getting-started)
   - [Register an Application](#register-an-application)
   - [Download the Sample](#download-the-sample)
-  - [Configuring the Sample](#configuring-the-sample)
+  - [Configure the Sample](#configure-the-sample)
   - [Run the Application](#run-the-application)
 - [Available Scripts](#available-scripts)
   - [Development server](#development-server)
@@ -32,7 +32,7 @@ Make sure to add `https://localhost:5000` as a Redirect URL and also add it unde
 
 Download the sample from [here](https://github.com/asgardeo/asgardeo-auth-angular-sdk/releases/latest/download/asgardeo-angular-app.zip) and extract the zip file.
 
-### Configuring the Sample
+### Configure the Sample
 
 Update configuration file `src/config.json` with your registered app details.
 
