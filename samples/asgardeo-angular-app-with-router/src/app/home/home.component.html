@@ -1,0 +1,65 @@
+<!--
+ Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+
+ WSO2 Inc. licenses this file to you under the Apache License,
+ Version 2.0 (the "License"); you may not use this file except
+ in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+
+-->
+
+<div class="content">
+
+    <div *ngIf="isAuthenticated; then signedIn else notSignedIn"></div>
+
+    <ng-template #notSignedIn>
+        <div class="home-image">
+            <img
+                src="/assets/angular-logo.png"
+                class="logo"
+            />
+        </div>
+        <h3>
+            Sample demo to showcase how to authenticate a simple client-side application using <br />
+            <b>Asgardeo</b> with the
+            <a
+                href="https://github.com/asgardeo/asgardeo-auth-angular-sdk"
+                target="_blank"
+            >
+                Asgardeo Auth Angular SDK
+            </a>
+        </h3>
+        <button
+            class="btn primary"
+            (click)="handleLogin()"
+        >
+            Login
+        </button>
+    </ng-template>
+
+    <ng-template #signedIn>
+        <button
+            class="btn primary mt-4"
+            routerLink="/profile"
+        >
+            Profile
+        </button>
+
+        <button
+            class="btn primary mt-4"
+            (click)="handleLogout()"
+        >
+            Logout
+        </button>
+    </ng-template>
+
+</div>

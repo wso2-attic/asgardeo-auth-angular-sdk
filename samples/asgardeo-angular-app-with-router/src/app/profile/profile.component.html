@@ -1,0 +1,86 @@
+<!--
+ Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+
+ WSO2 Inc. licenses this file to you under the Apache License,
+ Version 2.0 (the "License"); you may not use this file except
+ in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations
+ under the License.
+
+-->
+
+<div class="content">
+    <div *ngIf="userInfo != undefined || idToken != undefined; then defined else notDefined"></div>
+
+    <ng-template #notDefined>
+        <div>Loading ...</div>
+    </ng-template>
+
+    <ng-template #defined>
+        <h2>Authentication response</h2>
+        <div class="json json-container">
+            <app-json-formatter [json]="userInfo"></app-json-formatter>
+        </div>
+
+        <h2 class="mb-0 mt-4">ID token</h2>
+
+        <div class="row">
+            <div class="column">
+                <h5><b>Encoded</b></h5>
+                <div class="code">
+                    <code>
+                        <span class="id-token-0" [innerText]="idToken.encoded[0]">
+                        </span>.<span class="id-token-1" [innerText]="idToken.encoded[1]">
+                        </span>.<span class="id-token-2" [innerText]="idToken.encoded[2]"></span>
+                    </code>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="json">
+                    <h5><b>Decoded:</b> Header</h5>
+                    <div class="json-container">
+                        <app-json-formatter [json]="idToken.decoded[0]"></app-json-formatter>
+                    </div>
+                </div>
+
+                <h5><b>Decoded:</b> Payload</h5>
+                <div class="json-container">
+                    <app-json-formatter [json]="idToken.decoded[1]"></app-json-formatter>
+                </div>
+
+                <div class="json">
+                    <h5><b>Signature:</b></h5>
+                    <div class="code">
+                        <code>
+                            HMACSHA256(
+                                <br />
+                                &nbsp;&nbsp;<span class="id-token-0">base64UrlEncode(
+                                    <span class="id-token-1">header</span>)</span> + "." + <br />
+                                &nbsp;&nbsp;<span class="id-token-0">base64UrlEncode(
+                                    <span class="id-token-1">payload</span>)</span>,&nbsp;
+                                <span class="id-token-1">your-256-bit-secret</span> <br />
+                            );
+                        </code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+
+    <button
+        class="btn primary mt-4"
+        routerLink=""
+    >
+        Back
+    </button>
+
+</div>
