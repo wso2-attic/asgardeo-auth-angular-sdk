@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2020, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ * Copyright (c) 2021, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
  *
  * WSO2 Inc. licenses this file to you under the Apache License,
  * Version 2.0 (the "License"); you may not use this file except
@@ -35,7 +35,7 @@ export class AsgardeoAuthService {
         this.intializeSPAClient();
     }
 
-    signIn(): Promise<any> {
+    signIn(): Promise<BasicUserInfo> {
         return this.auth.signIn();
     }
 
@@ -45,7 +45,7 @@ export class AsgardeoAuthService {
         return this.navigator.navigateByUrl(redirectRoute);
     }
 
-    signOut(): Promise<any> {
+    signOut(): Promise<boolean> {
         return this.auth.signOut();
     }
 
@@ -59,6 +59,10 @@ export class AsgardeoAuthService {
 
     getAccessToken(): Promise<string> {
         return this.auth.getAccessToken();
+    }
+
+    getIDToken(): Promise<string> {
+        return this.auth.getIDToken();
     }
 
     getDecodedIDToken(): Promise<DecodedIDTokenPayload> {
