@@ -363,7 +363,6 @@ This method returns a promise that resolves with a [`DecodedIDTokenPayload`](htt
 | iss                | `string`               | The token issuer.                              |
 | email              | `string`               | The email address.                             |
 | preferred_username | `string`               | The preferred username.                        |
-| tenant_domain      | `string`               | The tenant domain to which the user belongs.   |
 
 #### getOIDCServiceEndpoints
 
