@@ -269,7 +269,7 @@ Therefore, developers can use this method to custom implement their own redirect
 signInWithRedirect(): Promise<boolean>
 ```
 
-This method sign-in and redirects the user back to the route where the authentication flow was initiated. To use this function following steps needs to be fulfilled.
+This method signs in and redirects the user back to the route where the authentication flow was initiated. To use this function following steps need to be fulfilled.
 
 - `app-routing.module.ts`
 
