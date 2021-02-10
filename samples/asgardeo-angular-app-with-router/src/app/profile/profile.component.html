@@ -26,14 +26,16 @@
 
     <ng-template #defined>
         <h2>Authentication response</h2>
-        <div class="json">
-            <ngx-json-viewer [json]="userInfo"></ngx-json-viewer>
+        <div class="json json-container">
+            <app-json-formatter [json]="userInfo"></app-json-formatter>
         </div>
 
         <h2 class="mb-0 mt-4">ID token</h2>
         <div class="json">
             <h5><b>Decoded:</b> Payload</h5>
-            <ngx-json-viewer [json]="idToken"></ngx-json-viewer>
+            <div class="json-container">
+                <app-json-formatter [json]="idToken"></app-json-formatter>
+            </div>
         </div>
     </ng-template>
 

@@ -20,17 +20,17 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { AsgardeoAuthModule, AsgardeoConfigInterface } from "@asgardeo/auth-angular";
-import { NgxJsonViewerModule } from "ngx-json-viewer";
 import { default as authConfig } from "../config.json";
 import { AppComponent } from "./app.component";
+import { JsonFormatterComponent } from "./json-formatter/json-formatter.component";
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        JsonFormatterComponent
     ],
     imports: [
         BrowserModule,
-        NgxJsonViewerModule,
         AsgardeoAuthModule.forRoot(authConfig as AsgardeoConfigInterface)
     ],
     providers: [],

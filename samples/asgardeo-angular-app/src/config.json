@@ -1,6 +1,6 @@
 {
-    "clientID": "",
-    "serverOrigin": "",
+    "clientID": "hbbgcB7M6LL1mnrcznDWEMdC084a",
+    "serverOrigin": "https://localhost:9443",
     "signInRedirectURL": "https://localhost:5000",
     "signOutRedirectURL": "https://localhost:5000"
 }

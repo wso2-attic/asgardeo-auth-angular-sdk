@@ -144,6 +144,11 @@ code {
     padding: 20px;
 }
 
+.json-container {
+    background: #272822;
+    padding: 20px;
+}
+
 .header-title {
     background-color: #f47421;
     color: #ffffff;
