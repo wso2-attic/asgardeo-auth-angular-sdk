@@ -34,12 +34,12 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit() {
         this.auth.isAuthenticated().then((payload) => {
-            this.isAuthenticated = payload
+            this.isAuthenticated = payload;
             if (this.isAuthenticated) {
                 this.getUserInfo();
                 this.getIdToken();
             }
-        })
+        });
     }
 
     getUserInfo() {
@@ -60,17 +60,17 @@ export class ProfileComponent implements OnInit {
         }
 
         const idTokenSplit = idToken.split(".");
-        let idTokenObject = {
-            "encoded": [],
-            "decoded": []
+        const idTokenObject = {
+            encoded: [],
+            decoded: []
         };
 
-        idTokenSplit.forEach(function (element) {
-            idTokenObject["encoded"].push(element);
+        idTokenSplit.forEach((element) => {
+            idTokenObject.encoded.push(element);
         });
 
-        idTokenObject["decoded"].push(JSON.parse(atob(idTokenObject.encoded[0])));
-        idTokenObject["decoded"].push(JSON.parse(atob(idTokenObject.encoded[1])));
+        idTokenObject.decoded.push(JSON.parse(atob(idTokenObject.encoded[0])));
+        idTokenObject.decoded.push(JSON.parse(atob(idTokenObject.encoded[1])));
 
         return idTokenObject;
     }

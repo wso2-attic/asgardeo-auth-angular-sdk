@@ -1,46 +1,86 @@
-<!-- omit in toc -->
-# Sample Angular Application for Basic Usage
-This sample application is developed to demonstrate basic usage of Asgardeo Auth Angular SDK.
+# Sample Application With Angular Router using Asgardeo Auth Angular SDK
+
+This sample application is developed to demonstrate the usage of Asgardeo Auth Angular SDK with [Angular Router](https://angular.io/api/router).
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
-<!-- omit in toc -->
 ## Table of Contents
 
-- [Instructions](#instructions)
+- [Getting Started](#getting-started)
+  - [Register an Application](#register-an-application)
+  - [Download the Sample](#download-the-sample)
+  - [Configuring the Sample](#configuring-the-sample)
+  - [Run the Application](#run-the-application)
+- [Available Scripts](#available-scripts)
+  - [Development server](#development-server)
+  - [Build](#build)
+  - [Lint](#lint)
+  - [Further help](#further-help)
 - [Contribute](#contribute)
   - [Reporting Issues](#reporting-issues)
 - [License](#license)
 
-## Instructions
+## Getting Started
 
-1. Before getting started with running this app, make sure you have followed the common instructions in the [Try Out the Sample Apps](../../README.md#try-out-the-sample-apps) section.
-   
-2. Download and extract the zip file from [here](https://github.com/asgardeo/asgardeo-auth-angular-sdk/releases/latest/download/basic-usage.zip).
+### Register an Application
 
-3. Open the [src/config.json](src/config.json) file.
+Follow the instructions in the [Try Out the Sample Apps](../../README.md#try-out-the-sample-apps) section to register an application.
 
-4. Paste the copied `OAuth Client Key` in front of the `"clientID"`. You will be replacing a value called `<<CLIENT_ID>>`
+Make sure to add `https://localhost:5000` and `https://localhost:5000/signin/redirect` as a Redirect URLs.
 
+Add `https://localhost:5000` under allowed origins. 
+
+### Download the Sample
+
+Download the sample from [here](https://github.com/asgardeo/asgardeo-auth-angular-sdk/releases/latest/download/asgardeo-angular-app-with-router.zip) and extract the zip file.
+
+### Configuring the Sample
+
+Update configuration file `src/config.json` with your registered app details.
+
+**Note:** You will only have to paste in the `client ID` generated for the application you registered.
+
+Read more about the SDK configurations [here](../../README.md#configuration).
 
 ```json
 {
-    "clientID": "<<CLIENT_ID>>",
-    "signInRedirectURL": "https://localhost:5000/signin/redirect",
-    "signOutRedirectURL": "https://localhost:5000",
+    "clientID": "<ADD_CLIENT_ID_HERE>",
     "serverOrigin": "https://localhost:9443",
-    "enablePKCE": true
+    "signInRedirectURL": "https://localhost:5000/signin/redirect",
+    "signOutRedirectURL": "https://localhost:5000"
 }
 ```
 
-5. Build the apps by running the following command at the root directory.
+### Run the Application
 
 ```bash
 npm install && npm start
 ```
+The app should open at [`http://localhost:5000`](http://localhost:5000)
 
-6. Navigate to https://localhost:5000
+## Available Scripts
 
+Install [Angular CLI](https://github.com/angular/angular-cli) globally to use default angular scripts.
+
+```bash
+npm install -g @angular/cli
+```
+
+### Development server
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:5000/`. The app will automatically reload if you change any of the source files.
+
+### Build
+
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+
+### Lint
+
+Run `ng lint` to lint the project. This app will use [Angular EsLint](https://github.com/angular-eslint/angular-eslint) for this purpose.
+
+### Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 ## Contribute
 

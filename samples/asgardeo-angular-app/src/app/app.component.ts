@@ -90,17 +90,17 @@ export class AppComponent implements OnInit {
         }
 
         const idTokenSplit = idToken.split(".");
-        let idTokenObject = {
-            "encoded": [],
-            "decoded": []
+        const idTokenObject = {
+            encoded: [],
+            decoded: []
         };
 
-        idTokenSplit.forEach(function (element) {
-            idTokenObject["encoded"].push(element);
+        idTokenSplit.forEach((element) => {
+            idTokenObject.encoded.push(element);
         });
 
-        idTokenObject["decoded"].push(JSON.parse(atob(idTokenObject.encoded[0])));
-        idTokenObject["decoded"].push(JSON.parse(atob(idTokenObject.encoded[1])));
+        idTokenObject.decoded.push(JSON.parse(atob(idTokenObject.encoded[0])));
+        idTokenObject.decoded.push(JSON.parse(atob(idTokenObject.encoded[1])));
 
         return idTokenObject;
     }
