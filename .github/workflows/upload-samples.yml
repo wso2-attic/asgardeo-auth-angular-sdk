@@ -45,7 +45,7 @@ jobs:
         echo "::set-output name=LATEST_RELEASE_TAG:: $(get_latest_release)"
 
     - name: Upload Samples to Latest Release
-      uses: svenstaro/upload-release-action@v2
+      uses: svenstaro/upload-release-action@c5cd3d711a186bb9da45dd49f8a7d3c61ad2f4d4
       with:
         repo_token: ${{ secrets.ASGARDIO_GITHUB_BOT_TOKEN }}
         file: assets/*

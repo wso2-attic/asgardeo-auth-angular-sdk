@@ -36,18 +36,10 @@ export class ProfileComponent implements OnInit {
         this.auth.isAuthenticated().then((payload) => {
             this.isAuthenticated = payload;
             if (this.isAuthenticated) {
-                this.getUserInfo();
-                this.getIdToken();
+                this.auth.getBasicUserInfo().then((payload) => this.userInfo = payload);
+                this.auth.getIDToken().then((payload) => this.idToken = this.parseIdToken(payload));
             }
         });
-    }
-
-    getUserInfo() {
-        this.auth.getBasicUserInfo().then((payload) => this.userInfo = payload);
-    }
-
-    getIdToken() {
-        this.auth.getIDToken().then((payload) => this.idToken = this.parseIdToken(payload));
     }
 
     parseIdToken(idToken: string) {
