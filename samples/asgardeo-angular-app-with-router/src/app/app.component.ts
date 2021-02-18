@@ -34,7 +34,7 @@ export class AppComponent {
 
     getClientIdStatus() {
         if (authConfig.clientID === "") {
-            this.isConfigured = false;
+            return false;
         }
         else {
             return true;

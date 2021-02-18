@@ -40,15 +40,15 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         if (this.isInitLogin) {
             this.auth.signIn().then(() => {
-                this.getBasicUserInfo();
-                this.getIdToken();
+                this.auth.getBasicUserInfo().then((payload) => this.userInfo = payload);
+                this.auth.getIDToken().then((payload) => this.idToken = this.parseIdToken(payload));
             });
         }
     }
 
     getClientIdStatus() {
         if (authConfig.clientID === "") {
-            this.isConfigured = false;
+            return false;
         }
         else {
             return true;
@@ -56,12 +56,28 @@ export class AppComponent implements OnInit {
     }
 
     getIsInitLogin() {
-        if (sessionStorage.getItem("isInitLogin") === "true") {
-            return true;
-        }
-        else {
+        if (this.checkForDeniedConsentError()) {
             return false;
         }
+        else {
+            if (sessionStorage.getItem("isInitLogin") === "true") {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    getQueryParams() {
+        return new URLSearchParams(window.location.search);
+    }
+
+    checkForDeniedConsentError() {
+        if (this.getQueryParams().get("error_description") === "User denied the consent") {
+            return true;
+        }
+        return false;
     }
 
     handleLogin() {
@@ -70,14 +86,6 @@ export class AppComponent implements OnInit {
 
     handleLogout() {
         this.auth.signOut().then(() => sessionStorage.setItem("isInitLogin", "false"));
-    }
-
-    getBasicUserInfo() {
-        this.auth.getBasicUserInfo().then((payload) => this.userInfo = payload);
-    }
-
-    getIdToken() {
-        this.auth.getIDToken().then((payload) => this.idToken = this.parseIdToken(payload));
     }
 
     parseIdToken(idToken: string) {
