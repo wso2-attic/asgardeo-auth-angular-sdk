@@ -44,8 +44,8 @@ export class AppComponent implements OnInit {
                     const username = payload?.username?.split('/');
 
                     if (username.length >= 2) {
-                      username.shift();
-                      payload.username = username.join('/');
+                        username.shift();
+                        payload.username = username.join('/');
                     }
 
                     this.userInfo = payload;
@@ -99,50 +99,50 @@ export class AppComponent implements OnInit {
 
     parseIdToken(idToken: string) {
         if (!idToken) {
-          return;
+            return;
         }
 
-        if (typeof idToken !== 'string') {
-          idToken = JSON.stringify(idToken);
+        if (typeof idToken !== "string") {
+            idToken = JSON.stringify(idToken);
         }
 
-        const idTokenSplit = idToken.split('.');
+        const idTokenSplit = idToken.split(".");
         const idTokenObject = {
-          encoded: [],
-          decoded: [],
+            encoded: [],
+            decoded: []
         };
 
         idTokenSplit.forEach((element) => {
-          idTokenObject.encoded.push(element);
+            idTokenObject.encoded.push(element);
         });
 
         idTokenObject.decoded.push(JSON.parse(atob(idTokenObject.encoded[0])));
         idTokenObject.decoded.push(JSON.parse(atob(idTokenObject.encoded[1])));
 
         const sub =
-          idTokenObject['decoded'][1] &&
-          idTokenObject['decoded'][1]?.sub?.split('/');
+            idTokenObject['decoded'][1] &&
+            idTokenObject['decoded'][1]?.sub?.split('/');
 
         if (sub.length >= 2) {
-          sub.shift();
-          idTokenObject['decoded'][1].sub = sub.join('/');
+            sub.shift();
+            idTokenObject['decoded'][1].sub = sub.join('/');
         }
 
         const groups = [];
         idTokenObject['decoded'][1] &&
-          idTokenObject['decoded'][1]?.groups?.forEach((group) => {
-            const groupArrays = group.split('/');
+            idTokenObject['decoded'][1]?.groups?.forEach((group) => {
+                const groupArrays = group.split('/');
 
-            if (groupArrays.length >= 2) {
-              groupArrays.shift();
-              groups.push(groupArrays.join('/'));
-            } else {
-              groups.push(group);
-            }
-          });
+                if (groupArrays.length >= 2) {
+                    groupArrays.shift();
+                    groups.push(groupArrays.join('/'));
+                } else {
+                    groups.push(group);
+                }
+            });
 
         if (idTokenObject['decoded'][1]?.groups) {
-          idTokenObject['decoded'][1].groups = groups;
+            idTokenObject['decoded'][1].groups = groups;
         }
 
         return idTokenObject;
