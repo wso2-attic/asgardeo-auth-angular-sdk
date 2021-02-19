@@ -18,9 +18,10 @@
  */
 
 import { Inject, Injectable } from "@angular/core";
-import { AsgardeoSPAClient, BasicUserInfo, DecodedIDTokenPayload, OIDCEndpoints } from "@asgardeo/auth-spa";
+import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
+import { BasicUserInfo, DecodedIDTokenPayload, OIDCEndpoints } from "../models/asgardeo-spa.models";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 
 @Injectable({

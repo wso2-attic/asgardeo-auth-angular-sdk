@@ -17,13 +17,8 @@
  *
  */
 
-/*
- * Public API Surface of @asgardeo/auth-angular
- */
-
-export * from "./asgardeo-auth.module";
-export * from "./components/asgardeo-sign-in-redirect.component";
-export * from "./guards/asgardeo-auth.guard";
-export * from "./models/asgardeo-config.interface";
-export * from "./models/asgardeo-spa.models";
-export * from "./services/asgardeo-auth.service";
+export {
+    BasicUserInfo,
+    DecodedIDTokenPayload,
+    OIDCEndpoints
+} from "@asgardeo/auth-spa";
