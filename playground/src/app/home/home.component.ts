@@ -18,7 +18,7 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { AsgardeoAuthService } from "@asgardeo/auth-angular";
+import { AsgardeoAuthService, Hooks } from "@asgardeo/auth-angular";
 
 @Component({
     selector: "app-home",
@@ -28,7 +28,11 @@ import { AsgardeoAuthService } from "@asgardeo/auth-angular";
 export class HomeComponent implements OnInit {
     isAuthenticated = false;
 
-    constructor(private auth: AsgardeoAuthService) { }
+    constructor(private auth: AsgardeoAuthService) {
+        this.auth.on(Hooks.SignOut, () => {
+            console.log("You signed out!!!");
+        });
+    }
 
     ngOnInit() {
         this.auth.isAuthenticated().then((status) => {

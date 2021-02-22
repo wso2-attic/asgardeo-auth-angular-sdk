@@ -41,7 +41,7 @@ export class AsgardeoAuthService {
         authorizationCode?: string,
         sessionState?: string
     ) {
-        this.auth.signIn(config, authorizationCode, sessionState);
+        return this.auth.signIn(config, authorizationCode, sessionState);
     };
 
     signInWithRedirect(): Promise<boolean> {
@@ -87,9 +87,7 @@ export class AsgardeoAuthService {
     }
 
     on(hook: Hooks, callback: (response?: any) => void): Promise<void> {
-        if (hook !== Hooks.CustomGrant) {
-            return this.auth.on(hook, callback);
-        }
+        return this.auth.on(hook, callback);
     };
 
     private intializeSPAClient() {
