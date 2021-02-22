@@ -20,5 +20,7 @@
 export {
     BasicUserInfo,
     DecodedIDTokenPayload,
-    OIDCEndpoints
+    Hooks,
+    OIDCEndpoints,
+    SignInConfig
 } from "@asgardeo/auth-spa";

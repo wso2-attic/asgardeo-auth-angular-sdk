@@ -21,7 +21,7 @@ import { Inject, Injectable } from "@angular/core";
 import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
-import { BasicUserInfo, DecodedIDTokenPayload, OIDCEndpoints } from "../models/asgardeo-spa.models";
+import { BasicUserInfo, DecodedIDTokenPayload, Hooks, OIDCEndpoints, SignInConfig } from "../models/asgardeo-spa.models";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 
 @Injectable({
@@ -36,9 +36,13 @@ export class AsgardeoAuthService {
         this.intializeSPAClient();
     }
 
-    signIn(): Promise<BasicUserInfo> {
-        return this.auth.signIn();
-    }
+    signIn(
+        config?: SignInConfig,
+        authorizationCode?: string,
+        sessionState?: string
+    ) {
+        this.auth.signIn(config, authorizationCode, sessionState);
+    };
 
     signInWithRedirect(): Promise<boolean> {
         this.navigator.setRedirectUrl();
@@ -81,6 +85,12 @@ export class AsgardeoAuthService {
     revokeAccessToken(): Promise<boolean> {
         return this.auth.revokeAccessToken();
     }
+
+    on(hook: Hooks, callback: (response?: any) => void): Promise<void> {
+        if (hook !== Hooks.CustomGrant) {
+            return this.auth.on(hook, callback);
+        }
+    };
 
     private intializeSPAClient() {
         this.auth = AsgardeoSPAClient.getInstance();
