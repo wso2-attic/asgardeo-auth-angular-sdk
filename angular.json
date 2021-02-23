@@ -100,7 +100,6 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "options": {
                         "browserTarget": "playground:build",
-                        "port": 3000,
                         "ssl": true
                     },
                     "configurations": {
