@@ -18,15 +18,31 @@
  */
 
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { AsgardeoAuthService, BasicUserInfo } from "@asgardeo/auth-angular";
 import { HomeComponent } from "./home.component";
 
 describe("HomeComponent", () => {
     let component: HomeComponent;
     let fixture: ComponentFixture<HomeComponent>;
 
+    let authService: AsgardeoAuthService;
+    let authServiceStub: Partial<AsgardeoAuthService>;
+
+    authServiceStub = {
+        signIn: () => Promise.resolve({} as BasicUserInfo),
+        isAuthenticated: () => Promise.resolve(true),
+        on: () => Promise.resolve()
+    };
+
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [HomeComponent]
+            declarations: [HomeComponent],
+            providers: [
+                {
+                    provide: AsgardeoAuthService,
+                    useValue: authServiceStub
+                }
+            ]
         })
             .compileComponents();
     });
@@ -34,6 +50,8 @@ describe("HomeComponent", () => {
     beforeEach(() => {
         fixture = TestBed.createComponent(HomeComponent);
         component = fixture.componentInstance;
+
+        authService = TestBed.inject(AsgardeoAuthService);
         fixture.detectChanges();
     });
 

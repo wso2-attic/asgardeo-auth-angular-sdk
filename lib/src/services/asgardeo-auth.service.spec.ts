@@ -20,6 +20,7 @@
 import { TestBed } from "@angular/core/testing";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
+import { Hooks } from "../models/asgardeo-spa.models";
 import { AsgardeoAuthService } from "./asgardeo-auth.service";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 
@@ -33,7 +34,7 @@ describe("AsgardeoAuthService", () => {
     beforeEach(() => {
 
         navigatorServiceStub = {
-            navigateByUrl: (params) => Promise.resolve(true),
+            navigateByUrl: () => Promise.resolve(true),
             setRedirectUrl: () => "",
             getCurrentRoute: () => "fakeUrl",
             getRouteWithoutParams: () => "fakeRoute"
@@ -119,6 +120,14 @@ describe("AsgardeoAuthService", () => {
         expect(getAccessTokenSpy).toHaveBeenCalled();
     });
 
+    it("should call auth.getIDToken when getIDToken is called", () => {
+        const getIDTokenSpy = spyOn(service["auth"], "getIDToken");
+
+        service.getIDToken();
+
+        expect(getIDTokenSpy).toHaveBeenCalled();
+    });
+
     it("should call auth.getDecodedIDToken when getDecodedIDToken is called", () => {
         const getDecodedIDTokenSpy = spyOn(service["auth"], "getDecodedIDToken");
 
@@ -149,5 +158,13 @@ describe("AsgardeoAuthService", () => {
         service.revokeAccessToken();
 
         expect(revokeAccessTokenSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.on when on is called", () => {
+        const onSpy = spyOn(service["auth"], "on");
+
+        service.on(Hooks.SignIn, () => { });
+
+        expect(onSpy).toHaveBeenCalled();
     });
 });
