@@ -28,13 +28,13 @@ describe("HomeComponent", () => {
     let authService: AsgardeoAuthService;
     let authServiceStub: Partial<AsgardeoAuthService>;
 
-    authServiceStub = {
-        signIn: () => Promise.resolve({} as BasicUserInfo),
-        isAuthenticated: () => Promise.resolve(true),
-        on: () => Promise.resolve()
-    };
-
     beforeEach(async () => {
+        authServiceStub = {
+            signIn: () => Promise.resolve({} as BasicUserInfo),
+            isAuthenticated: () => Promise.resolve(true),
+            on: () => Promise.resolve()
+        };
+
         await TestBed.configureTestingModule({
             declarations: [HomeComponent],
             providers: [

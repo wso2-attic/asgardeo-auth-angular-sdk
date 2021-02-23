@@ -32,7 +32,6 @@ describe("AsgardeoAuthService", () => {
     let navigatorServiceStub: Partial<AsgardeoNavigatorService>;
 
     beforeEach(() => {
-
         navigatorServiceStub = {
             navigateByUrl: () => Promise.resolve(true),
             setRedirectUrl: () => "",

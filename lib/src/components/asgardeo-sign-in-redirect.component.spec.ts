@@ -34,7 +34,6 @@ describe("AsgardeoSignInRedirectComponent", () => {
     let navigatorServiceStub: Partial<AsgardeoNavigatorService>;
 
     beforeEach(async () => {
-
         authServiceStub = {
             signIn: () => Promise.resolve({} as BasicUserInfo),
             isAuthenticated: () => Promise.resolve(true)
@@ -74,7 +73,7 @@ describe("AsgardeoSignInRedirectComponent", () => {
     });
 
     it("should call signIn", () => {
-        const signInSpy = spyOn(authService, "signIn").and.resolveTo({ "username": "fakeUser" } as BasicUserInfo);
+        const signInSpy = spyOn(authService, "signIn").and.resolveTo({} as BasicUserInfo);
 
         fixture.detectChanges();
 

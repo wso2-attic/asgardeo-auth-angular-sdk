@@ -28,12 +28,12 @@ describe("ProfileComponent", () => {
     let authService: AsgardeoAuthService;
     let authServiceStub: Partial<AsgardeoAuthService>;
 
-    authServiceStub = {
-        signIn: () => Promise.resolve({} as BasicUserInfo),
-        isAuthenticated: () => Promise.resolve(true)
-    };
-
     beforeEach(async () => {
+        authServiceStub = {
+            signIn: () => Promise.resolve({} as BasicUserInfo),
+            isAuthenticated: () => Promise.resolve(true)
+        };
+
         await TestBed.configureTestingModule({
             declarations: [ProfileComponent],
             providers: [
