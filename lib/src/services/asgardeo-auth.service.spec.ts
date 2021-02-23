@@ -60,7 +60,6 @@ describe("AsgardeoAuthService", () => {
     it("should be created", () => {
         expect(service).toBeTruthy();
         expect(service["auth"]).toBeDefined();
-        expect();
     });
 
     it("should call auth.signIn when signIn is called", () => {

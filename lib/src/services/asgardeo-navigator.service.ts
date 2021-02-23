@@ -24,7 +24,6 @@ import { Router } from "@angular/router";
     providedIn: "root"
 })
 export class AsgardeoNavigatorService {
-
     private readonly router: Router;
 
     constructor(injector: Injector) {

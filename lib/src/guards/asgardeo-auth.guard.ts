@@ -25,7 +25,6 @@ import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
     providedIn: "root"
 })
 export class AsgardeoAuthGuard implements CanActivate, CanActivateChild {
-
     constructor(private auth: AsgardeoAuthService) { }
 
     async canActivate(): Promise<boolean> {

@@ -27,7 +27,6 @@ import { AsgardeoNavigatorService } from "../services/asgardeo-navigator.service
     template: ""
 })
 export class AsgardeoSignInRedirectComponent implements OnInit {
-
     constructor(private auth: AsgardeoAuthService, private navigator: AsgardeoNavigatorService) {
         this.auth.on(Hooks.SignIn, () => {
             this.navigator.navigateByUrl(this.navigator.getRedirectUrl());

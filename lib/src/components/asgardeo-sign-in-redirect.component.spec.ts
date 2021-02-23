@@ -17,7 +17,7 @@
  *
  */
 
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { BasicUserInfo } from "../models/asgardeo-spa.models";
 import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
 import { AsgardeoNavigatorService } from "../services/asgardeo-navigator.service";
@@ -36,7 +36,8 @@ describe("AsgardeoSignInRedirectComponent", () => {
     beforeEach(async () => {
         authServiceStub = {
             signIn: () => Promise.resolve({} as BasicUserInfo),
-            isAuthenticated: () => Promise.resolve(true)
+            isAuthenticated: () => Promise.resolve(true),
+            on: () => Promise.resolve()
         };
 
         navigatorServiceStub = {
@@ -79,16 +80,4 @@ describe("AsgardeoSignInRedirectComponent", () => {
 
         expect(signInSpy).toHaveBeenCalled();
     });
-
-    it("should redirect back after signIn resolves", fakeAsync(() => {
-        const getRedirectUrlSpy = spyOn(navigatorService, "getRedirectUrl").and.returnValue("fakeRedirectUrl");
-        const navigateByUrlSpy = spyOn(navigatorService, "navigateByUrl");
-        spyOn(authService, "isAuthenticated").and.resolveTo(false);
-
-        fixture.detectChanges();
-        tick();
-
-        expect(getRedirectUrlSpy).toHaveBeenCalled();
-        expect(navigateByUrlSpy).toHaveBeenCalledWith("fakeRedirectUrl");
-    }));
 });

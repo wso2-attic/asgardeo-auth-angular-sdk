@@ -62,8 +62,9 @@ module.exports = {
                     "allowPrivateClassPropertyAccess": true
                 }
             ],
-            "no-shadow": "off",
-            "@typescript-eslint/no-shadow": ["error"]
+            "@typescript-eslint/no-shadow": ["error"],
+            "@typescript-eslint/brace-style": ["error", "stroustrup"],
+            "padded-blocks": ["error", "never"]
         }
     },
     {
