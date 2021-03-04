@@ -24,6 +24,7 @@
 export * from "./asgardeo-auth.module";
 export * from "./components/asgardeo-sign-in-redirect.component";
 export * from "./guards/asgardeo-auth.guard";
+export * from "./interceptors/asgardeo-auth.interceptor";
 export * from "./models/asgardeo-config.interface";
 export * from "./models/asgardeo-spa.models";
 export * from "./services/asgardeo-auth.service";

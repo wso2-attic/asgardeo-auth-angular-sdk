@@ -16,9 +16,10 @@
  * under the License.
  *
  */
-
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
 import { AsgardeoAuthService, Hooks } from "@asgardeo/auth-angular";
+import { Observable } from "rxjs";
 
 @Component({
     selector: "app-home",
@@ -28,7 +29,7 @@ import { AsgardeoAuthService, Hooks } from "@asgardeo/auth-angular";
 export class HomeComponent implements OnInit {
     isAuthenticated = false;
 
-    constructor(private auth: AsgardeoAuthService) {
+    constructor(private auth: AsgardeoAuthService, private http: HttpClient) {
         this.auth.on(Hooks.SignOut, () => {
             console.log("You signed out!!!");
         });
@@ -46,5 +47,23 @@ export class HomeComponent implements OnInit {
 
     signOut(): void {
         this.auth.signOut();
+    }
+
+    /* eslint-disable */
+    sendHTTPRequest(): Observable<any> {
+        const url = "https://localhost:9443/scim2/Me";
+        const httpOptions = {
+            headers: new HttpHeaders({
+                "Accept": "application/json",
+                "Content-Type": "application/scim+json",
+            })
+        };
+        return this.http.get(url, httpOptions);
+    }
+
+    showHTTPResponse() {
+        this.sendHTTPRequest().subscribe((response) => {
+            console.log(response);
+        });
     }
 }

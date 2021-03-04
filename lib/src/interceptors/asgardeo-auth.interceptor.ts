@@ -18,14 +18,47 @@
  */
 
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { catchError, mergeMap } from "rxjs/operators";
+import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
+import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
+import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
 
 @Injectable()
 export class AsgardeoAuthInterceptor implements HttpInterceptor {
-    constructor() { }
+    constructor(
+        private auth: AsgardeoAuthService,
+        @Inject(ASGARDEO_CONFIG) private authConfig: AsgardeoConfigInterface) { }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-        return next.handle(request);
+        if (this.canAttachToken(request)) {
+            return this.auth.getAccessToken()
+                .pipe(
+                    mergeMap(token => {
+                        if (token) {
+                            const header = "Bearer " + token;
+                            const headers = request.headers.set("Authorization", header);
+                            request = request.clone({ headers });
+                        }
+                        return next.handle(request);
+                    }),
+                    catchError(_ => next.handle(request)),
+                );
+        }
+        else {
+            return next.handle(request);
+        }
+    }
+
+    private canAttachToken(request: HttpRequest<any>): boolean {
+        const url = request.url;
+        if (url.startsWith(this.authConfig.serverOrigin)) {
+            return true;
+        }
+        else {
+            return false;
+        }
+
     }
 }
