@@ -24,6 +24,7 @@ export {
     Hooks,
     HttpRequestConfig,
     HttpResponse,
+    Method,
     OIDCEndpoints,
     SignInConfig
 } from "@asgardeo/auth-spa";

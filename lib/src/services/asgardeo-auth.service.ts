@@ -50,7 +50,7 @@ export class AsgardeoAuthService {
         authorizationCode?: string,
         sessionState?: string) {
         return this.auth.signIn(config, authorizationCode, sessionState);
-    };
+    }
 
     signInWithRedirect(): Promise<boolean> {
         this.navigator.setRedirectUrl();
@@ -99,11 +99,11 @@ export class AsgardeoAuthService {
             return this.auth.on(hook, callback, id);
         }
         return this.auth.on(hook, callback);
-    };
+    }
 
     requestCustomGrant(config: CustomGrantConfig): Promise<HttpResponse<any> | BasicUserInfo> {
         return this.auth.requestCustomGrant(config);
-    };
+    }
 
     httpRequest(config: HttpRequestConfig): Promise<HttpResponse<any>> {
         return this.auth.httpRequest(config);

@@ -18,7 +18,7 @@
  */
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { AsgardeoAuthService, Hooks } from "@asgardeo/auth-angular";
+import { AsgardeoAuthService, Hooks, Method } from "@asgardeo/auth-angular";
 import { Observable } from "rxjs";
 
 @Component({
@@ -61,8 +61,25 @@ export class HomeComponent implements OnInit {
         return this.http.get(url, httpOptions);
     }
 
+    /* eslint-disable */
+    sendHTTPRequestWithSDK(): Promise<any> {
+        const requestConfig = {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/scim+json",
+            },
+            method: "GET" as Method,
+            url: "https://localhost:9443/scim2/Me"
+        };
+        return this.auth.httpRequest(requestConfig);
+    }
+
     showHTTPResponse() {
-        this.sendHTTPRequest().subscribe((response) => {
+        // this.sendHTTPRequest().subscribe((response) => {
+        //     console.log(response);
+        // });
+
+        this.sendHTTPRequestWithSDK().then((response) => {
             console.log(response);
         });
     }
