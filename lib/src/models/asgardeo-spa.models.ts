@@ -19,7 +19,9 @@
 
 export {
     BasicUserInfo,
+    CustomGrantConfig,
     DecodedIDTokenPayload,
+    HttpResponse,
     OIDCEndpoints,
     SignInConfig
 } from "@asgardeo/auth-spa";
