@@ -21,15 +21,9 @@ export {
     BasicUserInfo,
     CustomGrantConfig,
     DecodedIDTokenPayload,
+    Hooks,
+    HttpRequestConfig,
     HttpResponse,
     OIDCEndpoints,
     SignInConfig
 } from "@asgardeo/auth-spa";
-
-/* eslint-disable */
-export enum Hooks {
-    SignIn = "sign-in",
-    SignOut = "sign-out",
-    RevokeAccessToken = "revoke-access-token",
-    CustomGrant = "custom-grant"
-}

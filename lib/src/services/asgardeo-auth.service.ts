@@ -26,6 +26,7 @@ import {
     CustomGrantConfig,
     DecodedIDTokenPayload,
     Hooks,
+    HttpRequestConfig,
     HttpResponse,
     OIDCEndpoints,
     SignInConfig
@@ -103,6 +104,14 @@ export class AsgardeoAuthService {
     requestCustomGrant(config: CustomGrantConfig): Promise<HttpResponse<any> | BasicUserInfo> {
         return this.auth.requestCustomGrant(config);
     };
+
+    httpRequest(config: HttpRequestConfig): Promise<HttpResponse<any>> {
+        return this.auth.httpRequest(config);
+    }
+
+    httpRequestAll(config: HttpRequestConfig[]): Promise<HttpResponse<any>[]> {
+        return this.auth.httpRequestAll(config);
+    }
 
     private intializeSPAClient() {
         this.auth = AsgardeoSPAClient.getInstance();

@@ -59,6 +59,5 @@ export class AsgardeoAuthInterceptor implements HttpInterceptor {
         else {
             return false;
         }
-
     }
 }

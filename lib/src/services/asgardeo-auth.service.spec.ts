@@ -181,5 +181,4 @@ describe("AsgardeoAuthService", () => {
 
         expect(requestCustomGrantSpy).toHaveBeenCalled();
     });
-
 });
