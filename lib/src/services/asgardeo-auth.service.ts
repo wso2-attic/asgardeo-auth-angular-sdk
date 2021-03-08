@@ -93,7 +93,7 @@ export class AsgardeoAuthService {
         return this.auth.revokeAccessToken();
     }
 
-    on(hook: Hooks, callback: (response?: any) => void, id: string): Promise<void> {
+    on(hook: Hooks, callback: (response?: any) => void, id?: string): Promise<void> {
         if (hook === Hooks.CustomGrant) {
             return this.auth.on(hook, callback, id);
         }
