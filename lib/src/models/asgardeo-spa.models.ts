@@ -30,5 +30,6 @@ export {
 export enum Hooks {
     SignIn = "sign-in",
     SignOut = "sign-out",
-    RevokeAccessToken = "revoke-access-token"
+    RevokeAccessToken = "revoke-access-token",
+    CustomGrant = "custom-grant"
 }
