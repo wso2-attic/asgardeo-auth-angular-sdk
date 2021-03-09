@@ -75,12 +75,12 @@ export class HomeComponent implements OnInit {
     }
 
     showHTTPResponse() {
-        // this.sendHTTPRequest().subscribe((response) => {
-        //     console.log(response);
-        // });
-
-        this.sendHTTPRequestWithSDK().then((response) => {
+        this.sendHTTPRequest().subscribe((response) => {
             console.log(response);
         });
+
+        // this.sendHTTPRequestWithSDK().then((response) => {
+        //     console.log(response);
+        // });
     }
 }

@@ -32,7 +32,7 @@ export class AsgardeoAuthInterceptor implements HttpInterceptor {
         @Inject(ASGARDEO_CONFIG) private authConfig: AsgardeoConfigInterface) { }
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-        if (this.canAttachToken(request)) {
+        if (this.canAttachToken(request, this.authConfig["resourceServerURLs"])) {
             return this.auth.getAccessToken()
                 .pipe(
                     mergeMap(token => {
@@ -43,7 +43,10 @@ export class AsgardeoAuthInterceptor implements HttpInterceptor {
                         }
                         return next.handle(request);
                     }),
-                    catchError(_ => next.handle(request)),
+                    catchError(error => {
+                        console.error(error);
+                        return next.handle(request);
+                    }),
                 );
         }
         else {
@@ -51,13 +54,15 @@ export class AsgardeoAuthInterceptor implements HttpInterceptor {
         }
     }
 
-    private canAttachToken(request: HttpRequest<any>): boolean {
-        const url = request.url;
-        if (url.startsWith(this.authConfig.serverOrigin)) {
-            return true;
+    private canAttachToken(request: HttpRequest<any>, allowedUrls: string[]): boolean {
+        let matches = false;
+        if (allowedUrls) {
+            allowedUrls.forEach((baseUrl) => {
+                if (request.url?.startsWith(baseUrl)) {
+                    matches = true;
+                }
+            });
         }
-        else {
-            return false;
-        }
+        return matches;
     }
 }

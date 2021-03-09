@@ -41,7 +41,8 @@ import { ProfileComponent } from "./profile/profile.component";
             signOutRedirectURL: "https://localhost:4200",
             clientID: "",
             serverOrigin: "https://localhost:9443",
-            scope: ["internal_login"]
+            scope: ["internal_login"],
+            resourceServerURLs: ["https://localhost:9443/scim2"]
         })
     ],
     providers: [
