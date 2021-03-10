@@ -20,7 +20,7 @@
 import { TestBed } from "@angular/core/testing";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
-import { CustomGrantConfig, Hooks } from "../models/asgardeo-spa.models";
+import { CustomGrantConfig, Hooks, HttpRequestConfig } from "../models/asgardeo-spa.models";
 import { AsgardeoAuthService } from "./asgardeo-auth.service";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 
@@ -180,5 +180,21 @@ describe("AsgardeoAuthService", () => {
         service.requestCustomGrant({} as CustomGrantConfig);
 
         expect(requestCustomGrantSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.httpRequest when httpRequest is called", () => {
+        const httpRequestSpy = spyOn(service["auth"], "httpRequest");
+
+        service.httpRequest({} as HttpRequestConfig);
+
+        expect(httpRequestSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.httpRequestAll when httpRequestAll is called", () => {
+        const httpRequestAllSpy = spyOn(service["auth"], "httpRequestAll");
+
+        service.httpRequestAll({} as HttpRequestConfig[]);
+
+        expect(httpRequestAllSpy).toHaveBeenCalled();
     });
 });

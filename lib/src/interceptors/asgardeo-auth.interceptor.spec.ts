@@ -18,15 +18,35 @@
  */
 
 import { TestBed } from "@angular/core/testing";
+import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
+import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
 import { AsgardeoAuthInterceptor } from "./asgardeo-auth.interceptor";
 
 
 describe("AsgardeoAuthInterceptor", () => {
-    beforeEach(() => TestBed.configureTestingModule({
-        providers: [
-            AsgardeoAuthInterceptor
-        ]
-    }));
+    let authService: AsgardeoAuthService;
+    let authServiceStub: Partial<AsgardeoAuthService>;
+
+    beforeEach(() => {
+        authServiceStub = {
+            isAuthenticated: () => Promise.resolve(true)
+        };
+
+        TestBed.configureTestingModule({
+            providers: [
+                AsgardeoAuthInterceptor,
+                {
+                    provide: ASGARDEO_CONFIG,
+                    useValue: {}
+                },
+                {
+                    provide: AsgardeoAuthService,
+                    useValue: authServiceStub
+                }
+            ]
+        })
+        authService = TestBed.inject(AsgardeoAuthService);
+    });
 
     it("should be created", () => {
         const interceptor: AsgardeoAuthInterceptor = TestBed.inject(AsgardeoAuthInterceptor);
