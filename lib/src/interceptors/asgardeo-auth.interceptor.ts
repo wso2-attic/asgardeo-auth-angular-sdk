@@ -19,7 +19,7 @@
 
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { from, Observable } from "rxjs";
 import { catchError, mergeMap } from "rxjs/operators";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
@@ -33,7 +33,7 @@ export class AsgardeoAuthInterceptor implements HttpInterceptor {
 
     intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
         if (this.canAttachToken(request, this.authConfig["resourceServerURLs"])) {
-            return this.auth.getAccessToken()
+            return from(this.auth.getAccessToken())
                 .pipe(
                     mergeMap(token => {
                         if (token) {
