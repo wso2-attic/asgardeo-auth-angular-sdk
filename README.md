@@ -186,8 +186,6 @@ import { AsgardeoAuthService } from "@asgardeo/auth-angular";
     styleUrls: ["./app.component.css"]
 })
 export class AppComponent {
-    isAuthenticated: boolean;
-
     constructor(private auth: AsgardeoAuthService) { }
 
     // Use this function in a login button to simply sign-in.    
@@ -218,7 +216,13 @@ export class AppComponent {
   - [getOIDCServiceEndpoints](#getoidcserviceendpoints)
   - [refreshAccessToken](#refreshaccesstoken)
   - [revokeAccessToken](#revokeaccesstoken)
+  - [httpRequest](#httprequest)
+  - [httpRequestAll](#httprequestall)
+  - [requestCustomGrant](#requestcustomgrant)
 - [`AsgardeoAuthGuard`](#asgardeoauthguard)
+- [`AsgardeoAuthInterceptor`](#asgardeoauthinterceptor)
+
+---
 
 ### `AsgardeoAuthModule`
 
@@ -249,11 +253,13 @@ This SDK currently supports following configuration parameters defined in [@asga
 | `validateIDToken`(optional)     | `boolean`                            | `true`                                                      | Allows you to enable/disable JWT ID token validation after obtaining the ID token.          |
 | `clockTolerance`(optional)      | `number`                             | `60`                                                        | Allows you to configure the leeway when validating the id_token.                            |
 
+---
+
 ### `AsgardeoAuthService`
 
 In the components, `AsgardeoAuthService` can be used to take advantage of all of supported authentication features provided. This service inherits from the `IdentityClient` of the [@asgardeo/auth-spa](https://github.com/asgardeo/asgardeo-auth-spa-sdk).
 
-#### signIn
+### signIn
 
 ```typescript
 signIn(): Promise<BasicUserInfo>
@@ -263,7 +269,7 @@ As the name implies, this method is used to sign-in users. This method will have
 
 Therefore, developers can use this method to custom implement their own redirect flow after sign-in.
 
-#### signInWithRedirect
+### signInWithRedirect
 
 ```typescript
 signInWithRedirect(): Promise<boolean>
@@ -299,7 +305,7 @@ AsgardeoAuthModule.forRoot({
 })
 ```    
 
-#### signOut
+### signOut
 
 ```typescript
 signOut(): Promise<boolean>
@@ -307,7 +313,7 @@ signOut(): Promise<boolean>
 This method ends the user session at the identity provider and logs the user out.
 
 
-#### isAuthenticated
+### isAuthenticated
 
 ```typeScript
 isAuthenticated(): Promise<boolean>
@@ -315,7 +321,7 @@ isAuthenticated(): Promise<boolean>
 
 This returns a promise that resolves into a boolean value that indicates if the user is authenticated or not.
 
-#### getBasicUserInfo
+### getBasicUserInfo
 
 ```typescript
 getBasicUserInfo(): Promise<BasicUserInfo>
@@ -332,7 +338,7 @@ This method returns a promise that resolves with a [`BasicUserInfo`](https://git
 | `tenantDomain`  | `string` | The tenant domain to which the user belongs.                                                       |
 | `sessionState`  | `string` | The session state.                                                                                 |
 
-#### getAccessToken
+### getAccessToken
 
 ```typescript
 getAccessToken(): Promise<string>
@@ -340,7 +346,7 @@ getAccessToken(): Promise<string>
 
 This returns a promise that resolves with the access token. 
 
-#### getIDToken
+### getIDToken
 
 ```TypeScript
 getIDToken(): Promise<string>
@@ -348,7 +354,7 @@ getIDToken(): Promise<string>
 
 This returns a promise that resolves with the id token.
 
-#### getDecodedIDToken
+### getDecodedIDToken
 
 ```typescript
 getDecodedIDToken(): Promise<DecodedIDTokenPayload>
@@ -364,7 +370,7 @@ This method returns a promise that resolves with a [`DecodedIDTokenPayload`](htt
 | email              | `string`               | The email address.                             |
 | preferred_username | `string`               | The preferred username.                        |
 
-#### getOIDCServiceEndpoints
+### getOIDCServiceEndpoints
 
 ```TypeScript
 getOIDCServiceEndpoints(): Promise<OIDCEndpoints>
@@ -381,7 +387,7 @@ This method returns a promise that resolves with an [`OIDCEndpoints`](https://gi
 | `"token"`             | The endpoint to which the token request should be sent.                            |
 | `"wellKnown"`         | The well-known endpoint from which OpenID endpoints of the server can be obtained. |
 
-#### refreshAccessToken
+### refreshAccessToken
 
 ```typescript
 refreshAccessToken(): Promise<BasicUserInfo>;
@@ -391,13 +397,137 @@ This refreshes the access token and stores the refreshed session information in 
 
 This method also returns a Promise that resolves with a [`BasicUserInfo`](#https://github.com/asgardeo/asgardeo-auth-spa-sdk#BasicUserInfo) object.
 
-#### revokeAccessToken
+### revokeAccessToken
 
 ```typescript
 revokeAccessToken(): Promise<boolean>
 ```
 
 This method revokes the access token and clears the session information from the storage.
+
+### httpRequest
+
+```typescript
+httpRequest(config: `HttpRequestConfig`): Promise<HttpResponse>;
+```
+
+#### Arguments
+
+1. config: `HttpRequestConfig`
+   A config object with the settings necessary to send http requests. This object is similar to the `AxiosRequestConfig`.
+
+#### Returns
+
+A Promise that resolves with the response.
+
+#### Description
+
+This method is used to send http requests to the Identity Server. The developer doesn't need to manually attach the access token since this method does it automatically.
+
+If the `storage` type is set to `sessionStorage` or `localStorage`, the developer may choose to implement their own ways of sending http requests by obtaining the access token from the relevant storage medium and attaching it to the header. However, if the `storage` is set to `webWorker`, this is the _ONLY_ way http requests can be sent.
+
+This method accepts a config object which is of type `AxiosRequestConfig`. If you have used `axios` before, you can use the `httpRequest` in the exact same way.
+
+For example, to get the user profile details after signing in, you can query the `me` endpoint as follows:
+
+#### Example
+
+```TypeScript
+const auth = AsgardeoSPAClient.getInstance();
+
+const requestConfig = {
+    headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/scim+json"
+    },
+    method: "GET",
+    url: "https://localhost:9443/scim2/me"
+};
+
+return auth.httpRequest(requestConfig)
+    .then((response) => {
+        // console.log(response);
+    })
+    .catch((error) => {
+        // console.error(error);
+    });
+```
+
+### httpRequestAll
+
+```typescript
+httpRequestAll(config[]: ): Promise<[]>;
+```
+
+#### Arguments
+
+1. config[]: `HttpRequestConfig[]`
+   An array config objects with the settings necessary to send http requests. This object is similar to the `AxiosRequestConfig`.
+
+#### Returns
+
+A Promise that resolves with the responses.
+
+#### Description
+
+This method is used to send multiple http requests at the same time. This works similar to `axios.all()`. An array of config objects need to be passed as the argument and an array of responses will be returned in a `Promise` in the order in which the configs were passed.
+
+#### Example
+
+```typeScript
+auth.httpRequestAll(configs).then((responses) => {
+    response.forEach((response) => {
+        // console.log(response);
+    });
+}).catch((error) => {
+    // console.error(error);
+});
+```
+
+### requestCustomGrant
+
+```typescript
+requestCustomGrant(config: CustomGranConfig): Promise<HttpResponse | BasicUserInfo>;
+```
+
+#### Arguments
+
+1. config: [`CustomGrantConfig`](#CustomGrantConfig)
+   A config object to configure the custom-grant request. To learn more about the different attributes that can be used with config object, see the [`CustomGrantConfig`](#CustomGrantConfig) section.
+
+#### Returns
+
+A Promise that resolves either with the response or the [`BasicUserInfo`](#BasicUserInfo).
+
+#### Description
+
+This method allows developers to use custom grants provided by their Identity Servers. This method accepts an object that has the following attributes as the argument.
+
+The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [on()](#on) section for more information.
+
+```TypeScript
+    const config = {
+      attachToken: false,
+      data: {
+          client_id: "{{clientID}}",
+          grant_type: "account_switch",
+          scope: "{{scope}}",
+          token: "{{token}}",
+      },
+      id: "account-switch",
+      returnResponse: true,
+      returnsSession: true,
+      signInRequired: true
+    }
+
+    auth.requestCustomGrant(config).then((response)=>{
+        console.log(response);
+    }).catch((error)=>{
+        console.error(error);
+    });
+```
+
+---
 
 ### `AsgardeoAuthGuard`
 
@@ -422,6 +552,77 @@ const routes: Routes = [
     ...
 ];
 ```
+---
+
+### `AsgardeoAuthInterceptor`
+
+```typescript
+// app.module.ts
+
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { NgModule } from "@angular/core";
+import { BrowserModule } from "@angular/platform-browser";
+import { AsgardeoAuthInterceptor, AsgardeoAuthModule } from "@asgardeo/auth-angular";
+import { AppComponent } from "./app.component";
+
+@NgModule({
+    declarations: [
+        AppComponent,
+    ],
+    imports: [
+        BrowserModule,
+        HttpClientModule,
+        AsgardeoAuthModule.forRoot({
+            ...
+            serverOrigin: "https://localhost:9443",
+            scope: ["internal_login"],
+            resourceServerURLs: [
+                "https://localhost:9443/scim2",
+                ...
+            ]
+        })
+    ],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AsgardeoAuthInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+
+```typescript
+// app.component.ts
+
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Component } from "@angular/core";
+import { Observable } from "rxjs";
+
+@Component({
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"]
+})
+export class AppComponent {
+    constructor(private http: HttpClient) { }
+
+    sendHTTPRequest(): Observable<any> {
+        const url = "https://localhost:9443/scim2/Me";
+        const httpOptions = {
+            headers: new HttpHeaders({
+                "Accept": "application/json",
+                "Content-Type": "application/scim+json",
+            })
+        };
+        return this.http.get(url, httpOptions);
+    }
+}
+```
+---
 
 ## Develop
 
