@@ -26,5 +26,7 @@ export {
     HttpResponse,
     Method,
     OIDCEndpoints,
-    SignInConfig
+    ResponseMode,
+    SignInConfig,
+    Storage
 } from "@asgardeo/auth-spa";
