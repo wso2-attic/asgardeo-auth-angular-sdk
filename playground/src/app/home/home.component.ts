@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.auth.isAuthenticated().then((status) => {
             this.isAuthenticated = status;
         });
@@ -49,32 +49,32 @@ export class HomeComponent implements OnInit {
         this.auth.signOut();
     }
 
-    /* eslint-disable */
     sendHTTPRequest(): Observable<any> {
         const url = "https://localhost:9443/scim2/Me";
         const httpOptions = {
             headers: new HttpHeaders({
-                "Accept": "application/json",
+                Accept: "application/json",
                 "Content-Type": "application/scim+json",
             })
         };
+
         return this.http.get(url, httpOptions);
     }
 
-    /* eslint-disable */
     sendHTTPRequestWithSDK(): Promise<any> {
         const requestConfig = {
             headers: {
-                "Accept": "application/json",
+                Accept: "application/json",
                 "Content-Type": "application/scim+json",
             },
             method: "GET" as Method,
             url: "https://localhost:9443/scim2/Me"
         };
+
         return this.auth.httpRequest(requestConfig);
     }
 
-    showHTTPResponse() {
+    showHTTPResponse(): void {
         this.sendHTTPRequest().subscribe((response) => {
             console.log(response);
         });

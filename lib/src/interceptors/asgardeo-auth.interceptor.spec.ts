@@ -22,7 +22,6 @@ import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
 import { AsgardeoAuthInterceptor } from "./asgardeo-auth.interceptor";
 
-
 describe("AsgardeoAuthInterceptor", () => {
     let authService: AsgardeoAuthService;
     let authServiceStub: Partial<AsgardeoAuthService>;
@@ -44,7 +43,7 @@ describe("AsgardeoAuthInterceptor", () => {
                     useValue: authServiceStub
                 }
             ]
-        })
+        });
         authService = TestBed.inject(AsgardeoAuthService);
     });
 

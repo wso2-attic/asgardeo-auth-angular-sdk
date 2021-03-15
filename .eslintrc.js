@@ -64,7 +64,8 @@ module.exports = {
             ],
             "@typescript-eslint/no-shadow": ["error"],
             "@typescript-eslint/brace-style": ["error", "stroustrup"],
-            "padded-blocks": ["error", "never"]
+            "padded-blocks": ["error", "never"],
+            "newline-before-return": ["error"]
         }
     },
     {

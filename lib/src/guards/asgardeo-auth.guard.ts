@@ -32,6 +32,7 @@ export class AsgardeoAuthGuard implements CanActivate, CanActivateChild {
         if (isAuthenticated) {
             return true;
         }
+
         return false;
     }
 

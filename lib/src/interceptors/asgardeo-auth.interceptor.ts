@@ -41,10 +41,12 @@ export class AsgardeoAuthInterceptor implements HttpInterceptor {
                             const headers = request.headers.set("Authorization", header);
                             request = request.clone({ headers });
                         }
+
                         return next.handle(request);
                     }),
                     catchError(error => {
                         console.error(error);
+
                         return next.handle(request);
                     }),
                 );
@@ -63,6 +65,7 @@ export class AsgardeoAuthInterceptor implements HttpInterceptor {
                 }
             });
         }
+
         return matches;
     }
 }

@@ -46,16 +46,14 @@ export class AsgardeoAuthService {
         this.auth.initialize(this.authConfig);
     }
 
-    signIn(
-        config?: SignInConfig,
-        authorizationCode?: string,
-        sessionState?: string) {
+    signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string): Promise<BasicUserInfo> {
         return this.auth.signIn(config, authorizationCode, sessionState);
     }
 
     signInWithRedirect(): Promise<boolean> {
         this.navigator.setRedirectUrl();
         const redirectRoute = this.navigator.getRouteWithoutParams(this.authConfig.signInRedirectURL);
+
         return this.navigator.navigateByUrl(redirectRoute);
     }
 
@@ -97,8 +95,9 @@ export class AsgardeoAuthService {
 
     on(hook: Hooks, callback: (response?: any) => void, id?: string): Promise<void> {
         if (hook === Hooks.CustomGrant) {
-            return this.auth.on(hook, callback, id!);
+            return this.auth.on(hook, callback, id as string);
         }
+
         return this.auth.on(hook, callback);
     }
 
