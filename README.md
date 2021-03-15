@@ -17,6 +17,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Try Out the Sample Apps](#try-out-the-sample-apps)
 - [Getting Started](#getting-started)
 - [APIs](#apis)
+- [Models](#models)
 - [Develop](#develop)
   - [Prerequisites](#prerequisites)
   - [Installing Dependencies](#installing-dependencies)
@@ -238,20 +239,26 @@ Pass configuration parameters for authentication into `AsgardeoAuthModule` using
 
 This SDK currently supports following configuration parameters defined in [@asgardeo/oidc-spa](https://github.com/asgardeo/asgardeo-auth-spa-sdk) 
 
-| Attribute                       | Type                                 | Default Value                                               | Description                                                                                 |
-| :------------------------------ | :----------------------------------- | :---------------------------------------------------------- | :------------------------------------------------------------------------------------------ |
-| `signInRedirectURL`             | `string`                             | ""                                                          | The URL to redirect to after the user authorizes the client app.                            |
-| `clientID`                      | `string`                             | ""                                                          | The client ID of the OIDC application hosted in the Asgardeo.                               |
-| `serverOrigin`                  | `string`                             | ""                                                          | The origin of the Identity Provider.                                                        |
-| `signOutRedirectURL` (optional) | `string`                             | `signInRedirectURL`                                         | The URL to redirect to after the user signs out.                                            |
-| `clientHost` (optional)         | `string`                             | The origin of the client app obtained using `window.origin` | The hostname of the client app.                                                             |
-| `clientSecret` (optional)       | `string`                             | ""                                                          | The client secret of the OIDC application                                                   |
-| `enablePKCE` (optional)         | `boolean`                            | `true`                                                      | Specifies if a PKCE should be sent with the request for the authorization code.             |
-| `prompt` (optional)             | `string`                             | ""                                                          | Specifies the prompt type of an OIDC request                                                |
-| `scope` (optional)              | `string[]`                           | `["openid"]`                                                | Specifies the requested scopes                                                              |
-| `storage` (optional)            | `"sessionStorage"`, `"localStorage"` | `"sessionStorage"`                                          | The storage medium where the session information such as the access token should be stored. |
-| `validateIDToken`(optional)     | `boolean`                            | `true`                                                      | Allows you to enable/disable JWT ID token validation after obtaining the ID token.          |
-| `clockTolerance`(optional)      | `number`                             | `60`                                                        | Allows you to configure the leeway when validating the id_token.                            |
+| Attribute                    | Required/Optional                               | Type                                                | Default Value                                                           | Description                                                                                                                                                                                                                                                                                                                                |
+| :--------------------------- | :---------------------------------------------- | :-------------------------------------------------- | :---------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `signInRedirectURL`          | Required                                        | `string`                                            | ""                                                                      | The URL to redirect to after the user authorizes the client app. eg: `https//localhost:5000/sign-in`                                                                                                                                                                                                                                       |
+| `signOutRedirectURL`         | Optional                                        | `string`                                            | The `signInRedirectURL` URL will be used if this value is not provided. | The URL to redirect to after the user                                                                                                                                                                                                                                                                                                      | signs out. eg: `https://localhost:5000/dashboard`                                                                                                           |
+| `clientHost`                 | Optional                                        | `string`                                            | The origin of the client app obtained using `window.origin`             | The hostname of the client app. eg: `https://localhost:5000`                                                                                                                                                                                                                                                                               |
+| `clientID`                   | Required                                        | `string`                                            | ""                                                                      | The client ID of the OIDC application hosted in the Asgardeo.                                                                                                                                                                                                                                                                              |
+| `clientSecret`               | Optional                                        | `string`                                            | ""                                                                      | The client secret of the OIDC application                                                                                                                                                                                                                                                                                                  |
+| `enablePKCE`                 | Optional                                        | `boolean`                                           | `true`                                                                  | Specifies if a PKCE should be sent with the request for the authorization code.                                                                                                                                                                                                                                                            |
+| `prompt`                     | Optional                                        | `string`                                            | ""                                                                      | Specifies the prompt type of an OIDC request                                                                                                                                                                                                                                                                                               |
+| `responseMode`               | Optional                                        | `ResponseMode`                                      | `"query"`                                                               | Specifies the response mode. The value can either be `query` or `form_post`                                                                                                                                                                                                                                                                |
+| `scope`                      | Optional                                        | `string[]`                                          | `["openid"]`                                                            | Specifies the requested scopes.                                                                                                                                                                                                                                                                                                            |
+| `serverOrigin`               | Required                                        | `string`                                            | ""                                                                      | The origin of the Identity Provider. eg: `https://www.asgardeo.io`                                                                                                                                                                                                                                                                         |
+| `endpoints`                  | Optional                                        | `OIDCEndpoints`                                     | [OIDC Endpoints Default Values](#oidc-endpoints)                        | The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS                                                                                                                                                                                                                                                                       | using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be | used. However, if the `overrideWellEndpointConfig` is set to `true`, then this will override the endpoints obtained from the `.well-known` endpoint. |
+| `overrideWellEndpointConfig` | Optional                                        | `boolean`                                           | `false`                                                                 | If this option is set to `true`, then the `endpoints` object will override endpoints obtained                                                                                                                                                                                                                                              | from the `.well-known` endpoint. If this is set to `false`, then this will be used as a fallback if the request to the `.well-known` endpoint fails.        |
+| `wellKnownEndpoint`          | Optional                                        | `string`                                            | `"/oauth2/token/.well-known/openid-configuration"`                      | The URL of the `.well-known` endpoint.                                                                                                                                                                                                                                                                                                     |
+| `validateIDToken`            | Optional                                        | `boolean`                                           | `true`                                                                  | Allows you to enable/disable JWT ID token validation after obtaining the ID token.                                                                                                                                                                                                                                                         |
+| `clockTolerance`             | Optional                                        | `number`                                            | `60`                                                                    | Allows you to configure the leeway when validating the id_token.                                                                                                                                                                                                                                                                           |
+| [`storage`](#storage)        | Optional                                        | `"sessionStorage"`, `"webWorker"`, `"localStorage"` | `"sessionStorage"`                                                      | The storage medium where the session information such as the access token should be stored.                                                                                                                                                                                                                                                |                                                                                                                                                             |
+| `resourceServerURLs`         | Required if the `storage` is set to `webWorker` | `string[]`                                          | `[]`                                                                    | The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied. |                                                                                                                                                             |
+| `requestTimeout`             | Optional                                        | `number`                                            | 60000 (seconds)                                                         | Specifies in seconds how long a request to the web worker should wait before being timed out.                                                                                                                                                                                                                                              |
 
 ---
 
@@ -262,12 +269,25 @@ In the components, `AsgardeoAuthService` can be used to take advantage of all of
 ### signIn
 
 ```typescript
-signIn(): Promise<BasicUserInfo>
+signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string): Promise<BasicUserInfo>
 ```
 
-As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates generates the authorization URL and takes the user to the identity provider, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authenticating themselves with the server. 
+#### Arguments
 
-Therefore, developers can use this method to custom implement their own redirect flow after sign-in.
+1. config?: [`SignInConfig`](#SignInConfig) (optional)
+   An object that contains attributes that allows you to configure sign in. The `forceInit` attribute of this object, allows you to force a request to the `.well-known` endpoint even if a request has previously been sent. You can also pass key-value pairs that you want to be appended as path parameters to the authorization URL to this object. To learn more, refer to [`SignInConfig`](#SignInConfig). This object is needed only during the authorization-url-generation phase.
+
+2. authorizationCode?: `string` (optional)
+   The `signIn` method can be passed the authorization code as an argument, which will be used to obtain the token during the token-request phase of the method. This allows developers to use different response modes such as `form_post`. To learn more about the `form_post` method refer to the [Using the `form_post` response mode](#Using-the-form_post-response-mode) section. If you're using the `query` method, then the `signIn` method automatically obtains the authorization code from the URL.
+
+3. sessionState?: `string` (optional)
+   The `signIn` method can be passed the session state as an argument, which will be used to obtain the token during the token-request phase of the method. This allows developers to use different response modes such as `form_post`. To learn more about the `form_post` method refer to the [Using the `form_post` response mode](#Using-the-form_post-response-mode) section. If you're using the `query` method, then the `signIn` method automatically obtains the session state from the URL.
+
+#### Description
+
+As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates generates the authorization URl and takes the user to the single-sign-on page of the identity server, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authentication themselves with the server.
+
+The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on) section for more information.
 
 ### signInWithRedirect
 
@@ -310,41 +330,55 @@ AsgardeoAuthModule.forRoot({
 ```typescript
 signOut(): Promise<boolean>
 ```
-This method ends the user session at the identity provider and logs the user out.
 
+#### Description
+
+This method ends the user session at the Identity Server and logs the user out.
+
+The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on) section for more information.
 
 ### isAuthenticated
 
-```typeScript
-isAuthenticated(): Promise<boolean>
+```TypeScript
+isAuthenticated(): boolean
 ```
 
-This returns a promise that resolves into a boolean value that indicates if the user is authenticated or not.
+#### Returns
+
+isAuth: `boolean`
+A boolean value that indicates of the user is authenticated or not.
+
+#### Description
+
+This method returns a boolean value indicating if the user is authenticated or not.
 
 ### getBasicUserInfo
 
 ```typescript
-getBasicUserInfo(): Promise<BasicUserInfo>
+getBasicUserInfo(): Promise<BasicUserInfo>;
 ```
 
-This method returns a promise that resolves with a [`BasicUserInfo`](https://github.com/asgardeo/asgardeo-auth-spa-sdk#BasicUserInfo) object which contains the following information about the authenticated user obtained from the id token as an object
+#### Returns
 
-| Attribute       | Type     | Description                                                                                        |
-| :-------------- | :------- | :------------------------------------------------------------------------------------------------- |
-| `email`         | `string` | The email address of the user.                                                                     |
-| `username`      | `string` | The username of the user.                                                                          |
-| `displayName`   | `string` | The display name of the user. It is the `preferred_username` in the id token payload or the `sub`. |
-| `allowedScopes` | `string` | The scopes allowed for the user.                                                                   |
-| `tenantDomain`  | `string` | The tenant domain to which the user belongs.                                                       |
-| `sessionState`  | `string` | The session state.                                                                                 |
+A Promise that resolves with [`BasicUserInfo`](#BasicUserInfo).
+
+#### Description
+
+This method returns a promise that resolves with the information about the authenticated user obtained from the id token as an object. To learn more what information this object contains, refer to the [`BasicUserInfo`](#BasicUserInfo) section.                                                                        |
 
 ### getAccessToken
 
 ```typescript
-getAccessToken(): Promise<string>
+getAccessToken(): Promise<string>;
 ```
 
-This returns a promise that resolves with the access token. 
+#### Returns
+
+A Promise that resolves with the access token.
+
+#### Description
+
+This returns a promise that resolves with the access token. The promise resolves successfully only if the storage type is set to a type other than `webWorker`. Otherwise an error is thrown.
 
 ### getIDToken
 
@@ -352,7 +386,14 @@ This returns a promise that resolves with the access token.
 getIDToken(): Promise<string>
 ```
 
-This returns a promise that resolves with the id token.
+#### Returns
+
+idToken: `Promise<string>`
+The id token.
+
+#### Description
+
+This method returns the id token.
 
 ### getDecodedIDToken
 
@@ -360,15 +401,13 @@ This returns a promise that resolves with the id token.
 getDecodedIDToken(): Promise<DecodedIDTokenPayload>
 ```
 
-This method returns a promise that resolves with a [`DecodedIDTokenPayload`](https://github.com/asgardeo/asgardeo-auth-spa-sdk#decodedidtokenpayload) object, which contains the decoded payload of the JWT ID token as mentioned in the table below.
+#### Returns
 
-| Method             | Type                   | Description                                    |
-| ------------------ | ---------------------- | ---------------------------------------------- |
-| aud                | `string` \| `string[]` | The audience.                                  |
-| sub                | `string`               | The subject. This is the username of the user. |
-| iss                | `string`               | The token issuer.                              |
-| email              | `string`               | The email address.                             |
-| preferred_username | `string`               | The preferred username.                        |
+A promise that returns with the [`DecodedIDTokenPayload`](#DecodedIDTokenPayload) object.
+
+#### Description
+
+This method returns a promise that resolves with the decoded payload of the JWT ID token.
 
 ### getOIDCServiceEndpoints
 
@@ -376,7 +415,13 @@ This method returns a promise that resolves with a [`DecodedIDTokenPayload`](htt
 getOIDCServiceEndpoints(): Promise<OIDCEndpoints>
 ```
 
-This method returns a promise that resolves with an [`OIDCEndpoints`](https://github.com/asgardeo/asgardeo-auth-spa-sdk#OIDCEndpoints) object containing the OIDC endpoints obtained from the `.well-known` endpoint. The object contains the following attributes.
+#### Returns
+
+A Promise that resolves with an object containing the endpoints. To learn more about what endpoints are returned, refer to the [`OIDCEndpoints`](#OIDCEndpoints) section.
+
+#### Description
+
+This method returns a promise that resolves with an object containing the OIDC endpoints obtained from the `.well-known` endpoint. The object contains the following attributes.
 
 | Attribute             | Description                                                                        |
 | --------------------- | ---------------------------------------------------------------------------------- |
@@ -393,9 +438,24 @@ This method returns a promise that resolves with an [`OIDCEndpoints`](https://gi
 refreshAccessToken(): Promise<BasicUserInfo>;
 ```
 
+#### Returns
+
+A Promise that resolves with the [`BasicUserInfo`](#BasicUserInfo) object.
+
+#### Description
+
 This refreshes the access token and stores the refreshed session information in either the session or local storage as per your configuration. Note that this method cannot be used when the storage type is set to `webWorker` since the web worker automatically refreshes the token and there is no need for the developer to do it.
 
-This method also returns a Promise that resolves with a [`BasicUserInfo`](#https://github.com/asgardeo/asgardeo-auth-spa-sdk#BasicUserInfo) object.
+This method also returns a Promise that resolves with an object containing the attributes mentioned in the table below.
+| Attribute        | Description                         |
+| ---------------- | ----------------------------------- |
+| `"accessToken"`  | The new access token                |
+| `"expiresIn"`    | The expiry time in seconds          |
+| `"idToken"`      | The ID token                        |
+| `"refreshToken"` | The refresh token                   |
+| `"scope"`        | The scope of the access token       |
+| `"tokenType"`    | The type of the token. E.g.: Bearer |
+
 
 ### revokeAccessToken
 
@@ -404,6 +464,41 @@ revokeAccessToken(): Promise<boolean>
 ```
 
 This method revokes the access token and clears the session information from the storage.
+
+### on
+
+```typescript
+on(hook: string, callback: () => void, id?: string): Promise<void>
+```
+
+#### Arguments
+
+1. hook: `string`
+   The name of the hook.
+2. callback: `() => void`
+   The callback function that should be fired.
+3. id?: `string`
+   An id for the method. This is required only when the hook type is `custom-grant`.
+
+#### Description
+
+The `on` method is used to hook callback functions to authentication methods. The method accepts a hook name and a callback function as the only arguments except when the hook name is "custom-grant", in which case the id of the custom grant should be passed as the third argument. The following hooks are available.
+
+If you are using TypeScript, you may want to use the `Hooks` enum that consists of the following string literals instead of directly inputting the string value.
+
+| Hook                     | Method to which the callback function is attached                                | Returned Response                                                                       |
+| :----------------------- | :------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------- |
+| `"sign-in"`              | `signIn()`                                                                       | The user information. See [getUserInfo()](#getuserinfo)'s return type for more details. |
+| `"sign-out"`             | `signOut()`                                                                      |                                                                                         |
+| `"initialize"`           | `initialize()`                                                                   | A boolean value indicating if the initialization was successful or not.                 |
+| `"http-request-start"`   | `httpRequest()` (Called before an http request is sent)                          |
+| `"http-request-finish"`  | `httpRequest()` (Called after an http request is sent and response is received.) |
+| `"http-request-error"`   | `httpRequest()` (Called when an http request returns an error)                   |
+| `"http-request-success"` | `httpRequest()` (Called when an http requests returns a response successfully)   |
+| `"revoke-access-token"`  | `revokeAccessToken()`                                                            | A boolean value indicating if the process was successful or not                         |
+| `"custom-grant"`         | `customGrant()`                                                                  | Returns the response from the custom grant request.                                     |
+
+**When the user signs out, the user is taken to the identity server's logout page and then redirected back to the SPA on successful log out. Hence, developers should ensure that the `"sign-out"` hook is called when the page the user is redirected to loads.**
 
 ### httpRequest
 
@@ -623,6 +718,76 @@ export class AppComponent {
 }
 ```
 ---
+
+## Models
+
+### BasicUserInfo
+
+| Attribute       | Type     | Description                                                                                        |
+| :-------------- | :------- | :------------------------------------------------------------------------------------------------- |
+| `email`         | `string` | The email address of the user.                                                                     |
+| `username`      | `string` | The username of the user.                                                                          |
+| `displayName`   | `string` | The display name of the user. It is the `preferred_username` in the id token payload or the `sub`. |
+| `allowedScopes` | `string` | The scopes allowed for the user.                                                                   |
+| `tenantDomain`  | `string` | The tenant domain to which the user belongs.                                                       |
+| `sessionState`  | `string` | The session state.                                                                                 |
+
+### SignInConfig
+
+| Method        | Required/Optional | Type                  | Default Value | Description                                                                                                                                                            |
+| ------------- | ----------------- | --------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fidp`        | Optional          | `string`              | ""            | The `fidp` parameter that can be used to redirect a user directly to an IdP's sign-in page.                                                                            |
+| `forceInit`   | Optional          | `boolean`             | `false`       | Forces obtaining the OIDC endpoints from the `.well-known` endpoint. A request to this endpoint is not sent if a request has already been sent. This forces a request. |
+| key: `string` | Optional          | `string` \| `boolean` | ""            | Any key-value pair to be appended as path parameters to the authorization URL.                                                                                         |
+
+### OIDCEndpoints
+
+| Method                  | Type     | Default Value                                      | Description                                                               |
+| ----------------------- | -------- | -------------------------------------------------- | ------------------------------------------------------------------------- |
+| `authorizationEndpoint` | `string` | `"/oauth2/authorize"`                              | The authorization endpoint.                                               |
+| `tokenEndpoint`         | `string` | `"/oauth2/token"`                                  | The token endpoint.                                                       |
+| `userinfoEndpoint`      | `string` | ""                                                 | The user-info endpoint.                                                   |
+| `jwksUri`               | `string` | `"/oauth2/jwks"`                                   | The JWKS URI.                                                             |
+| `registrationEndpoint`  | `string` | ""                                                 | The registration endpoint.                                                |
+| `revocationEndpoint`    | `string` | `"/oauth2/revoke"`                                 | The token-revocation endpoint.                                            |
+| `introspectionEndpoint` | `string` | ""                                                 | The introspection endpoint.                                               |
+| `checkSessionIframe`    | `string` | `"/oidc/checksession"`                             | The check-session endpoint.                                               |
+| `endSessionEndpoint`    | `string` | `"/oidc/logout"`                                   | The end-session endpoint.                                                 |
+| `issuer`                | `string` | ""                                                 | The issuer of the token.                                                  |
+| `wellKnownEndpoint`     | `string` | `"/oauth2/token/.well-known/openid-configuration"` | The well-known endpoint. This is the default endpoint defined in the SDK. |
+
+### CustomGrantConfig
+
+| Attribute        | Required/Optional | Type      | Default Value | Description                                                                                                                                                                                                                   |
+| ---------------- | ----------------- | --------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`             | Required          | `string`  | ""            | Every custom-grant request should have an id. This attributes takes that id.                                                                                                                                                  |
+| `data`           | Required          | `any`     | `null`        | The data that should be sent in the body of the custom-grant request. You can use template tags to send session information. Refer to the [Custom Grant Template Tags](#custom-grant-template-tags) section for more details. |
+| `signInRequired` | Required          | `boolean` | `false`       | Specifies if the user should be sign-in or not to dispatch this custom-grant request.                                                                                                                                         |
+| `attachToken`    | Required          | `boolean` | `false`       | Specifies if the access token should be attached to the header of the request.                                                                                                                                                |
+| `returnsSession` | Required          | `boolean` | `false`       | Specifies if the the request returns session information such as the access token.                                                                                                                                            |
+
+#### Custom Grant Template Tags
+
+Session information can be attached to the body of a custom-grant request using template tags. This is useful when the session information is not exposed outside the SDK but you want such information to be used in custom-grant requests. The following table lists the available template tags.
+| Tag                | Data               |
+| ------------------ | ------------------ |
+| "{{token}}"        | The access token.  |
+| "{{username}}"     | The username.      |
+| "{{scope}}"        | The scope.         |
+| "{{clientID}}"     | The client ID.     |
+| "{{clientSecret}}" | The client secret. |
+
+### DecodedIDTokenPayload
+
+| Method             | Type                   | Description                                    |
+| ------------------ | ---------------------- | ---------------------------------------------- |
+| aud                | `string` \| `string[]` | The audience.                                  |
+| sub                | `string`               | The subject. This is the username of the user. |
+| iss                | `string`               | The token issuer.                              |
+| email              | `string`               | The email address.                             |
+| preferred_username | `string`               | The preferred username.                        |
+| tenant_domain      | `string`               | The tenant domain to which the user belongs.   |
+
 
 ## Develop
 
