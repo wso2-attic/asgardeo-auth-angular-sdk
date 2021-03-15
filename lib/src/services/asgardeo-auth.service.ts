@@ -42,7 +42,8 @@ export class AsgardeoAuthService {
     constructor(
         @Inject(ASGARDEO_CONFIG) private authConfig: AsgardeoConfigInterface,
         private navigator: AsgardeoNavigatorService) {
-        this.intializeSPAClient();
+        this.auth = AsgardeoSPAClient.getInstance();
+        this.auth.initialize(this.authConfig);
     }
 
     signIn(
@@ -96,7 +97,7 @@ export class AsgardeoAuthService {
 
     on(hook: Hooks, callback: (response?: any) => void, id?: string): Promise<void> {
         if (hook === Hooks.CustomGrant) {
-            return this.auth.on(hook, callback, id);
+            return this.auth.on(hook, callback, id!);
         }
         return this.auth.on(hook, callback);
     }
@@ -111,10 +112,5 @@ export class AsgardeoAuthService {
 
     httpRequestAll(config: HttpRequestConfig[]): Promise<HttpResponse<any>[]> {
         return this.auth.httpRequestAll(config);
-    }
-
-    private intializeSPAClient() {
-        this.auth = AsgardeoSPAClient.getInstance();
-        this.auth.initialize(this.authConfig);
     }
 }
