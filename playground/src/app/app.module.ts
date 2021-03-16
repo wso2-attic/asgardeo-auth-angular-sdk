@@ -37,8 +37,8 @@ import { ProfileComponent } from "./profile/profile.component";
         AppRoutingModule,
         HttpClientModule,
         AsgardeoAuthModule.forRoot({
-            signInRedirectURL: "https://localhost:4200/signin/redirect",
-            signOutRedirectURL: "https://localhost:4200",
+            signInRedirectURL: window.location.origin + "/signin/redirect",
+            signOutRedirectURL: window.location.origin,
             clientID: "",
             serverOrigin: "https://localhost:9443",
             scope: ["internal_login"],

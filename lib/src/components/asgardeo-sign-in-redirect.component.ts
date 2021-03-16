@@ -33,6 +33,7 @@ export class AsgardeoSignInRedirectComponent implements OnInit {
         this.auth.on(Hooks.SignIn, () => {
             this.navigator.navigateByUrl(this.navigator.getRedirectUrl());
         });
+
         this.auth.signIn();
     }
 }
