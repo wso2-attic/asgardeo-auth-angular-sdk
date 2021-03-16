@@ -17,6 +17,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Try Out the Sample Apps](#try-out-the-sample-apps)
 - [Getting Started](#getting-started)
 - [APIs](#apis)
+- [Storage](#storage)
 - [Models](#models)
 - [Develop](#develop)
   - [Prerequisites](#prerequisites)
@@ -224,7 +225,6 @@ export class AppComponent {
 - [`AsgardeoAuthGuard`](#asgardeoauthguard)
 - [`AsgardeoAuthInterceptor`](#asgardeoauthinterceptor)
 
----
 
 ### `AsgardeoAuthModule`
 
@@ -240,26 +240,26 @@ Pass configuration parameters for authentication into `AsgardeoAuthModule` using
 
 This SDK currently supports following configuration parameters defined in [@asgardeo/oidc-spa](https://github.com/asgardeo/asgardeo-auth-spa-sdk) 
 
-| Attribute                    | Required/Optional                               | Type                                                | Default Value                                                           | Description                                                                                                                                                                                                                                                                                                                                |
-| :--------------------------- | :---------------------------------------------- | :-------------------------------------------------- | :---------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `signInRedirectURL`          | Required                                        | `string`                                            | ""                                                                      | The URL to redirect to after the user authorizes the client app. eg: `https//localhost:5000/sign-in`                                                                                                                                                                                                                                       |
-| `signOutRedirectURL`         | Optional                                        | `string`                                            | The `signInRedirectURL` URL will be used if this value is not provided. | The URL to redirect to after the user                                                                                                                                                                                                                                                                                                      | signs out. eg: `https://localhost:5000/dashboard`                                                                                                           |
-| `clientHost`                 | Optional                                        | `string`                                            | The origin of the client app obtained using `window.origin`             | The hostname of the client app. eg: `https://localhost:5000`                                                                                                                                                                                                                                                                               |
-| `clientID`                   | Required                                        | `string`                                            | ""                                                                      | The client ID of the OIDC application hosted in the Asgardeo.                                                                                                                                                                                                                                                                              |
-| `clientSecret`               | Optional                                        | `string`                                            | ""                                                                      | The client secret of the OIDC application                                                                                                                                                                                                                                                                                                  |
-| `enablePKCE`                 | Optional                                        | `boolean`                                           | `true`                                                                  | Specifies if a PKCE should be sent with the request for the authorization code.                                                                                                                                                                                                                                                            |
-| `prompt`                     | Optional                                        | `string`                                            | ""                                                                      | Specifies the prompt type of an OIDC request                                                                                                                                                                                                                                                                                               |
-| `responseMode`               | Optional                                        | `ResponseMode`                                      | `"query"`                                                               | Specifies the response mode. The value can either be `query` or `form_post`                                                                                                                                                                                                                                                                |
-| `scope`                      | Optional                                        | `string[]`                                          | `["openid"]`                                                            | Specifies the requested scopes.                                                                                                                                                                                                                                                                                                            |
-| `serverOrigin`               | Required                                        | `string`                                            | ""                                                                      | The origin of the Identity Provider. eg: `https://www.asgardeo.io`                                                                                                                                                                                                                                                                         |
-| `endpoints`                  | Optional                                        | `OIDCEndpoints`                                     | [OIDC Endpoints Default Values](#oidc-endpoints)                        | The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS                                                                                                                                                                                                                                                                       | using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be | used. However, if the `overrideWellEndpointConfig` is set to `true`, then this will override the endpoints obtained from the `.well-known` endpoint. |
-| `overrideWellEndpointConfig` | Optional                                        | `boolean`                                           | `false`                                                                 | If this option is set to `true`, then the `endpoints` object will override endpoints obtained                                                                                                                                                                                                                                              | from the `.well-known` endpoint. If this is set to `false`, then this will be used as a fallback if the request to the `.well-known` endpoint fails.        |
-| `wellKnownEndpoint`          | Optional                                        | `string`                                            | `"/oauth2/token/.well-known/openid-configuration"`                      | The URL of the `.well-known` endpoint.                                                                                                                                                                                                                                                                                                     |
-| `validateIDToken`            | Optional                                        | `boolean`                                           | `true`                                                                  | Allows you to enable/disable JWT ID token validation after obtaining the ID token.                                                                                                                                                                                                                                                         |
-| `clockTolerance`             | Optional                                        | `number`                                            | `60`                                                                    | Allows you to configure the leeway when validating the id_token.                                                                                                                                                                                                                                                                           |
-| [`storage`](#storage)        | Optional                                        | `"sessionStorage"`, `"webWorker"`, `"localStorage"` | `"sessionStorage"`                                                      | The storage medium where the session information such as the access token should be stored.                                                                                                                                                                                                                                                |                                                                                                                                                             |
-| `resourceServerURLs`         | Required if the `storage` is set to `webWorker` | `string[]`                                          | `[]`                                                                    | The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied. |                                                                                                                                                             |
-| `requestTimeout`             | Optional                                        | `number`                                            | 60000 (seconds)                                                         | Specifies in seconds how long a request to the web worker should wait before being timed out.                                                                                                                                                                                                                                              |
+| Attribute                                                              | Required/Optional                                                                                                   | Type                                                | Default Value                                                           | Description                                                                                                                                                                                                                                                                                                                                |
+| :--------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------ | :-------------------------------------------------- | :---------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `signInRedirectURL`                                                    | Required                                                                                                            | `string`                                            | ""                                                                      | The URL to redirect to after the user authorizes the client app. eg: `https//localhost:5000/sign-in`                                                                                                                                                                                                                                       |
+| `signOutRedirectURL`                                                   | Optional                                                                                                            | `string`                                            | The `signInRedirectURL` URL will be used if this value is not provided. | The URL to redirect to after the user                                                                                                                                                                                                                                                                                                      | signs out. eg: `https://localhost:5000/dashboard`                                                                                                           |
+| `clientHost`                                                           | Optional                                                                                                            | `string`                                            | The origin of the client app obtained using `window.origin`             | The hostname of the client app. eg: `https://localhost:5000`                                                                                                                                                                                                                                                                               |
+| `clientID`                                                             | Required                                                                                                            | `string`                                            | ""                                                                      | The client ID of the OIDC application hosted in the Asgardeo.                                                                                                                                                                                                                                                                              |
+| `clientSecret`                                                         | Optional                                                                                                            | `string`                                            | ""                                                                      | The client secret of the OIDC application                                                                                                                                                                                                                                                                                                  |
+| `enablePKCE`                                                           | Optional                                                                                                            | `boolean`                                           | `true`                                                                  | Specifies if a PKCE should be sent with the request for the authorization code.                                                                                                                                                                                                                                                            |
+| `prompt`                                                               | Optional                                                                                                            | `string`                                            | ""                                                                      | Specifies the prompt type of an OIDC request                                                                                                                                                                                                                                                                                               |
+| `responseMode`                                                         | Optional                                                                                                            | `ResponseMode`                                      | `"query"`                                                               | Specifies the response mode. The value can either be `query` or `form_post`                                                                                                                                                                                                                                                                |
+| `scope`                                                                | Optional                                                                                                            | `string[]`                                          | `["openid"]`                                                            | Specifies the requested scopes.                                                                                                                                                                                                                                                                                                            |
+| `serverOrigin`                                                         | Required                                                                                                            | `string`                                            | ""                                                                      | The origin of the Identity Provider. eg: `https://www.asgardeo.io`                                                                                                                                                                                                                                                                         |
+| `endpoints`                                                            | Optional                                                                                                            | `OIDCEndpoints`                                     | [OIDC Endpoints Default Values](#oidc-endpoints)                        | The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS                                                                                                                                                                                                                                                                       | using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be | used. However, if the `overrideWellEndpointConfig` is set to `true`, then this will override the endpoints obtained from the `.well-known` endpoint. |
+| `overrideWellEndpointConfig`                                           | Optional                                                                                                            | `boolean`                                           | `false`                                                                 | If this option is set to `true`, then the `endpoints` object will override endpoints obtained                                                                                                                                                                                                                                              | from the `.well-known` endpoint. If this is set to `false`, then this will be used as a fallback if the request to the `.well-known` endpoint fails.        |
+| `wellKnownEndpoint`                                                    | Optional                                                                                                            | `string`                                            | `"/oauth2/token/.well-known/openid-configuration"`                      | The URL of the `.well-known` endpoint.                                                                                                                                                                                                                                                                                                     |
+| `validateIDToken`                                                      | Optional                                                                                                            | `boolean`                                           | `true`                                                                  | Allows you to enable/disable JWT ID token validation after obtaining the ID token.                                                                                                                                                                                                                                                         |
+| `clockTolerance`                                                       | Optional                                                                                                            | `number`                                            | `60`                                                                    | Allows you to configure the leeway when validating the id_token.                                                                                                                                                                                                                                                                           |
+| [`storage`](https://github.com/asgardeo/asgardeo-auth-spa-sdk#storage) | Optional                                                                                                            | `"sessionStorage"`, `"webWorker"`, `"localStorage"` | `"sessionStorage"`                                                      | The storage medium where the session information such as the access token should be stored.                                                                                                                                                                                                                                                |                                                                                                                                                             |
+| `resourceServerURLs`                                                   | Required if the `storage` is set to `webWorker` or to use the built-in [auth interceptor](#asgardeoauthinterceptor) | `string[]`                                          | `[]`                                                                    | The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied. |                                                                                                                                                             |
+| `requestTimeout`                                                       | Optional                                                                                                            | `number`                                            | 60000 (seconds)                                                         | Specifies in seconds how long a request to the web worker should wait before being timed out.                                                                                                                                                                                                                                              |
 
 ---
 
@@ -279,10 +279,10 @@ signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string)
    An object that contains attributes that allows you to configure sign in. The `forceInit` attribute of this object, allows you to force a request to the `.well-known` endpoint even if a request has previously been sent. You can also pass key-value pairs that you want to be appended as path parameters to the authorization URL to this object. To learn more, refer to [`SignInConfig`](#SignInConfig). This object is needed only during the authorization-url-generation phase.
 
 2. authorizationCode?: `string` (optional)
-   The `signIn` method can be passed the authorization code as an argument, which will be used to obtain the token during the token-request phase of the method. This allows developers to use different response modes such as `form_post`. To learn more about the `form_post` method refer to the [Using the `form_post` response mode](#Using-the-form_post-response-mode) section. If you're using the `query` method, then the `signIn` method automatically obtains the authorization code from the URL.
+   The `signIn` method can be passed the authorization code as an argument, which will be used to obtain the token during the token-request phase of the method. This allows developers to use different response modes such as `form_post`. To learn more about the `form_post` method refer to the [Using the `form_post` response mode](https://github.com/asgardeo/asgardeo-auth-spa-sdk#using-the-form_post-response-mode) section. If you're using the `query` method, then the `signIn` method automatically obtains the authorization code from the URL.
 
 3. sessionState?: `string` (optional)
-   The `signIn` method can be passed the session state as an argument, which will be used to obtain the token during the token-request phase of the method. This allows developers to use different response modes such as `form_post`. To learn more about the `form_post` method refer to the [Using the `form_post` response mode](#Using-the-form_post-response-mode) section. If you're using the `query` method, then the `signIn` method automatically obtains the session state from the URL.
+   The `signIn` method can be passed the session state as an argument, which will be used to obtain the token during the token-request phase of the method. This allows developers to use different response modes such as `form_post`. To learn more about the `form_post` method refer to the [Using the `form_post` response mode](https://github.com/asgardeo/asgardeo-auth-spa-sdk#using-the-form_post-response-mode) section. If you're using the `query` method, then the `signIn` method automatically obtains the session state from the URL.
 
 #### Description
 
@@ -571,7 +571,7 @@ If the `storage` type is set to `sessionStorage` or `localStorage`, the develope
 
 This method accepts a config object which is of type `AxiosRequestConfig`. If you have used `axios` before, you can use the `httpRequest` in the exact same way.
 
-For example, to get the user profile details after signing in, you can query the `me` endpoint as follows:
+For example, to get the user profile details after signing in, you can query the `Me` endpoint as follows:
 
 #### Example
 
@@ -584,7 +584,7 @@ const requestConfig = {
         "Content-Type": "application/scim+json"
     },
     method: "GET",
-    url: "https://localhost:9443/scim2/me"
+    url: "https://localhost:9443/scim2/Me"
 };
 
 return auth.httpRequest(requestConfig)
@@ -655,6 +655,14 @@ const routes: Routes = [
 
 ### `AsgardeoAuthInterceptor`
 
+This is an angular [HTTPInterceptor](https://angular.io/api/common/http/HttpInterceptor) that automatically attaches the access tokens to outgoing HTTP requests, when using the built-in angular HttpClient [@angular/common/http](https://angular.io/api/common/http). 
+
+**Note:** `AsgardeoAuthInterceptor` can only be used if the `storage` type is set to `sessionStorage` or `localStorage`. If the storage type is set to `webWorker`, promise based [`httpRequest`](#httprequest) or [`httpRequestAll`](#httprequestall) methods must be used to call API endpoints of the identity provider.
+
+#### Example
+
+Add `AsgardeoAuthInterceptor` to the providers array in the app root module and list down the required API endpoints in `resourceServerURLs` array,
+
 ```typescript
 // app.module.ts
 
@@ -674,7 +682,11 @@ import { AppComponent } from "./app.component";
         AsgardeoAuthModule.forRoot({
             ...
             serverOrigin: "https://localhost:9443",
+
+            // Add the correct scope(s) required by the API here
             scope: ["internal_login"],
+
+            // Access token will be attached to calls that start with these base URLs
             resourceServerURLs: [
                 "https://localhost:9443/scim2",
                 ...
@@ -682,6 +694,7 @@ import { AppComponent } from "./app.component";
         })
     ],
     providers: [
+        // Add the interceptor to the providers array
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AsgardeoAuthInterceptor,
@@ -693,6 +706,9 @@ import { AppComponent } from "./app.component";
 export class AppModule { }
 ```
 
+An access token will be attached as an `Authorization` header, for the requests sent by the built-in angular [`HttpClient`](https://angular.io/api/common/http/HttpClient), to the API endpoints that start with URLs defined in the `resourceServerURLs` array.
+
+Query the `Me` endpoint to get the user profile details after signing in as follows:
 
 ```typescript
 // app.component.ts
@@ -709,6 +725,7 @@ import { Observable } from "rxjs";
 export class AppComponent {
     constructor(private http: HttpClient) { }
 
+    // Send http requests with built-in angular HttpClient
     sendHTTPRequest(): Observable<any> {
         const url = "https://localhost:9443/scim2/Me";
         const httpOptions = {
@@ -717,13 +734,32 @@ export class AppComponent {
                 "Content-Type": "application/scim+json",
             })
         };
+        
         return this.http.get(url, httpOptions);
     }
 }
 ```
----
+
+Learn more about using APIs in WSO2 Identity Server from [here](https://is.docs.wso2.com/en/latest/develop/using-apis/).
+
+## Storage
+
+Asgardeo allows the session information including the access token to be stored in three different places, namely,
+
+1. Session storage
+2. Local storage
+3. Web worker
+4. Browser memory
+
+Of the four methods, storing the session information in the **web worker** is the **safest** method. This is because the web worker cannot be accessed by third-party libraries and data there cannot be stolen through XSS attacks. However, when using a web worker to store the session information, the [`httpRequest`](#httprequest) method has to be used to send http requests. This method will route the request through the web worker and the web worker will attach the access token to the request before sending it to the server.
 
 ## Models
+
+- [BasicUserInfo](#basicuserinfo)
+- [SignInConfig](#signinconfig)
+- [OIDCEndpoints](#oidcendpoints)
+- [CustomGrantConfig](#customgrantconfig)
+- [DecodedIDTokenPayload](#decodedidtokenpayload)
 
 ### BasicUserInfo
 
