@@ -56,7 +56,7 @@ Read more about the SDK configurations [here](../../README.md#configuration).
 ```bash
 npm install && npm start
 ```
-The app should open at [`http://localhost:5000`](http://localhost:5000)
+The app should open at [`https://localhost:5000`](https://localhost:5000)
 
 ## Available Scripts
 

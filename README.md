@@ -52,7 +52,7 @@ There are two methods to add an application to **WSO2 Identity Server**.
    
 2. Click on **New Application** and then **Single Page Application**.
    
-3. Enter **Sample** as the name of the app and the add redirect URL(s). You can find the relevant redirect URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
+3. Enter **Sample** as the name of the app and add the redirect URL(s). You can find the relevant redirect URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
    
 4. Click on Register. You will be navigated to management page of the **sample** application.
    
@@ -88,7 +88,7 @@ There are two methods to add an application to **WSO2 Identity Server**.
 
 2. Update configuration file `src/config.json` with your registered app details.
 
-Note: You will only have to paste in the `clientID`(**OAuth Client Key**) generated for the application you registered.
+**Note:** You will only have to paste in the `clientID`(**OAuth Client Key**) generated for the application you registered.
 
 Read more about the SDK configurations [here](#configuration) .
 
@@ -107,7 +107,7 @@ Read more about the SDK configurations [here](#configuration) .
 npm install && npm start
 ```
 
-4. Navigate to `https://localhost:5000`.
+4. Navigate to [`https://localhost:5000`](https://localhost:5000).
 
 #### a. Basic Angular Sample
 
@@ -132,14 +132,14 @@ npm install && npm start
 
 ### 1. Installing the Package
 
-Install the Angular library from the npm registry.
+Install the Asgardeo auth angular library from the npm registry.
 ```bash
 npm install --save @asgardeo/auth-angular
 ```
 
 ### 2. Import `AsgardeoAuthModule` and Provide Configuration Parameters
 
-Add the `AsgardeoAuthModule` to the imports array of your root app module. Pass the config object to the `forRoot` function. See all the available configurations list [here](#configuration).
+Add the `AsgardeoAuthModule` to the imports array of your root app module. Pass the config object to the `forRoot` function. See list of available configurations [here](#configuration).
 
 ```typescript
 // app.module.ts
@@ -217,9 +217,10 @@ export class AppComponent {
   - [getOIDCServiceEndpoints](#getoidcserviceendpoints)
   - [refreshAccessToken](#refreshaccesstoken)
   - [revokeAccessToken](#revokeaccesstoken)
+  - [on](#on)
+  - [requestCustomGrant](#requestcustomgrant)
   - [httpRequest](#httprequest)
   - [httpRequestAll](#httprequestall)
-  - [requestCustomGrant](#requestcustomgrant)
 - [`AsgardeoAuthGuard`](#asgardeoauthguard)
 - [`AsgardeoAuthInterceptor`](#asgardeoauthinterceptor)
 
@@ -295,6 +296,8 @@ The `sign-in` hook is used to fire a callback function after signing in is succe
 signInWithRedirect(): Promise<boolean>
 ```
 
+#### Description
+
 This method signs in and redirects the user back to the route where the authentication flow was initiated. To use this function following steps need to be fulfilled.
 
 - `app-routing.module.ts`
@@ -340,13 +343,12 @@ The `sign-out` hook is used to fire a callback function after signing out is suc
 ### isAuthenticated
 
 ```TypeScript
-isAuthenticated(): boolean
+isAuthenticated(): Promise<boolean>
 ```
 
 #### Returns
 
-isAuth: `boolean`
-A boolean value that indicates of the user is authenticated or not.
+isAuth: `Promis<boolean>` A promise that resolves with a boolean value that indicates if the user is authenticated or not.
 
 #### Description
 
@@ -388,12 +390,11 @@ getIDToken(): Promise<string>
 
 #### Returns
 
-idToken: `Promise<string>`
-The id token.
+A promise that resolves with the ID token.
 
 #### Description
 
-This method returns the id token.
+idToken: `Promise<string>` This method returns the id token.
 
 ### getDecodedIDToken
 
@@ -463,17 +464,20 @@ This method also returns a Promise that resolves with an object containing the a
 revokeAccessToken(): Promise<boolean>
 ```
 
+#### Description
 This method revokes the access token and clears the session information from the storage.
+
+The `end-user-session` hook is used to fire a callback function after end user session is successful. Check the [on()](#on) section for more information.
 
 ### on
 
 ```typescript
-on(hook: string, callback: () => void, id?: string): Promise<void>
+on(hook: Hooks, callback: (response?: any) => void, id?: string): Promise<void>
 ```
 
 #### Arguments
 
-1. hook: `string`
+1. hook: `Hooks`
    The name of the hook.
 2. callback: `() => void`
    The callback function that should be fired.
@@ -500,10 +504,54 @@ If you are using TypeScript, you may want to use the `Hooks` enum that consists 
 
 **When the user signs out, the user is taken to the identity server's logout page and then redirected back to the SPA on successful log out. Hence, developers should ensure that the `"sign-out"` hook is called when the page the user is redirected to loads.**
 
+### requestCustomGrant
+
+```typescript
+requestCustomGrant(config: CustomGrantConfig): Promise<HttpResponse | BasicUserInfo>;
+```
+
+#### Arguments
+
+1. config: [`CustomGrantConfig`](#CustomGrantConfig)
+   A config object to configure the custom-grant request. To learn more about the different attributes that can be used with config object, see the [`CustomGrantConfig`](#CustomGrantConfig) section.
+
+#### Returns
+
+A Promise that resolves either with the response or the [`BasicUserInfo`](#BasicUserInfo).
+
+#### Description
+
+This method allows developers to use custom grants provided by their Identity Servers. This method accepts an object that has the following attributes as the argument.
+
+The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [on()](#on) section for more information.
+
+```TypeScript
+    const config = {
+      attachToken: false,
+      data: {
+          client_id: "{{clientID}}",
+          grant_type: "account_switch",
+          scope: "{{scope}}",
+          token: "{{token}}",
+      },
+      id: "account-switch",
+      returnResponse: true,
+      returnsSession: true,
+      signInRequired: true
+    }
+
+    auth.requestCustomGrant(config).then((response)=>{
+        console.log(response);
+    }).catch((error)=>{
+        console.error(error);
+    });
+```
+
+
 ### httpRequest
 
 ```typescript
-httpRequest(config: `HttpRequestConfig`): Promise<HttpResponse>;
+httpRequest(config: HttpRequestConfig): Promise<HttpResponse>;
 ```
 
 #### Arguments
@@ -551,7 +599,7 @@ return auth.httpRequest(requestConfig)
 ### httpRequestAll
 
 ```typescript
-httpRequestAll(config[]: ): Promise<[]>;
+httpRequestAll(config: HttpRequestConfig[]): Promise<HttpResponse[]>;
 ```
 
 #### Arguments
@@ -570,7 +618,7 @@ This method is used to send multiple http requests at the same time. This works 
 #### Example
 
 ```typeScript
-auth.httpRequestAll(configs).then((responses) => {
+this.auth.httpRequestAll(configs).then((responses) => {
     response.forEach((response) => {
         // console.log(response);
     });
@@ -578,50 +626,6 @@ auth.httpRequestAll(configs).then((responses) => {
     // console.error(error);
 });
 ```
-
-### requestCustomGrant
-
-```typescript
-requestCustomGrant(config: CustomGranConfig): Promise<HttpResponse | BasicUserInfo>;
-```
-
-#### Arguments
-
-1. config: [`CustomGrantConfig`](#CustomGrantConfig)
-   A config object to configure the custom-grant request. To learn more about the different attributes that can be used with config object, see the [`CustomGrantConfig`](#CustomGrantConfig) section.
-
-#### Returns
-
-A Promise that resolves either with the response or the [`BasicUserInfo`](#BasicUserInfo).
-
-#### Description
-
-This method allows developers to use custom grants provided by their Identity Servers. This method accepts an object that has the following attributes as the argument.
-
-The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [on()](#on) section for more information.
-
-```TypeScript
-    const config = {
-      attachToken: false,
-      data: {
-          client_id: "{{clientID}}",
-          grant_type: "account_switch",
-          scope: "{{scope}}",
-          token: "{{token}}",
-      },
-      id: "account-switch",
-      returnResponse: true,
-      returnsSession: true,
-      signInRequired: true
-    }
-
-    auth.requestCustomGrant(config).then((response)=>{
-        console.log(response);
-    }).catch((error)=>{
-        console.error(error);
-    });
-```
-
 ---
 
 ### `AsgardeoAuthGuard`
