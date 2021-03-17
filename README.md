@@ -140,7 +140,7 @@ npm install --save @asgardeo/auth-angular
 
 ### 2. Import `AsgardeoAuthModule` and Provide Configuration Parameters
 
-Add the `AsgardeoAuthModule` to the imports array of your root app module. Pass the config object to the `forRoot` function. See list of available configurations [here](#configuration).
+Add the `AsgardeoAuthModule` to the imports array of your root app module. Pass the config object to the `forRoot` function. See the list of available configurations [here](#configuration).
 
 ```typescript
 // app.module.ts
