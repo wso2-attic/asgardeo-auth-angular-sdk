@@ -133,7 +133,7 @@ npm install && npm start
 
 ### 1. Installing the Package
 
-Install the Asgardeo auth angular library from the npm registry.
+Install the Asgardeo Auth Angular SDK from the npm registry.
 ```bash
 npm install --save @asgardeo/auth-angular
 ```
