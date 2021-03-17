@@ -17,26 +17,16 @@
  *
  */
 
-import { Injectable } from "@angular/core";
-import { CanActivate, CanActivateChild } from "@angular/router";
-import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
-
-@Injectable({
-    providedIn: "root"
-})
-export class AsgardeoAuthGuard implements CanActivate, CanActivateChild {
-    constructor(private auth: AsgardeoAuthService) { }
-
-    async canActivate(): Promise<boolean> {
-        const isAuthenticated = await this.auth.isAuthenticated();
-        if (isAuthenticated) {
-            return true;
-        }
-
-        return false;
-    }
-
-    async canActivateChild(): Promise<boolean> {
-        return this.canActivate();
-    }
-}
+export {
+    BasicUserInfo,
+    CustomGrantConfig,
+    DecodedIDTokenPayload,
+    Hooks,
+    HttpRequestConfig,
+    HttpResponse,
+    Method,
+    OIDCEndpoints,
+    ResponseMode,
+    SignInConfig,
+    Storage
+} from "@asgardeo/auth-spa";

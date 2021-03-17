@@ -24,8 +24,7 @@ import { Router } from "@angular/router";
     providedIn: "root"
 })
 export class AsgardeoNavigatorService {
-
-    private readonly router: Router;
+    private readonly router?: Router;
 
     constructor(injector: Injector) {
         try {
@@ -37,7 +36,12 @@ export class AsgardeoNavigatorService {
     }
 
     navigateByUrl(url: string): Promise<boolean> {
-        return this.router.navigateByUrl(url);
+        if (this.router) {
+            return this.router.navigateByUrl(url);
+        }
+        else {
+            return Promise.resolve(false);
+        }
     }
 
     setRedirectUrl(): void {
@@ -53,6 +57,11 @@ export class AsgardeoNavigatorService {
     }
 
     getCurrentRoute(): string {
-        return this.router.url.split("?")[0];
+        if (this.router) {
+            return this.router.url.split("?")[0];
+        }
+        else {
+            return window.location.href.split("?")[0];
+        }
     }
 }

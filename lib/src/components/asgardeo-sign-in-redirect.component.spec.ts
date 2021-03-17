@@ -17,7 +17,8 @@
  *
  */
 
-import { ComponentFixture, fakeAsync, TestBed, tick } from "@angular/core/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { BasicUserInfo } from "../models/asgardeo-spa.models";
 import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
 import { AsgardeoNavigatorService } from "../services/asgardeo-navigator.service";
 import { AsgardeoSignInRedirectComponent } from "./asgardeo-sign-in-redirect.component";
@@ -33,14 +34,14 @@ describe("AsgardeoSignInRedirectComponent", () => {
     let navigatorServiceStub: Partial<AsgardeoNavigatorService>;
 
     beforeEach(async () => {
-
         authServiceStub = {
-            signIn: () => Promise.resolve(),
-            isAuthenticated: () => Promise.resolve(true)
+            signIn: () => Promise.resolve({} as BasicUserInfo),
+            isAuthenticated: () => Promise.resolve(true),
+            on: () => Promise.resolve()
         };
 
         navigatorServiceStub = {
-            navigateByUrl: (params) => Promise.resolve(true),
+            navigateByUrl: () => Promise.resolve(true),
             getRedirectUrl: () => "fakeRedirectUrl"
         };
 
@@ -73,22 +74,10 @@ describe("AsgardeoSignInRedirectComponent", () => {
     });
 
     it("should call signIn", () => {
-        const signInSpy = spyOn(authService, "signIn").and.resolveTo("fakeSignIn");
+        const signInSpy = spyOn(authService, "signIn").and.resolveTo({} as BasicUserInfo);
 
         fixture.detectChanges();
 
         expect(signInSpy).toHaveBeenCalled();
     });
-
-    it("should redirect back after signIn resolves", fakeAsync(() => {
-        const getRedirectUrlSpy = spyOn(navigatorService, "getRedirectUrl").and.returnValue("fakeRedirectUrl");
-        const navigateByUrlSpy = spyOn(navigatorService, "navigateByUrl");
-        spyOn(authService, "isAuthenticated").and.resolveTo(false);
-
-        fixture.detectChanges();
-        tick();
-
-        expect(getRedirectUrlSpy).toHaveBeenCalled();
-        expect(navigateByUrlSpy).toHaveBeenCalledWith("fakeRedirectUrl");
-    }));
 });

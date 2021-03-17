@@ -17,9 +17,10 @@
  *
  */
 
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
-import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
+import { AsgardeoAuthInterceptor, AsgardeoAuthModule } from "@asgardeo/auth-angular";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
@@ -34,14 +35,23 @@ import { ProfileComponent } from "./profile/profile.component";
     imports: [
         BrowserModule,
         AppRoutingModule,
+        HttpClientModule,
         AsgardeoAuthModule.forRoot({
-            signInRedirectURL: "https://localhost:3000/signin/redirect",
-            signOutRedirectURL: "https://localhost:3000",
+            signInRedirectURL: window.location.origin + "/signin/redirect",
+            signOutRedirectURL: window.location.origin,
             clientID: "",
-            serverOrigin: ""
+            serverOrigin: "https://localhost:9443",
+            scope: ["internal_login"],
+            resourceServerURLs: ["https://localhost:9443/scim2"]
         })
     ],
-    providers: [],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AsgardeoAuthInterceptor,
+            multi: true
+        }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

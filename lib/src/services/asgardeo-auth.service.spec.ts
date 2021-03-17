@@ -20,6 +20,7 @@
 import { TestBed } from "@angular/core/testing";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
+import { CustomGrantConfig, Hooks, HttpRequestConfig } from "../models/asgardeo-spa.models";
 import { AsgardeoAuthService } from "./asgardeo-auth.service";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 
@@ -31,9 +32,8 @@ describe("AsgardeoAuthService", () => {
     let navigatorServiceStub: Partial<AsgardeoNavigatorService>;
 
     beforeEach(() => {
-
         navigatorServiceStub = {
-            navigateByUrl: (params) => Promise.resolve(true),
+            navigateByUrl: () => Promise.resolve(true),
             setRedirectUrl: () => "",
             getCurrentRoute: () => "fakeUrl",
             getRouteWithoutParams: () => "fakeRoute"
@@ -60,7 +60,6 @@ describe("AsgardeoAuthService", () => {
     it("should be created", () => {
         expect(service).toBeTruthy();
         expect(service["auth"]).toBeDefined();
-        expect();
     });
 
     it("should call auth.signIn when signIn is called", () => {
@@ -119,6 +118,14 @@ describe("AsgardeoAuthService", () => {
         expect(getAccessTokenSpy).toHaveBeenCalled();
     });
 
+    it("should call auth.getIDToken when getIDToken is called", () => {
+        const getIDTokenSpy = spyOn(service["auth"], "getIDToken");
+
+        service.getIDToken();
+
+        expect(getIDTokenSpy).toHaveBeenCalled();
+    });
+
     it("should call auth.getDecodedIDToken when getDecodedIDToken is called", () => {
         const getDecodedIDTokenSpy = spyOn(service["auth"], "getDecodedIDToken");
 
@@ -149,5 +156,45 @@ describe("AsgardeoAuthService", () => {
         service.revokeAccessToken();
 
         expect(revokeAccessTokenSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.on when on is called", () => {
+        const onSpy = spyOn(service["auth"], "on");
+
+        service.on(Hooks.SignIn, () => { });
+
+        expect(onSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.on when on is called with CustomGrant Hook", () => {
+        const onSpy = spyOn(service["auth"], "on");
+
+        service.on(Hooks.CustomGrant, () => { });
+
+        expect(onSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.requestCustomGrant when requestCustomGrant is called", () => {
+        const requestCustomGrantSpy = spyOn(service["auth"], "requestCustomGrant");
+
+        service.requestCustomGrant({} as CustomGrantConfig);
+
+        expect(requestCustomGrantSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.httpRequest when httpRequest is called", () => {
+        const httpRequestSpy = spyOn(service["auth"], "httpRequest");
+
+        service.httpRequest({} as HttpRequestConfig);
+
+        expect(httpRequestSpy).toHaveBeenCalled();
+    });
+
+    it("should call auth.httpRequestAll when httpRequestAll is called", () => {
+        const httpRequestAllSpy = spyOn(service["auth"], "httpRequestAll");
+
+        service.httpRequestAll({} as HttpRequestConfig[]);
+
+        expect(httpRequestAllSpy).toHaveBeenCalled();
     });
 });

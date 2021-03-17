@@ -17,44 +17,38 @@
  *
  */
 
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { AsgardeoAuthService, BasicUserInfo } from "@asgardeo/auth-angular";
-import { ProfileComponent } from "./profile.component";
+import { TestBed } from "@angular/core/testing";
+import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
+import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
+import { AsgardeoAuthInterceptor } from "./asgardeo-auth.interceptor";
 
-describe("ProfileComponent", () => {
-    let component: ProfileComponent;
-    let fixture: ComponentFixture<ProfileComponent>;
-
+describe("AsgardeoAuthInterceptor", () => {
     let authService: AsgardeoAuthService;
     let authServiceStub: Partial<AsgardeoAuthService>;
 
-    beforeEach(async () => {
+    beforeEach(() => {
         authServiceStub = {
-            signIn: () => Promise.resolve({} as BasicUserInfo),
             isAuthenticated: () => Promise.resolve(true)
         };
 
-        await TestBed.configureTestingModule({
-            declarations: [ProfileComponent],
+        TestBed.configureTestingModule({
             providers: [
+                AsgardeoAuthInterceptor,
+                {
+                    provide: ASGARDEO_CONFIG,
+                    useValue: {}
+                },
                 {
                     provide: AsgardeoAuthService,
                     useValue: authServiceStub
                 }
             ]
-        })
-            .compileComponents();
-    });
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(ProfileComponent);
-        component = fixture.componentInstance;
-
+        });
         authService = TestBed.inject(AsgardeoAuthService);
-        fixture.detectChanges();
     });
 
-    it("should create", () => {
-        expect(component).toBeTruthy();
+    it("should be created", () => {
+        const interceptor: AsgardeoAuthInterceptor = TestBed.inject(AsgardeoAuthInterceptor);
+        expect(interceptor).toBeTruthy();
     });
 });

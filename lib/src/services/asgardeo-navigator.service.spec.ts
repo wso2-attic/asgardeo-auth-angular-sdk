@@ -31,6 +31,12 @@ describe("AsgardeoNavigatorService", () => {
     it("should be created even if the router module is not provided ", () => {
         expect(service).toBeTruthy();
     });
+
+    it("should return a promise that resolves with false when navigateByUrl is called", async () => {
+        const result = await service.navigateByUrl("fakePath");
+
+        expect(result).toBeFalse();
+    });
 });
 
 describe("AsgardeoNavigatorService", () => {

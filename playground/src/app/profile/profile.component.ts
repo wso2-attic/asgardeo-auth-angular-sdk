@@ -32,7 +32,7 @@ export class ProfileComponent implements OnInit {
 
     constructor(private auth: AsgardeoAuthService) { }
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.auth.isAuthenticated().then((status) => {
             this.isAuthenticated = status;
             if (this.isAuthenticated) {

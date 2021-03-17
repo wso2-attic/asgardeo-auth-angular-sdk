@@ -39,8 +39,15 @@
             Profile
         </a>
         <a
-            (click)="signOut()"
+            (click)="showHTTPResponse()"
             class="btn cButton cButtonDark"
+        >
+            Send HTTP Request
+        </a>
+        <br />
+        <a
+            (click)="signOut()"
+            class="btn cButton"
         >
             Sign Out
         </a>

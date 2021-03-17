@@ -18,9 +18,19 @@
  */
 
 import { Inject, Injectable } from "@angular/core";
-import { AsgardeoSPAClient, BasicUserInfo, DecodedIDTokenPayload, OIDCEndpoints } from "@asgardeo/auth-spa";
+import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
+import {
+    BasicUserInfo,
+    CustomGrantConfig,
+    DecodedIDTokenPayload,
+    Hooks,
+    HttpRequestConfig,
+    HttpResponse,
+    OIDCEndpoints,
+    SignInConfig
+} from "../models/asgardeo-spa.models";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 
 @Injectable({
@@ -32,16 +42,18 @@ export class AsgardeoAuthService {
     constructor(
         @Inject(ASGARDEO_CONFIG) private authConfig: AsgardeoConfigInterface,
         private navigator: AsgardeoNavigatorService) {
-        this.intializeSPAClient();
+        this.auth = AsgardeoSPAClient.getInstance();
+        this.auth.initialize(this.authConfig);
     }
 
-    signIn(): Promise<BasicUserInfo> {
-        return this.auth.signIn();
+    signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string): Promise<BasicUserInfo> {
+        return this.auth.signIn(config, authorizationCode, sessionState);
     }
 
     signInWithRedirect(): Promise<boolean> {
         this.navigator.setRedirectUrl();
         const redirectRoute = this.navigator.getRouteWithoutParams(this.authConfig.signInRedirectURL);
+
         return this.navigator.navigateByUrl(redirectRoute);
     }
 
@@ -81,8 +93,23 @@ export class AsgardeoAuthService {
         return this.auth.revokeAccessToken();
     }
 
-    private intializeSPAClient() {
-        this.auth = AsgardeoSPAClient.getInstance();
-        this.auth.initialize(this.authConfig);
+    on(hook: Hooks, callback: (response?: any) => void, id?: string): Promise<void> {
+        if (hook === Hooks.CustomGrant) {
+            return this.auth.on(hook, callback, id as string);
+        }
+
+        return this.auth.on(hook, callback);
+    }
+
+    requestCustomGrant(config: CustomGrantConfig): Promise<HttpResponse<any> | BasicUserInfo> {
+        return this.auth.requestCustomGrant(config);
+    }
+
+    httpRequest(config: HttpRequestConfig): Promise<HttpResponse<any>> {
+        return this.auth.httpRequest(config);
+    }
+
+    httpRequestAll(config: HttpRequestConfig[]): Promise<HttpResponse<any>[]> {
+        return this.auth.httpRequestAll(config);
     }
 }
