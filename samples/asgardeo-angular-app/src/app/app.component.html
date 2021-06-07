@@ -72,7 +72,15 @@
                 <div *ngIf="userInfo != undefined || idToken != undefined; then defined else notDefined"></div>
 
                 <ng-template #notDefined>
+                    <div *ngIf="isError; then error else loading"></div>
+                </ng-template>
+
+                <ng-template #loading>
                     <div>Loading ...</div>
+                </ng-template>
+
+                <ng-template #error>
+                    <div> An error occurred while authenticating ...</div>
                 </ng-template>
 
                 <ng-template #defined>

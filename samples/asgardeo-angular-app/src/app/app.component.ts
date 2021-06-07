@@ -31,6 +31,7 @@ export class AppComponent implements OnInit {
     isConfigured: boolean;
     userInfo: any;
     idToken: any;
+    isError: boolean;
 
     constructor(private auth: AsgardeoAuthService) {
         this.isConfigured = this.getClientIdStatus();
@@ -42,6 +43,8 @@ export class AppComponent implements OnInit {
             this.auth.signIn().then(() => {
                 this.auth.getBasicUserInfo().then((payload) => this.userInfo = payload);
                 this.auth.getIDToken().then((payload) => this.idToken = this.parseIdToken(payload));
+            }).catch((error) => {
+                this.isError = true;
             });
         }
     }
