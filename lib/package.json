@@ -25,6 +25,6 @@
     },
     "dependencies": {
         "tslib": "^2.0.0",
-        "@asgardeo/auth-spa": "^0.1.2"
+        "@asgardeo/auth-spa": "^0.1.3"
     }
 }

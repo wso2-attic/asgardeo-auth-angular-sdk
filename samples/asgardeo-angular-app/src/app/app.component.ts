@@ -41,7 +41,16 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         if (this.isInitLogin) {
             this.auth.signIn().then(() => {
-                this.auth.getBasicUserInfo().then((payload) => this.userInfo = payload);
+                this.auth.getBasicUserInfo().then((payload) => {
+                    const username = payload?.username?.split('/');
+
+                    if (username.length >= 2) {
+                        username.shift();
+                        payload.username = username.join('/');
+                    }
+
+                    this.userInfo = payload;
+                });
                 this.auth.getIDToken().then((payload) => this.idToken = this.parseIdToken(payload));
             }).catch((error) => {
                 this.isError = true;
@@ -112,6 +121,32 @@ export class AppComponent implements OnInit {
 
         idTokenObject.decoded.push(JSON.parse(atob(idTokenObject.encoded[0])));
         idTokenObject.decoded.push(JSON.parse(atob(idTokenObject.encoded[1])));
+
+        const sub =
+            idTokenObject['decoded'][1] &&
+            idTokenObject['decoded'][1]?.sub?.split('/');
+
+        if (sub.length >= 2) {
+            sub.shift();
+            idTokenObject['decoded'][1].sub = sub.join('/');
+        }
+
+        const groups = [];
+        idTokenObject['decoded'][1] &&
+            idTokenObject['decoded'][1]?.groups?.forEach((group) => {
+                const groupArrays = group.split('/');
+
+                if (groupArrays.length >= 2) {
+                    groupArrays.shift();
+                    groups.push(groupArrays.join('/'));
+                } else {
+                    groups.push(group);
+                }
+            });
+
+        if (idTokenObject['decoded'][1]?.groups) {
+            idTokenObject['decoded'][1].groups = groups;
+        }
 
         return idTokenObject;
     }
