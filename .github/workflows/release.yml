@@ -83,7 +83,12 @@ jobs:
         run: |
           version=`git describe --tags --abbrev=0`
           echo ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}} | gh auth login --with-token
-          gh release create $version artifacts/*
+          if test -d samples
+          then
+            gh release create $version artifacts/*
+          else
+            gh release create $version
+          fi
 
       - name: Publish Asgardeo Auth Angular SDK
         env:
