@@ -55,22 +55,26 @@ jobs:
         run: |
           git config --global user.email "version.bump@github.action.com"
           git config --global user.name "asgardeo-github-bot"
-          lerna version ${{ github.event.inputs.Type }} --yes
+          npm run bump-${{ github.event.inputs.Type }}-version
           git push --follow-tags
 
       - name: Pack Release Artifacts
         run: |
           mkdir artifacts
-          cd samples
-          for dir in */ ; dox
-              zip -r "../artifacts/${dir%/}.zip" $dir
-          done
+          if test -d samples
+          then
+            cd samples
+            rm -rf **/node_modules/
+            for dir in */ ; do
+                zip -r "../artifacts/${dir%/}.zip" $dir
+            done
+          fi
 
-      - name: Release Asgardeo Auth Angular SDK
+      - name: Release Asgardeo Auth JS SDK
         run: |
-          version=`npm info @asgardeo/auth-angular version`
+          version=`git describe --tags --abbrev=0`
           echo ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}} | gh auth login --with-token
-          gh release create v$version artifacts/*
+          gh release create $version artifacts/*
 
       - name: Publish Asgardeo Auth Angular SDK
         env:
