@@ -51,26 +51,44 @@ jobs:
           npm ci
           npm run build:prod --if-present
 
-      - name: Bump Version
+      - name: Bump Library Version
+        working-directory: lib
         run: |
           git config --global user.email "version.bump@github.action.com"
           git config --global user.name "asgardeo-github-bot"
-          lerna version ${{ github.event.inputs.Type }} --yes
+          npm version ${{ github.event.inputs.Type }}
+          git add .
+          git commit -m "Bump @asgardeo/auth-angular Version"
+
+      - name: Bump Parent Version
+        run: |
+          git config --global user.email "version.bump@github.action.com"
+          git config --global user.name "asgardeo-github-bot"
+          npm version ${{ github.event.inputs.Type }} -m "[WSO2 Release] [GitHub Actions] [Release %s] Bump Parent Version"
           git push --follow-tags
 
       - name: Pack Release Artifacts
         run: |
           mkdir artifacts
-          cd samples
-          for dir in */ ; dox
-              zip -r "../artifacts/${dir%/}.zip" $dir
-          done
+          if test -d samples
+          then
+            cd samples
+            rm -rf **/node_modules/
+            for dir in */ ; do
+                zip -r "../artifacts/${dir%/}.zip" $dir
+            done
+          fi
 
       - name: Release Asgardeo Auth Angular SDK
         run: |
-          version=`npm info @asgardeo/auth-angular version`
+          version=`git describe --tags --abbrev=0`
           echo ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}} | gh auth login --with-token
-          gh release create v$version artifacts/*
+          if test -d samples
+          then
+            gh release create $version artifacts/*
+          else
+            gh release create $version
+          fi
 
       - name: Publish Asgardeo Auth Angular SDK
         env:
