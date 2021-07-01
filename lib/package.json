@@ -1,6 +1,6 @@
 {
     "name": "@asgardeo/auth-angular",
-    "version": "0.1.5",
+    "version": "0.1.4",
     "description": "Asgardeo Auth Angular SDK for Angular Applications.",
     "keywords": [
         "Asgardeo",
