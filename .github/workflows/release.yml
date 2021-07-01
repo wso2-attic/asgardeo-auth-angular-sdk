@@ -79,7 +79,7 @@ jobs:
             done
           fi
 
-      - name: Release Asgardeo Auth JS SDK
+      - name: Release Asgardeo Auth Angular SDK
         run: |
           version=`git describe --tags --abbrev=0`
           echo ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}} | gh auth login --with-token
