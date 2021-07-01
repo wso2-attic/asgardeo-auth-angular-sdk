@@ -51,12 +51,23 @@ jobs:
           npm ci
           npm run build:prod --if-present
 
-      - name: Bump Version
+      - name: Bump Library Version
+        working-directory: lib
         run: |
           git config --global user.email "version.bump@github.action.com"
           git config --global user.name "asgardeo-github-bot"
-          npm run bump-${{ github.event.inputs.Type }}-version
+          npm version ${{ github.event.inputs.Type }}
+          git add .
+          git commit -m "Bump @asgardeo/auth-angular Version"
+        if: github.repository == 'asgardeo/asgardeo-auth-angular-sdk'
+
+      - name: Bump Parent Version
+        run: |
+          git config --global user.email "version.bump@github.action.com"
+          git config --global user.name "asgardeo-github-bot"
+          npm version ${{ github.event.inputs.Type }} -m "[WSO2 Release] [GitHub Actions] [Release %s] Bump Parent Version"
           git push --follow-tags
+        if: github.repository == 'asgardeo/asgardeo-auth-angular-sdk'
 
       - name: Pack Release Artifacts
         run: |
