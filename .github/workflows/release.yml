@@ -94,6 +94,7 @@ jobs:
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
+          cat ~/.npmrc
           npm whoami
           cp README.md dist/auth-angular
           cd dist/auth-angular
