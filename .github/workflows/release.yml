@@ -92,7 +92,7 @@ jobs:
 
       - name: Publish Asgardeo Auth Angular SDK
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          NPM_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
           npm whoami
           cp README.md dist/auth-angular
