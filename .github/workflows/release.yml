@@ -62,7 +62,6 @@ jobs:
           git config --global user.name "asgardeo-github-bot"
           npm version ${{ github.event.inputs.Type }} -m "[WSO2 Release] [GitHub Actions] [Release %s] Bump Parent Version"
           git push --follow-tags
-          grep "version" lib/package.json
 
       - name: Build
         run: |
@@ -84,7 +83,6 @@ jobs:
       - name: Release Asgardeo Auth Angular SDK
         run: |
           version=`git describe --tags --abbrev=0`
-          grep "version" lib/package.json
           echo ${{secrets.ASGARDIO_GITHUB_BOT_TOKEN}} | gh auth login --with-token
           if test -d samples
           then
@@ -97,7 +95,6 @@ jobs:
         env:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
-          grep "version" lib/package.json
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
           cp README.md dist/auth-angular
           cd dist/auth-angular
