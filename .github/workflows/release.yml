@@ -64,6 +64,11 @@ jobs:
           git push --follow-tags
           grep "version" lib/package.json
 
+      - name: Build
+        run: |
+          npm ci
+          npm run build:prod --if-present
+
       - name: Pack Release Artifacts
         run: |
           mkdir artifacts
