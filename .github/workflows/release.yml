@@ -95,7 +95,6 @@ jobs:
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
         run: |
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          grep -o "=[^-]*-" ~/.npmrc
           cp README.md dist/auth-angular
           cd dist/auth-angular
           npm publish --access public
