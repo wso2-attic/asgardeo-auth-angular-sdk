@@ -48,3 +48,11 @@ jobs:
       run: |
         npm ci
         npm run build:prod --if-present
+
+    - name: Build Samples
+      working-directory: samples
+      run: |
+        for dir in */ ; do
+          npm ci --prefix "$dir"
+          npm run build --prefix "$dir" --if-present
+        done
