@@ -145,5 +145,8 @@
             }
         }
     },
+    "cli": {
+        "analytics": false
+    },
     "defaultProject": "asgardeo-angular-app-with-router"
 }
