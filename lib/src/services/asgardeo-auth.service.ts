@@ -17,10 +17,11 @@
  *
  */
 
+import { from, ObservedValueOf } from 'rxjs';
 import { Inject, Injectable } from "@angular/core";
-import { AsgardeoSPAClient } from "@asgardeo/auth-spa";
+import { AsgardeoSPAClient, AuthClientConfig, SPAUtils } from "@asgardeo/auth-spa";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
-import { AsgardeoConfigInterface } from "../models/asgardeo-config.interface";
+import { AuthAngularConfig, AuthStateInterface } from "../models";
 import {
     BasicUserInfo,
     CustomGrantConfig,
@@ -32,21 +33,45 @@ import {
     SignInConfig
 } from "../models/asgardeo-spa.models";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
+import { Observable } from "rxjs";
+import { AsgardeoAuthStateStoreService } from "./asgardeo-auth-state-store.service";
 
 @Injectable({
     providedIn: "root"
 })
 export class AsgardeoAuthService {
+
     private auth: AsgardeoSPAClient;
+    private readonly config: AuthClientConfig<AuthAngularConfig>;
 
     constructor(
-        @Inject(ASGARDEO_CONFIG) private authConfig: AsgardeoConfigInterface,
-        private navigator: AsgardeoNavigatorService) {
+        @Inject(ASGARDEO_CONFIG) private authConfig: AuthClientConfig<AuthAngularConfig>,
+        private navigator: AsgardeoNavigatorService,
+        private stateStore: AsgardeoAuthStateStoreService
+    ) {
         this.auth = AsgardeoSPAClient.getInstance();
         this.auth.initialize(this.authConfig);
+        this.config = authConfig;
+
+        this.handleAutoLogin()
+            .subscribe();
     }
 
     signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string): Promise<BasicUserInfo> {
+
+        this.auth.on(Hooks.SignIn, (response) => {
+            const stateToUpdate: AuthStateInterface = {
+                allowedScopes: response.allowedScopes,
+                displayName: response.displayName,
+                email: response.email,
+                isAuthenticated: true,
+                isLoading: false,
+                username: response.username
+            };
+
+            this.stateStore.state = stateToUpdate;
+        });
+
         return this.auth.signIn(config, authorizationCode, sessionState);
     }
 
@@ -111,5 +136,64 @@ export class AsgardeoAuthService {
 
     httpRequestAll(config: HttpRequestConfig[]): Promise<HttpResponse<any>[]> {
         return this.auth.httpRequestAll(config);
+    }
+
+    /**
+     * This method allows you to sign in silently.
+     * First, this method sends a prompt none request to see if there is an active user session in the identity server.
+     * If there is one, then it requests the access token and stores it. Else, it returns false.
+     *
+     * @example
+     *```
+     * this.auth.trySignInSilently()
+     *```
+     *
+     * @return {Promise<BasicUserInfo | boolean | undefined>} - A Promise that resolves with the user information after signing in
+     * or with `false` if the user is not signed in.
+     *
+     */
+    public async trySignInSilently(state: AuthStateInterface): Promise<BasicUserInfo | boolean | undefined> {
+
+        return this.auth.trySignInSilently().then((response: BasicUserInfo | boolean) => {
+            if (response) {
+                const basicUserInfo = response as BasicUserInfo;
+                const stateToUpdate: AuthStateInterface = {
+                    allowedScopes: basicUserInfo.allowedScopes,
+                    displayName: basicUserInfo.displayName,
+                    email: basicUserInfo.email,
+                    isAuthenticated: true,
+                    isLoading: false,
+                    username: basicUserInfo.username
+                };
+
+                // Update the store.
+                this.stateStore.state = stateToUpdate;
+
+                return response;
+            }
+
+            this.stateStore.setIsLoading(false);
+
+            return false;
+        });
+    }
+
+    /**
+     * Subscribe to the URL search param changes and try signing in whenever required.
+     * @return {Observable<ObservedValueOf<Promise<BasicUserInfo>> | ObservedValueOf<Promise<BasicUserInfo | boolean>>>}
+     */
+    handleAutoLogin(): Observable<ObservedValueOf<Promise<BasicUserInfo>> | ObservedValueOf<Promise<BasicUserInfo | boolean>>> {
+
+        this.stateStore.setIsLoading(true);
+
+        // If `skipRedirectCallback` is not true, check if the URL has `code` and `session_state` params.
+        // If so, initiate the sign in. If not, try to login silently.
+        if (!this.config.skipRedirectCallback && SPAUtils.hasAuthSearchParamsInURL()) {
+            return from(this.signIn({ callOnlyOnRedirect: true }));
+        }
+
+        // This uses the RP iframe to get the session. Hence, will not work if 3rd party cookies are disabled.
+        // If the browser has these cookies disabled, we'll not be able to retrieve the session on refreshes.
+        return from(this.trySignInSilently(this.stateStore.state));
     }
 }
