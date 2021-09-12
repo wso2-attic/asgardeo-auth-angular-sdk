@@ -72,6 +72,9 @@ export class AsgardeoAuthService implements OnDestroy {
     }
 
     signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string): Promise<BasicUserInfo> {
+
+        this.stateStore.setIsLoading(true);
+
         return this.auth.signIn(config, authorizationCode, sessionState)
             .then(async (response: BasicUserInfo) => {
                 if (!response) {
@@ -93,6 +96,9 @@ export class AsgardeoAuthService implements OnDestroy {
             })
             .catch((error) => {
                 return Promise.reject(error);
+            })
+            .finally(() => {
+                this.stateStore.setIsLoading(false);
             });
     }
 
@@ -105,6 +111,8 @@ export class AsgardeoAuthService implements OnDestroy {
 
     signOut(): Promise<boolean> {
 
+        this.stateStore.setIsLoading(true);
+
         return this.auth.signOut()
             .then((response: boolean) => {
                 // Reset the state.
@@ -114,6 +122,9 @@ export class AsgardeoAuthService implements OnDestroy {
             })
             .catch((error) => {
                 return Promise.reject(error);
+            })
+            .finally(() => {
+                this.stateStore.setIsLoading(false);
             });
     }
 
@@ -156,6 +167,9 @@ export class AsgardeoAuthService implements OnDestroy {
             })
             .catch((error) => {
                 return Promise.reject(error);
+            })
+            .finally(() => {
+                this.stateStore.setIsLoading(false);
             });
     }
 
@@ -184,6 +198,7 @@ export class AsgardeoAuthService implements OnDestroy {
      * First, this method sends a prompt none request to see if there is an active user session in the identity server.
      * If there is one, then it requests the access token and stores it. Else, it returns false.
      *
+     * @param {AuthStateInterface} state - Current Authenticated state.
      * @return {Promise<BasicUserInfo | boolean>} - A Promise that resolves with the user information after signing in
      * or with `false` if the user is not signed in.
      *
@@ -193,6 +208,9 @@ export class AsgardeoAuthService implements OnDestroy {
      *```
      */
     public trySignInSilently = async (state: AuthStateInterface): Promise<BasicUserInfo | boolean> => {
+
+        this.stateStore.setIsLoading(true);
+
         return this.auth.trySignInSilently()
             .then(async (response: BasicUserInfo | boolean) => {
                 if (!response) {
@@ -216,6 +234,9 @@ export class AsgardeoAuthService implements OnDestroy {
             })
             .catch((error) => {
                 return Promise.reject(error);
+            })
+            .finally(() => {
+                this.stateStore.setIsLoading(false);
             });
     }
 
