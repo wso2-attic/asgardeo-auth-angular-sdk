@@ -17,7 +17,7 @@
  *
  */
 
-import { from, ObservedValueOf } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { Inject, Injectable } from "@angular/core";
 import { AsgardeoSPAClient, AuthClientConfig, SPAUtils } from "@asgardeo/auth-spa";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
@@ -33,7 +33,6 @@ import {
     SignInConfig
 } from "../models/asgardeo-spa.models";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
-import { Observable } from "rxjs";
 import { AsgardeoAuthStateStoreService } from "./asgardeo-auth-state-store.service";
 
 @Injectable({
@@ -41,7 +40,8 @@ import { AsgardeoAuthStateStoreService } from "./asgardeo-auth-state-store.servi
 })
 export class AsgardeoAuthService {
 
-    private auth: AsgardeoSPAClient;
+    private auth: AsgardeoSPAClient = AsgardeoSPAClient.getInstance();
+    public readonly state$ = this.stateStore.state$;
     private readonly config: AuthClientConfig<AuthAngularConfig>;
 
     constructor(
@@ -49,30 +49,39 @@ export class AsgardeoAuthService {
         private navigator: AsgardeoNavigatorService,
         private stateStore: AsgardeoAuthStateStoreService
     ) {
-        this.auth = AsgardeoSPAClient.getInstance();
-        this.auth.initialize(this.authConfig);
         this.config = authConfig;
+        this.auth = AsgardeoSPAClient.getInstance();
 
-        this.handleAutoLogin()
-            .subscribe();
+        (async (): Promise<void> => {
+            await this.auth.initialize(this.authConfig);
+            this.handleAutoLogin()
+                .subscribe();
+        })();
     }
 
     signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string): Promise<BasicUserInfo> {
+        return this.auth.signIn(config, authorizationCode, sessionState)
+            .then(async (response: BasicUserInfo) => {
+                if (!response) {
+                    return;
+                }
 
-        this.auth.on(Hooks.SignIn, (response) => {
-            const stateToUpdate: AuthStateInterface = {
-                allowedScopes: response.allowedScopes,
-                displayName: response.displayName,
-                email: response.email,
-                isAuthenticated: true,
-                isLoading: false,
-                username: response.username
-            };
+                if (await this.auth.isAuthenticated()) {
+                    this.stateStore.state = {
+                        allowedScopes: response.allowedScopes,
+                        displayName: response.displayName,
+                        email: response.email,
+                        isAuthenticated: true,
+                        username: response.username,
+                        isLoading: false
+                    };
+                }
 
-            this.stateStore.state = stateToUpdate;
-        });
-
-        return this.auth.signIn(config, authorizationCode, sessionState);
+                return response;
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
     }
 
     signInWithRedirect(): Promise<boolean> {
@@ -83,7 +92,17 @@ export class AsgardeoAuthService {
     }
 
     signOut(): Promise<boolean> {
-        return this.auth.signOut();
+
+        return this.auth.signOut()
+            .then((response: boolean) => {
+                // Reset the state.
+                this.stateStore.reset();
+
+                return response;
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
     }
 
     isAuthenticated(): Promise<boolean> {
@@ -115,7 +134,17 @@ export class AsgardeoAuthService {
     }
 
     revokeAccessToken(): Promise<boolean> {
-        return this.auth.revokeAccessToken();
+
+        return this.auth.revokeAccessToken()
+            .then(() => {
+                // Reset the state.
+                this.stateStore.reset();
+
+                return true;
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
     }
 
     on(hook: Hooks, callback: (response?: any) => void, id?: string): Promise<void> {
@@ -143,53 +172,49 @@ export class AsgardeoAuthService {
      * First, this method sends a prompt none request to see if there is an active user session in the identity server.
      * If there is one, then it requests the access token and stores it. Else, it returns false.
      *
+     * @return {Promise<BasicUserInfo | boolean>} - A Promise that resolves with the user information after signing in
+     * or with `false` if the user is not signed in.
+     *
      * @example
      *```
      * this.auth.trySignInSilently()
      *```
-     *
-     * @return {Promise<BasicUserInfo | boolean | undefined>} - A Promise that resolves with the user information after signing in
-     * or with `false` if the user is not signed in.
-     *
      */
-    public async trySignInSilently(state: AuthStateInterface): Promise<BasicUserInfo | boolean | undefined> {
+    public trySignInSilently = async (state: AuthStateInterface): Promise<BasicUserInfo | boolean> => {
+        return this.auth.trySignInSilently()
+            .then(async (response: BasicUserInfo | boolean) => {
+                if (!response) {
+                    return false;
+                }
 
-        return this.auth.trySignInSilently().then((response: BasicUserInfo | boolean) => {
-            if (response) {
-                const basicUserInfo = response as BasicUserInfo;
-                const stateToUpdate: AuthStateInterface = {
-                    allowedScopes: basicUserInfo.allowedScopes,
-                    displayName: basicUserInfo.displayName,
-                    email: basicUserInfo.email,
-                    isAuthenticated: true,
-                    isLoading: false,
-                    username: basicUserInfo.username
-                };
+                if (await this.auth.isAuthenticated()) {
+                    const basicUserInfo: BasicUserInfo = response as BasicUserInfo;
 
-                // Update the store.
-                this.stateStore.state = stateToUpdate;
+                    this.stateStore.state = {
+                        allowedScopes: basicUserInfo.allowedScopes,
+                        displayName: basicUserInfo.displayName,
+                        email: basicUserInfo.email,
+                        isAuthenticated: true,
+                        isLoading: false,
+                        username: basicUserInfo.username
+                    };
+                }
 
                 return response;
-            }
-
-            this.stateStore.setIsLoading(false);
-
-            return false;
-        });
+            })
+            .catch((error) => {
+                return Promise.reject(error);
+            });
     }
 
-    /**
-     * Subscribe to the URL search param changes and try signing in whenever required.
-     * @return {Observable<ObservedValueOf<Promise<BasicUserInfo>> | ObservedValueOf<Promise<BasicUserInfo | boolean>>>}
-     */
-    handleAutoLogin(): Observable<ObservedValueOf<Promise<BasicUserInfo>> | ObservedValueOf<Promise<BasicUserInfo | boolean>>> {
+    private handleAutoLogin = (): Observable<BasicUserInfo | boolean> => {
 
         this.stateStore.setIsLoading(true);
 
         // If `skipRedirectCallback` is not true, check if the URL has `code` and `session_state` params.
         // If so, initiate the sign in. If not, try to login silently.
         if (!this.config.skipRedirectCallback && SPAUtils.hasAuthSearchParamsInURL()) {
-            return from(this.signIn({ callOnlyOnRedirect: true }));
+            return from(this.signIn());
         }
 
         // This uses the RP iframe to get the session. Hence, will not work if 3rd party cookies are disabled.
