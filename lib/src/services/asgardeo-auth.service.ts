@@ -17,8 +17,8 @@
  *
  */
 
-import { from, Observable } from 'rxjs';
-import { Inject, Injectable } from "@angular/core";
+import { from, Observable, Subject } from 'rxjs';
+import { Inject, Injectable, OnDestroy } from "@angular/core";
 import { AsgardeoSPAClient, AuthClientConfig, SPAUtils } from "@asgardeo/auth-spa";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AuthAngularConfig, AuthStateInterface } from "../models";
@@ -34,15 +34,17 @@ import {
 } from "../models/asgardeo-spa.models";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 import { AsgardeoAuthStateStoreService } from "./asgardeo-auth-state-store.service";
+import { takeUntil } from "rxjs/operators";
 
 @Injectable({
     providedIn: "root"
 })
-export class AsgardeoAuthService {
+export class AsgardeoAuthService implements OnDestroy {
 
     private auth: AsgardeoSPAClient = AsgardeoSPAClient.getInstance();
     public readonly state$ = this.stateStore.state$;
     private readonly config: AuthClientConfig<AuthAngularConfig>;
+    private subscriptionDestroyer$: Subject<boolean> = new Subject<boolean>();
 
     constructor(
         @Inject(ASGARDEO_CONFIG) private authConfig: AuthClientConfig<AuthAngularConfig>,
@@ -55,8 +57,18 @@ export class AsgardeoAuthService {
         (async (): Promise<void> => {
             await this.auth.initialize(this.authConfig);
             this.handleAutoLogin()
+                .pipe(takeUntil(this.subscriptionDestroyer$))
                 .subscribe();
         })();
+    }
+
+    /**
+     * Runs on service unmount.
+     * @remarks Housekeeping logic such as un-subscribing should go here.
+     */
+    ngOnDestroy(): void {
+        this.subscriptionDestroyer$.next(true);
+        this.subscriptionDestroyer$.unsubscribe();
     }
 
     signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string): Promise<BasicUserInfo> {
