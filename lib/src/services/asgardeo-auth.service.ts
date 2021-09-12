@@ -219,7 +219,14 @@ export class AsgardeoAuthService implements OnDestroy {
             });
     }
 
-    private handleAutoLogin = (): Observable<BasicUserInfo | boolean> => {
+    /**
+     * Handles auto login by trying to exchange tokens if auth params i.e `code` and `session_state` is
+     * available in the URL or else, tries to silently login.
+     *
+     * @private
+     * @return {Observable<BasicUserInfo | boolean>}
+     */
+    private handleAutoLogin (): Observable<BasicUserInfo | boolean> {
 
         this.stateStore.setIsLoading(true);
 
