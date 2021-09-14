@@ -43,7 +43,7 @@ Integration with [@angular/router](https://angular.io/api/router) of this SDK wi
 
 ### 1. Create an Application in Asgardeo
 
-Before trying out the sample apps, you need to a create an application in **Asgardeo**.
+Before trying out the sample apps, you need to create an application in **Asgardeo**.
 
 1. Navigate to [**Asgardeo Console**](https://console.asgardeo.io/login) and click on **Applications** under **Develop** tab
    
