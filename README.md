@@ -865,8 +865,26 @@ Session information can be attached to the body of a custom-grant request using 
 You can install the dependencies by running the following command at the root.
 
 ```bash
+npm install
+```
+
+### Building
+
+You can build the project by executing the following command.
+
+```bash
 npm run build
 ```
+
+#### Ivy Build
+
+For development builds, use the following command to build the project in [`ivy`](https://angular.io/guide/ivy) mode.
+This will help you resolve error occurred when using `npm link`.
+
+```bash
+npm run build:ivy
+```
+
 ### Helpful Links
 
 - Getting started with Angular
