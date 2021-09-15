@@ -22,7 +22,6 @@
 <div class="container">
 
     <div *ngIf="isClientIDConfigured; then configured else notConfigured"></div>
-    <h4>isLoading: {{(state$ | async)?.isLoading }}</h4>
 
     <ng-template #notConfigured>
         <div class="content">
