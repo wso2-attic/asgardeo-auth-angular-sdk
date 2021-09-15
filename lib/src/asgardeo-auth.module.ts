@@ -22,7 +22,7 @@ import { AsgardeoSignInRedirectComponent } from "./components/asgardeo-sign-in-r
 import { ASGARDEO_CONFIG } from "./configs/asgardeo-config";
 import { AsgardeoAuthGuard } from "./guards/asgardeo-auth.guard";
 import { AsgardeoConfigInterface } from "./models";
-import { AsgardeoAuthService, AsgardeoAuthStateStoreService } from "./services";
+import { AsgardeoAuthService } from "./services";
 
 @NgModule({
     declarations: [AsgardeoSignInRedirectComponent]
@@ -33,7 +33,6 @@ export class AsgardeoAuthModule {
             ngModule: AsgardeoAuthModule,
             providers: [
                 AsgardeoAuthService,
-                AsgardeoAuthStateStoreService,
                 AsgardeoAuthGuard,
                 {
                     provide: ASGARDEO_CONFIG,
