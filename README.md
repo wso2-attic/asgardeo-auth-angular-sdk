@@ -22,6 +22,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Develop](#develop)
   - [Prerequisites](#prerequisites)
   - [Installing Dependencies](#installing-dependencies)
+  - [Build](#build)
   - [Helpful Links](#helpful-links)
 - [Contribute](#contribute)
   - [Reporting Issues](#reporting-issues)
@@ -237,6 +238,7 @@ export class AppComponent {
 - [`AsgardeoAuthModule`](#asgardeoauthmodule)
   - [Configuration](#configuration)
 - [`AsgardeoAuthService`](#asgardeoauthservice)
+  - [state$](#state)
   - [signIn](#signin)
   - [signInWithRedirect](#signinwithredirect)
   - [signOut](#signout)
@@ -297,6 +299,23 @@ This SDK currently supports following configuration parameters defined in [@asga
 ### `AsgardeoAuthService`
 
 In the components, `AsgardeoAuthService` can be used to take advantage of all of supported authentication features provided. This service inherits from the `IdentityClient` of the [@asgardeo/auth-spa](https://github.com/asgardeo/asgardeo-auth-spa-sdk).
+
+### state$
+
+Authenticated state of the user than is exposed as an Observable. You can subscribe to `this.auth.state$` end extract the [attributes exposed by the SDK](#authstateinterface).
+
+
+```typescript
+
+constructor(private auth: AsgardeoAuthService) { }
+
+ngOnInit() {
+    this.auth.state$
+        .subscribe((state: AuthStateInterface) => {
+            // Access the state from here. ex: state.isAuthenticated, state.username etc.
+        });
+}
+```
 
 ### signIn
 
@@ -868,7 +887,7 @@ You can install the dependencies by running the following command at the root.
 npm install
 ```
 
-### Building
+### Build
 
 You can build the project by executing the following command.
 
