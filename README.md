@@ -202,6 +202,36 @@ export class AppComponent {
 }
 ```
 
+### 4. Use `AsgardeoAuthService` to access Authenticated state.
+
+`state$` could be used to access the user's authenticated user's state. Click [here](#authstateinterface) to see which attributes are exposed from `$state` object.
+
+```typescript
+// app.component.ts
+
+import { Component } from "@angular/core";
+import { AsgardeoAuthService } from "@asgardeo/auth-angular";
+
+@Component({
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"]
+})
+export class AppComponent {
+
+    public isAuthenticated: boolean;
+
+    constructor(private auth: AsgardeoAuthService) { }
+
+    ngOnInit() {
+        this.auth.state$
+            .subscribe((state: AuthStateInterface) => {
+                isAuthenticated = state.isAuthenticated;
+            });
+    }
+}
+```
+
 ## APIs
 
 - [`AsgardeoAuthModule`](#asgardeoauthmodule)
@@ -260,6 +290,7 @@ This SDK currently supports following configuration parameters defined in [@asga
 | [`storage`](#storage)        | Optional                                                                                                            | `Storage`       | `SessionStorage`                                                | The storage medium where the session information such as the access token should be stored.                                                                                                                                                                                                                                                |                                                                                                                                                             |
 | `resourceServerURLs`         | Required if `storage` is set to `webWorker` or if the built-in [auth interceptor](#asgardeoauthinterceptor) is used | `string[]`      | `[]`                                                            | The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied. |                                                                                                                                                             |
 | `requestTimeout`             | Optional                                                                                                            | `number`        | 60000 (seconds)                                                 | Specifies in seconds how long a request to the web worker should wait before being timed out.                                                                                                                                                                                                                                              |
+| `skipRedirectCallback`       | Optional                                                                                                            | `boolean`        | `false`                                              | Stop listening to Auth param changes i.e `code` & `session_state` to trigger auto login.                                                                                                                                                                                                                                              |
 
 ---
 
@@ -742,6 +773,7 @@ Of the four methods, storing the session information in the **web worker** is th
 - [OIDCEndpoints](#oidcendpoints)
 - [CustomGrantConfig](#customgrantconfig)
 - [DecodedIDTokenPayload](#decodedidtokenpayload)
+- [AuthStateInterface](#authstateinterface)
 
 ### BasicUserInfo
 
@@ -810,6 +842,16 @@ Session information can be attached to the body of a custom-grant request using 
 | preferred_username | `string`               | The preferred username.                        |
 | tenant_domain      | `string`               | The tenant domain to which the user belongs.   |
 
+### AuthStateInterface
+
+| Attribute          | Type                   | Description                                    |
+| ------------------ | ---------------------- | ---------------------------------------------- |
+| allowedScopes      | `string`               | Scopes in the Token.                           |
+| displayName        | `string`               | User's display name                            |
+| email              | `string`               | User's email.                                  |
+| isAuthenticated    | `boolean`              | Is the user authenticated or not.              |
+| isLoading          | `boolean`              | Is the authentication requests still loading.  |
+| username           | `string`               | Username of the Authenticated user.            |
 
 ## Develop
 
