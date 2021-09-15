@@ -18,136 +18,62 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { AsgardeoAuthService } from "@asgardeo/auth-angular";
+import { AsgardeoAuthService, AuthStateInterface, BasicUserInfo } from "@asgardeo/auth-angular";
 import { default as authConfig } from "../config.json";
+import { Observable } from "rxjs";
+import { ParsedIDTokenInterface, parseIdToken } from "./utils";
 
 @Component({
     selector: "app-root",
     templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.css"]
+    styleUrls: [ "./app.component.css" ]
 })
 export class AppComponent implements OnInit {
-    isInitLogin: boolean;
-    isConfigured: boolean;
-    userInfo: any;
-    idToken: any;
-    isError: boolean;
 
-    constructor(private auth: AsgardeoAuthService) {
-        this.isConfigured = this.getClientIdStatus();
-        this.isInitLogin = this.getIsInitLogin();
-    }
+    public isClientIDConfigured: boolean = !!authConfig.clientID;
+    public userInfo: BasicUserInfo;
+    public parsedIDToken: ParsedIDTokenInterface;
+    public hasErrors: boolean;
+    public state$: Observable<AuthStateInterface>;
+
+    constructor(private auth: AsgardeoAuthService) { }
 
     ngOnInit() {
-        if (this.isInitLogin) {
-            this.auth.signIn().then(() => {
-                this.auth.getBasicUserInfo().then((payload) => {
-                    const username = payload?.username?.split('/');
+        this.state$ = this.auth.state$;
 
-                    if (username.length >= 2) {
-                        username.shift();
-                        payload.username = username.join('/');
+        this.auth.state$
+            .subscribe(
+                (state: AuthStateInterface) => {
+                    if (state.isAuthenticated) {
+                        this.auth.getBasicUserInfo()
+                            .then((user: BasicUserInfo) => {
+                                const username: string[] = user?.username?.split('/');
+
+                                if (username.length >= 2) {
+                                    username.shift();
+                                    user.username = username.join('/');
+                                }
+
+                                this.userInfo = user;
+                            });
+
+                        this.auth.getIDToken()
+                            .then((payload: string) => {
+                                this.parsedIDToken = parseIdToken(payload)
+                            });
                     }
-
-                    this.userInfo = payload;
-                });
-                this.auth.getIDToken().then((payload) => this.idToken = this.parseIdToken(payload));
-            }).catch((error) => {
-                this.isError = true;
-            });
-        }
-    }
-
-    getClientIdStatus() {
-        if (authConfig.clientID === "") {
-            return false;
-        }
-        else {
-            return true;
-        }
-    }
-
-    getIsInitLogin() {
-        if (this.checkForDeniedConsentError()) {
-            return false;
-        }
-        else {
-            if (sessionStorage.getItem("isInitLogin") === "true") {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
-    }
-
-    getQueryParams() {
-        return new URLSearchParams(window.location.search);
-    }
-
-    checkForDeniedConsentError() {
-        if (this.getQueryParams().get("error_description") === "User denied the consent") {
-            return true;
-        }
-        return false;
+                },
+                (_: Error) => {
+                    this.hasErrors = true;
+                }
+            );
     }
 
     handleLogin() {
-        this.auth.signIn().then(() => sessionStorage.setItem("isInitLogin", "true"));
+        this.auth.signIn();
     }
 
     handleLogout() {
-        this.auth.signOut().then(() => sessionStorage.setItem("isInitLogin", "false"));
-    }
-
-    parseIdToken(idToken: string) {
-        if (!idToken) {
-            return;
-        }
-
-        if (typeof idToken !== "string") {
-            idToken = JSON.stringify(idToken);
-        }
-
-        const idTokenSplit = idToken.split(".");
-        const idTokenObject = {
-            encoded: [],
-            decoded: []
-        };
-
-        idTokenSplit.forEach((element) => {
-            idTokenObject.encoded.push(element);
-        });
-
-        idTokenObject.decoded.push(JSON.parse(atob(idTokenObject.encoded[0])));
-        idTokenObject.decoded.push(JSON.parse(atob(idTokenObject.encoded[1])));
-
-        const sub =
-            idTokenObject['decoded'][1] &&
-            idTokenObject['decoded'][1]?.sub?.split('/');
-
-        if (sub.length >= 2) {
-            sub.shift();
-            idTokenObject['decoded'][1].sub = sub.join('/');
-        }
-
-        const groups = [];
-        idTokenObject['decoded'][1] &&
-            idTokenObject['decoded'][1]?.groups?.forEach((group) => {
-                const groupArrays = group.split('/');
-
-                if (groupArrays.length >= 2) {
-                    groupArrays.shift();
-                    groups.push(groupArrays.join('/'));
-                } else {
-                    groups.push(group);
-                }
-            });
-
-        if (idTokenObject['decoded'][1]?.groups) {
-            idTokenObject['decoded'][1].groups = groups;
-        }
-
-        return idTokenObject;
+        this.auth.signOut();
     }
 }
