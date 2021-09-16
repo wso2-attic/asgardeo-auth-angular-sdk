@@ -302,7 +302,7 @@ In the components, `AsgardeoAuthService` can be used to take advantage of all of
 
 ### state$
 
-Authenticated state of the user than is exposed as an Observable. You can subscribe to `this.auth.state$` end extract the [attributes exposed by the SDK](#authstateinterface).
+Authenticated state of the user that is exposed as an `Observable`. You can subscribe to `this.auth.state$` end extract the [attributes exposed by the SDK](#authstateinterface).
 
 
 ```typescript
