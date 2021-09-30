@@ -66,16 +66,20 @@ export const parseIdToken = (idToken: string): ParsedIDTokenInterface => {
 
     const groups: string[] = [];
 
-    parsedIdToken["decoded"][1] && parsedIdToken["decoded"][1]?.groups?.forEach((group) => {
-        const groupArrays = group.split('/');
+    parsedIdToken["decoded"][1] && typeof parsedIdToken["decoded"][1]?.groups === "string" &&
+        groups.push(parsedIdToken["decoded"][1]?.groups);
 
-        if (groupArrays.length >= 2) {
-            groupArrays.shift();
-            groups.push(groupArrays.join('/'));
-        } else {
-            groups.push(group);
-        }
-    });
+    parsedIdToken["decoded"][1] && typeof parsedIdToken["decoded"][1]?.groups !== "string" &&
+        parsedIdToken["decoded"][1]?.groups?.forEach((group) => {
+            const groupArrays = group.split('/');
+
+            if (groupArrays.length >= 2) {
+                groupArrays.shift();
+                groups.push(groupArrays.join('/'));
+            } else {
+                groups.push(group);
+            }
+        });
 
     if (parsedIdToken["decoded"][1]?.groups) {
         parsedIdToken["decoded"][1].groups = groups;
