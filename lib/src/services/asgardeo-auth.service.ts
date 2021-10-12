@@ -195,7 +195,7 @@ export class AsgardeoAuthService implements OnDestroy {
 
     /**
      * This method allows you to sign in silently.
-     * First, this method sends a prompt none request to see if there is an active user session in the identity server.
+     * First, this method sends a prompt none request to see if there is an active user session in the asgardeo.
      * If there is one, then it requests the access token and stores it. Else, it returns false.
      *
      * @param {AuthStateInterface} state - Current Authenticated state.
