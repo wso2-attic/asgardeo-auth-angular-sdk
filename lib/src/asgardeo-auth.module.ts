@@ -21,8 +21,8 @@ import { ModuleWithProviders, NgModule } from "@angular/core";
 import { AsgardeoSignInRedirectComponent } from "./components/asgardeo-sign-in-redirect.component";
 import { ASGARDEO_CONFIG } from "./configs/asgardeo-config";
 import { AsgardeoAuthGuard } from "./guards/asgardeo-auth.guard";
-import { AsgardeoConfigInterface } from "./models/asgardeo-config.interface";
-import { AsgardeoAuthService } from "./services/asgardeo-auth.service";
+import { AsgardeoConfigInterface } from "./models";
+import { AsgardeoAuthService } from "./services";
 
 @NgModule({
     declarations: [AsgardeoSignInRedirectComponent]

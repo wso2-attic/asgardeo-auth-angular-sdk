@@ -22,6 +22,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [Develop](#develop)
   - [Prerequisites](#prerequisites)
   - [Installing Dependencies](#installing-dependencies)
+  - [Build](#build)
   - [Helpful Links](#helpful-links)
 - [Contribute](#contribute)
   - [Reporting Issues](#reporting-issues)
@@ -178,11 +179,42 @@ export class AppComponent {
 }
 ```
 
+### 4. Use `AsgardeoAuthService` to access Authenticated state.
+
+`state$` could be used to access the user's authenticated user's state. Click [here](#authstateinterface) to see which attributes are exposed from `$state` object.
+
+```typescript
+// app.component.ts
+
+import { Component } from "@angular/core";
+import { AsgardeoAuthService } from "@asgardeo/auth-angular";
+
+@Component({
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"]
+})
+export class AppComponent {
+
+    public isAuthenticated: boolean;
+
+    constructor(private auth: AsgardeoAuthService) { }
+
+    ngOnInit() {
+        this.auth.state$
+            .subscribe((state: AuthStateInterface) => {
+                isAuthenticated = state.isAuthenticated;
+            });
+    }
+}
+```
+
 ## APIs
 
 - [`AsgardeoAuthModule`](#asgardeoauthmodule)
   - [Configuration](#configuration)
 - [`AsgardeoAuthService`](#asgardeoauthservice)
+  - [state$](#state)
   - [signIn](#signin)
   - [signInWithRedirect](#signinwithredirect)
   - [signOut](#signout)
@@ -236,12 +268,30 @@ This SDK currently supports following configuration parameters defined in [@asga
 | [`storage`](#storage)        | Optional                                                                                                            | `Storage`       | `SessionStorage`                                                | The storage medium where the session information such as the access token should be stored.                                                                                                                                                                                                                                                |                                                                                                                                                             |
 | `resourceServerURLs`         | Required if `storage` is set to `webWorker` or if the built-in [auth interceptor](#asgardeoauthinterceptor) is used | `string[]`      | `[]`                                                            | The URLs of the API endpoints. This is needed only if the storage method is set to `webWorker`. When API calls are made through the [`httpRequest`](#httprequest) or the [`httpRequestAll`](#httprequestall) method, only the calls to the endpoints specified in the `baseURL` attribute will be allowed. Everything else will be denied. |                                                                                                                                                             |
 | `requestTimeout`             | Optional                                                                                                            | `number`        | 60000 (seconds)                                                 | Specifies in seconds how long a request to the web worker should wait before being timed out.                                                                                                                                                                                                                                              |
-
+| `skipRedirectCallback`       | Optional                                                                                                            | `boolean`        | `false`                                              | Stop listening to Auth param changes i.e `code` & `session_state` to trigger auto login.                                                                                                                                                                                                                                              |
+|`enableOIDCSessionManagement` |Optional|`boolean`| false | Flag to enable OIDC Session Management |
 ---
 
 ### `AsgardeoAuthService`
 
 In the components, `AsgardeoAuthService` can be used to take advantage of all of supported authentication features provided. This service inherits from the `IdentityClient` of the [@asgardeo/auth-spa](https://github.com/asgardeo/asgardeo-auth-spa-sdk).
+
+### state$
+
+Authenticated state of the user that is exposed as an `Observable`. You can subscribe to `this.auth.state$` end extract the [attributes exposed by the SDK](#authstateinterface).
+
+
+```typescript
+
+constructor(private auth: AsgardeoAuthService) { }
+
+ngOnInit() {
+    this.auth.state$
+        .subscribe((state: AuthStateInterface) => {
+            // Access the state from here. ex: state.isAuthenticated, state.username etc.
+        });
+}
+```
 
 ### signIn
 
@@ -718,6 +768,7 @@ Of the four methods, storing the session information in the **web worker** is th
 - [OIDCEndpoints](#oidcendpoints)
 - [CustomGrantConfig](#customgrantconfig)
 - [DecodedIDTokenPayload](#decodedidtokenpayload)
+- [AuthStateInterface](#authstateinterface)
 
 ### BasicUserInfo
 
@@ -786,6 +837,16 @@ Session information can be attached to the body of a custom-grant request using 
 | preferred_username | `string`               | The preferred username.                        |
 | tenant_domain      | `string`               | The tenant domain to which the user belongs.   |
 
+### AuthStateInterface
+
+| Attribute          | Type                   | Description                                    |
+| ------------------ | ---------------------- | ---------------------------------------------- |
+| allowedScopes      | `string`               | Scopes in the Token.                           |
+| displayName        | `string`               | User's display name                            |
+| email              | `string`               | User's email.                                  |
+| isAuthenticated    | `boolean`              | Is the user authenticated or not.              |
+| isLoading          | `boolean`              | Is the authentication requests still loading.  |
+| username           | `string`               | Username of the Authenticated user.            |
 
 ## Develop
 
@@ -799,8 +860,26 @@ Session information can be attached to the body of a custom-grant request using 
 You can install the dependencies by running the following command at the root.
 
 ```bash
+npm install
+```
+
+### Build
+
+You can build the project by executing the following command.
+
+```bash
 npm run build
 ```
+
+#### Ivy Build
+
+For development builds, use the following command to build the project in [`ivy`](https://angular.io/guide/ivy) mode.
+This will help you resolve error occurred when using `npm link`.
+
+```bash
+npm run build:ivy
+```
+
 ### Helpful Links
 
 - Getting started with Angular
