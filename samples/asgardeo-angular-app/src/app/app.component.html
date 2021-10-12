@@ -17,11 +17,11 @@
 
 -->
 
-<br />
+<br/>
 
 <div class="container">
 
-    <div *ngIf="isConfigured; then configured else notConfigured"></div>
+    <div *ngIf="isClientIDConfigured; then configured else notConfigured"></div>
 
     <ng-template #notConfigured>
         <div class="content">
@@ -42,113 +42,125 @@
 
         <div class="content">
 
-            <div *ngIf="isInitLogin; then signedIn else notSignedIn"></div>
+            <div *ngIf="(state$ | async)?.isLoading; then loading else notLoading"></div>
 
-            <ng-template #notSignedIn>
-                <div class="home-image">
-                    <img
-                        src="/assets/angular-logo.png"
-                        class="logo"
-                    />
-                </div>
-                <h3>
-                    Sample demo to showcase authentication for a Single Page Application <br />
-                    via the OpenID Connect Authorization Code flow, <br />
-                    which is integrated using the
-                    <a
-                        href="https://github.com/asgardeo/asgardeo-auth-angular-sdk"
-                        target="_blank"
-                    >
-                        Asgardeo Auth Angular SDK</a>.
-                </h3>
-                <button
-                    class="btn primary"
-                    (click)="handleLogin()"
-                >Login</button>
+            <ng-template #loading>
+                <div>Loading ...</div>
             </ng-template>
 
-            <ng-template #signedIn>
+            <ng-template #notLoading>
 
-                <div *ngIf="userInfo != undefined || idToken != undefined; then defined else notDefined"></div>
+                <div *ngIf="(state$ | async).isAuthenticated; then signedIn else notSignedIn"></div>
 
-                <ng-template #notDefined>
-                    <div *ngIf="isError; then error else loading"></div>
-                </ng-template>
+                <ng-template #notSignedIn>
 
-                <ng-template #loading>
-                    <div>Loading ...</div>
-                </ng-template>
-
-                <ng-template #error>
-                    <div> An error occurred while authenticating ...</div>
-                </ng-template>
-
-                <ng-template #defined>
-                  <h2>Authentication Response</h2>
-                  <h4 class="sub-title">
-                    Derived by the&nbsp;
-                    <code class="inline-code-block">
-                      <a href="https://www.npmjs.com/package/@asgardeo/auth-angular/v/latest" target="_blank">
-                        @asgardeo/auth-angular
-                      </a>
-                    </code>&nbsp;SDK
-                  </h4>
-                    <div class="json json-container">
-                        <app-json-formatter [json]="userInfo"></app-json-formatter>
+                    <div class="home-image">
+                        <img
+                            src="/assets/angular-logo.png"
+                            class="logo"
+                        />
                     </div>
-
-                    <h2 class="mb-0 mt-4">ID token</h2>
-
-                    <div class="row">
-                        <div class="column">
-                            <h5><b>Encoded</b></h5>
-                            <div class="code">
-                                <code>
-                                    <span class="id-token-0" [innerText]="idToken.encoded[0]">
-                                    </span>.<span class="id-token-1" [innerText]="idToken.encoded[1]">
-                                    </span>.<span class="id-token-2" [innerText]="idToken.encoded[2]"></span>
-                                </code>
-                            </div>
-                        </div>
-
-                        <div class="column">
-                            <div class="json">
-                                <h5><b>Decoded:</b> Header</h5>
-                                <div class="json-container">
-                                    <app-json-formatter [json]="idToken.decoded[0]"></app-json-formatter>
-                                </div>
-                            </div>
-
-                            <h5><b>Decoded:</b> Payload</h5>
-                            <div class="json-container">
-                                <app-json-formatter [json]="idToken.decoded[1]"></app-json-formatter>
-                            </div>
-
-                            <div class="json">
-                                <h5>Signature</h5>
-                                <div class="code">
-                                    <code>
-                                        HMACSHA256(
-                                    <br />
-                                    &nbsp;&nbsp;<span class="id-token-0">base64UrlEncode(
-                                        <span class="id-token-1">header</span>)</span> + "." + <br />
-                                    &nbsp;&nbsp;<span class="id-token-0">base64UrlEncode(
-                                        <span class="id-token-1">payload</span>)</span>,&nbsp;
-                                    <span class="id-token-1">your-256-bit-secret</span> <br />
-                                    );
-                                    </code>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <h3>
+                        Sample demo to showcase authentication for a Single Page Application <br/>
+                        via the OpenID Connect Authorization Code flow, <br/>
+                        which is integrated using the
+                        <a
+                            href="https://github.com/asgardeo/asgardeo-auth-angular-sdk"
+                            target="_blank"
+                        >
+                            Asgardeo Auth Angular SDK</a>.
+                    </h3>
                     <button
-                        class="btn primary mt-4"
-                        (click)="handleLogout()"
-                    >
-                        Logout
+                        class="btn primary"
+                        (click)="handleLogin()"
+                    >Login
                     </button>
                 </ng-template>
 
+                <ng-template #signedIn>
+
+                    <div
+                        *ngIf="userInfo != undefined || parsedIDToken != undefined; then defined else notDefined"></div>
+
+                    <ng-template #notDefined>
+                        <div *ngIf="hasErrors; then error"></div>
+                    </ng-template>
+
+                    <ng-template #loading>
+                        <div>Loading ...</div>
+                    </ng-template>
+
+                    <ng-template #error>
+                        <div> An error occurred while authenticating ...</div>
+                    </ng-template>
+
+                    <ng-template #defined>
+                        <h2>Authentication Response</h2>
+                        <h4 class="sub-title">
+                            Derived by the&nbsp;
+                            <code class="inline-code-block">
+                                <a href="https://www.npmjs.com/package/@asgardeo/auth-angular/v/latest" target="_blank">
+                                    @asgardeo/auth-angular
+                                </a>
+                            </code>&nbsp;SDK
+                        </h4>
+                        <div class="json json-container">
+                            <app-json-formatter [json]="userInfo"></app-json-formatter>
+                        </div>
+
+                        <h2 class="mb-0 mt-4">ID token</h2>
+
+                        <div class="row">
+                            <div class="column">
+                                <h5><b>Encoded</b></h5>
+                                <div class="code">
+                                    <code>
+                                    <span class="id-token-0" [innerText]="parsedIDToken.encoded[0]">
+                                    </span>.<span class="id-token-1" [innerText]="parsedIDToken.encoded[1]">
+                                    </span>.<span class="id-token-2" [innerText]="parsedIDToken.encoded[2]"></span>
+                                    </code>
+                                </div>
+                            </div>
+
+                            <div class="column">
+                                <div class="json">
+                                    <h5><b>Decoded:</b> Header</h5>
+                                    <div class="json-container">
+                                        <app-json-formatter [json]="parsedIDToken.decoded[0]"></app-json-formatter>
+                                    </div>
+                                </div>
+
+                                <h5><b>Decoded:</b> Payload</h5>
+                                <div class="json-container">
+                                    <app-json-formatter [json]="parsedIDToken.decoded[1]"></app-json-formatter>
+                                </div>
+
+                                <div class="json">
+                                    <h5>Signature</h5>
+                                    <div class="code">
+                                        <code>
+                                            HMACSHA256(
+                                            <br/>
+                                            &nbsp;&nbsp;<span class="id-token-0">base64UrlEncode(
+                                        <span class="id-token-1">header</span>)</span> + "." + <br/>
+                                            &nbsp;&nbsp;<span class="id-token-0">base64UrlEncode(
+                                        <span class="id-token-1">payload</span>)</span>,&nbsp;
+                                            <span class="id-token-1">your-256-bit-secret</span> <br/>
+                                            );
+                                        </code>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button
+                            class="btn primary mt-4"
+                            (click)="handleLogout()"
+                        >
+                            Logout
+                        </button>
+                    </ng-template>
+
+                </ng-template>
             </ng-template>
         </div>
     </ng-template>

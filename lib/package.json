@@ -1,6 +1,6 @@
 {
     "name": "@asgardeo/auth-angular",
-    "version": "0.2.1",
+    "version": "0.2.4",
     "description": "Asgardeo Auth Angular SDK for Angular Applications.",
     "keywords": [
         "Asgardeo",
@@ -25,6 +25,6 @@
     },
     "dependencies": {
         "tslib": "^2.0.0",
-        "@asgardeo/auth-spa": "^0.2.0"
+        "@asgardeo/auth-spa": "^0.2.11"
     }
 }
