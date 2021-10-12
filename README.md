@@ -43,9 +43,7 @@ Integration with [@angular/router](https://angular.io/api/router) of this SDK wi
 
 ### 1. Create an Application in Asgardeo
 
-Before trying out the sample apps, you need to a create an application in Asgardeo.
-
-Follow the steps below to add an application to **Asgardeo**.
+Before trying out the sample apps, you need to a create an application in **Asgardeo**.
 
 1. Navigate to [**Asgardeo Console**](https://console.asgardeo.io/login) and click on **Applications** under **Develop** tab
    
@@ -141,7 +139,7 @@ import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
         AsgardeoAuthModule.forRoot({
             signInRedirectURL: "https://localhost:5000",
             clientID: "clientID",
-            serverOrigin: "https://localhost:9443"
+            serverOrigin: "https://api.asgardeo.io"
         })
     ],
     providers: [],
