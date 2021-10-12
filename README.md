@@ -748,7 +748,7 @@ export class AppComponent {
 }
 ```
 
-Learn more about using APIs in Asgardeo from [here](https://wso2.com/asgardeo/docs/).
+Learn more about using APIs in Asgardeo from [here](https://wso2.com/asgardeo/docs/sdks/).
 
 ## Storage
 
