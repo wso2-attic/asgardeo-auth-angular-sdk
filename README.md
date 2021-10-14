@@ -527,7 +527,7 @@ A Promise that resolves either with the response or the [`BasicUserInfo`](#Basic
 
 #### Description
 
-This method allows developers to use custom grants provided by Asgardeo. This method accepts an object that has the following attributes as the argument.
+This method allows developers to use custom grants provided by their Identity Servers. This method accepts an object that has the following attributes as the argument.
 
 The `custom-grant` hook is used to fire a callback function after a custom grant request is successful. Check the [on()](#on) section for more information.
 
