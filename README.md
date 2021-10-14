@@ -3,10 +3,10 @@
 Repository containing the source of Asgardeo Auth Angular SDK & Samples.
 
 ![Builder](https://github.com/asgardeo/asgardeo-auth-angular-sdk/workflows/Builder/badge.svg)
-[![Stackoverflow](https://img.shields.io/badge/Ask%20for%20help%20on-Stackoverflow-orange)](https://stackoverflow.com/questions/tagged/wso2is)
+[![Stackoverflow](https://img.shields.io/badge/Ask%20for%20help%20on-Stackoverflow-orange)](https://stackoverflow.com/questions/tagged/asgardeo)
 [![Join the chat at https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE](https://img.shields.io/badge/Join%20us%20on-Slack-%23e01563.svg)](https://join.slack.com/t/wso2is/shared_invite/enQtNzk0MTI1OTg5NjM1LTllODZiMTYzMmY0YzljYjdhZGExZWVkZDUxOWVjZDJkZGIzNTE1NDllYWFhM2MyOGFjMDlkYzJjODJhOWQ4YjE)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/wso2/product-is/blob/master/LICENSE)
-[![Twitter](https://img.shields.io/twitter/follow/wso2.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=wso2) 
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/asgardeo/asgardeo-auth-angular-sdk/blob/main/LICENSE)
+[![Twitter](https://img.shields.io/twitter/follow/wso2.svg?style=social&label=Follow)](https://twitter.com/intent/follow?screen_name=asgardeo) 
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.2.0.
 
@@ -42,15 +42,11 @@ Integration with [@angular/router](https://angular.io/api/router) of this SDK wi
 
 ## Try Out the Sample Apps
 
-### 1. Create an Application in Your Identity Provider
+### 1. Create an Application in Asgardeo
 
-Before trying out the sample apps, you need to a create an application in your preferred identity provider. 
+Before trying out the sample apps, you need to create an application in **Asgardeo**.
 
-There are two methods to add an application to **WSO2 Identity Server**.
-
-#### a. WSO2 Identity Server - Console App
-
-1. Navigate to [`https://localhost:9443/console`](https://localhost:9443/console) and click on **Applications** under **Develop** tab
+1. Navigate to [**Asgardeo Console**](https://console.asgardeo.io/login) and click on **Applications** under **Develop** tab
    
 2. Click on **New Application** and then **Single Page Application**.
    
@@ -63,26 +59,6 @@ There are two methods to add an application to **WSO2 Identity Server**.
 6. Click on **Update** at the bottom.
    
 7. Copy the **Client ID**.
-
-#### b. WSO2 Identity Server - Carbon Console
-
-1. Navigate to [`https://localhost:9443/carbon`](https://localhost:9443/carbon) and click on **Add** under **Service Providers** in the left-hand menu panel.
-
-2. Enter **Sample** as the name of the app and click on **Register**.
-
-3. Then, expand the **Inbound Authentication Configuration** section. Under that, expand **OAuth/OpenID Connect Configuration** section and click on **Configure**.
-
-4. Under **Allowed Grant Types** uncheck everything except **Code** and **Refresh Token**.
-
-5. Enter the callback URL(s). You can find the relevant callback(redirect) URL(s) of each sample app in the [Running the sample apps](#2-running-the-sample-apps) section.
-
-6. Check **Allow authentication without the client secret**.
-
-7. Click **Add** at the bottom.
-
-8. Copy the **OAuth Client Key**.
-
-9. Enable CORS for the client application by following this [guide](https://is.docs.wso2.com/en/5.11.0/learn/cors/).
 
 ### 2. Running the sample apps
 
@@ -97,7 +73,7 @@ Read more about the SDK configurations [here](#configuration) .
 ```json
 {
     "clientID": "",
-    "serverOrigin": "https://localhost:9443",
+    "serverOrigin": "https://api.asgardeo.io",
     "signInRedirectURL": "https://localhost:5000",
     "signOutRedirectURL": "https://localhost:5000"
 }
@@ -164,7 +140,7 @@ import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
         AsgardeoAuthModule.forRoot({
             signInRedirectURL: "https://localhost:5000",
             clientID: "clientID",
-            serverOrigin: "https://localhost:9443"
+            serverOrigin: "https://api.asgardeo.io"
         })
     ],
     providers: [],
@@ -283,7 +259,7 @@ This SDK currently supports following configuration parameters defined in [@asga
 | `prompt`                     | Optional                                                                                                            | `string`        | ""                                                              | Specifies the prompt type of an OIDC request                                                                                                                                                                                                                                                                                               |
 | `responseMode`               | Optional                                                                                                            | `ResponseMode`  | `query`                                                         | Specifies the response mode. The value can either be `query` or `form_post`                                                                                                                                                                                                                                                                |
 | `scope`                      | Optional                                                                                                            | `string[]`      | `["openid"]`                                                    | Specifies the requested scopes.                                                                                                                                                                                                                                                                                                            |
-| `serverOrigin`               | Required                                                                                                            | `string`        | ""                                                              | The origin of the Identity Provider. eg: `https://localhost:9443`                                                                                                                                                                                                                                                                          |
+| `serverOrigin`               | Required                                                                                                            | `string`        | ""                                                              | The origin of the Identity Provider. eg: `https://api.asgardeo.io`                                                                                                                                                                                                                                                                          |
 | `endpoints`                  | Optional                                                                                                            | `OIDCEndpoints` | [OIDC Endpoints Default Values](#oidcendpoints)                 | The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS                                                                                                                                                                                                                                                                       | using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be | used. However, if the `overrideWellEndpointConfig` is set to `true`, then this will override the endpoints obtained from the `.well-known` endpoint. |
 | `overrideWellEndpointConfig` | Optional                                                                                                            | `boolean`       | `false`                                                         | If this option is set to `true`, then the `endpoints` object will override endpoints obtained                                                                                                                                                                                                                                              | from the `.well-known` endpoint. If this is set to `false`, then this will be used as a fallback if the request to the `.well-known` endpoint fails.        |
 | `wellKnownEndpoint`          | Optional                                                                                                            | `string`        | `"/oauth2/token /.well-known/ openid-configuration"`            | The URL of the `.well-known` endpoint.                                                                                                                                                                                                                                                                                                     |
@@ -386,7 +362,7 @@ signOut(): Promise<boolean>
 
 #### Description
 
-This method ends the user session at the Identity Server and logs the user out.
+This method ends the user session at Asgardeo and logs the user out.
 
 The `sign-out` hook is used to fire a callback function after signing out is successful. Check the [on()](#on) section for more information.
 
@@ -597,7 +573,7 @@ A Promise that resolves with the response.
 
 #### Description
 
-This method is used to send http requests to the Identity Server. The developer doesn't need to manually attach the access token since this method does it automatically.
+This method is used to send http requests to Asgardeo. The developer doesn't need to manually attach the access token since this method does it automatically.
 
 If the `storage` type is set to `sessionStorage` or `localStorage`, the developer may choose to implement their own ways of sending http requests by obtaining the access token from the relevant storage medium and attaching it to the header. However, if the `storage` is set to `webWorker`, this is the _ONLY_ way http requests can be sent.
 
@@ -772,7 +748,7 @@ export class AppComponent {
 }
 ```
 
-Learn more about using APIs in WSO2 Identity Server from [here](https://is.docs.wso2.com/en/latest/develop/using-apis/).
+Learn more about using APIs in Asgardeo from [here](https://wso2.com/asgardeo/docs/sdks/).
 
 ## Storage
 
@@ -911,7 +887,7 @@ npm run build:ivy
     - [Angular Quick Start Guide](https://angular.io/start)
     - [Angular In-app navigation](https://angular.io/guide/router)
 
-- WSO2 Identity Server [Docs](https://is.docs.wso2.com/en/latest/)
+- Asgardeo Documentation [Docs](https://wso2.com/asgardeo/docs/)
 
 ## Contribute
 

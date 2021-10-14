@@ -43,7 +43,7 @@ Read more about the SDK configurations [here](../../README.md#configuration).
 ```json
 {
     "clientID": "<ADD_CLIENT_ID_HERE>",
-    "serverOrigin": "https://localhost:9443",
+    "serverOrigin": "https://api.asgardeo.io",
     "signInRedirectURL": "https://localhost:5000",
     "signOutRedirectURL": "https://localhost:5000"
 }
