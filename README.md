@@ -508,7 +508,7 @@ If you are using TypeScript, you may want to use the `Hooks` enum that consists 
 | `Hooks.RevokeAccessToken`  | `revokeAccessToken()`                                                            | A boolean value indicating if the process was successful or not             |
 | `Hooks.CustomGrant`        | `customGrant()`                                                                  | Returns the response from the custom grant request.                         |
 
-**When the user signs out, the user is taken to Asgardeo's logout page and then redirected back to the SPA on successful log out. Hence, developers should ensure that the `Hooks.SignOut` hook is called when the page the user is redirected to loads.**
+**When the user signs out, the user is taken to the identity server's logout page and then redirected back to the SPA on successful log out. Hence, developers should ensure that the `Hooks.SignOut` hook is called when the page the user is redirected to loads.**
 
 ### requestCustomGrant
 
