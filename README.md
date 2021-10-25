@@ -34,6 +34,10 @@ Asgardeo's Auth SDK for Angular allows Angular Applications to use OIDC or OAuth
 
 Integration with [@angular/router](https://angular.io/api/router) of this SDK will help the developers to add identity management to their Angular Applications in a jiffy.
 
+## Prerequisite
+
+Create an organization in Asgardeo if you don't already have one. The organization name you choose will be referred to as `<org_name>` throughout this document.
+
 ## Package
 
 | Package                  | Version                                                                                                                             |
@@ -73,7 +77,7 @@ Read more about the SDK configurations [here](#configuration) .
 ```json
 {
     "clientID": "",
-    "serverOrigin": "https://api.asgardeo.io",
+    "serverOrigin": "https://api.asgardeo.io/t/<org_name>",
     "signInRedirectURL": "https://localhost:5000",
     "signOutRedirectURL": "https://localhost:5000"
 }
@@ -140,7 +144,7 @@ import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
         AsgardeoAuthModule.forRoot({
             signInRedirectURL: "https://localhost:5000",
             clientID: "clientID",
-            serverOrigin: "https://api.asgardeo.io"
+            serverOrigin: "https://api.asgardeo.io/t/<org_name>"
         })
     ],
     providers: [],
@@ -259,7 +263,7 @@ This SDK currently supports following configuration parameters defined in [@asga
 | `prompt`                     | Optional                                                                                                            | `string`        | ""                                                              | Specifies the prompt type of an OIDC request                                                                                                                                                                                                                                                                                               |
 | `responseMode`               | Optional                                                                                                            | `ResponseMode`  | `query`                                                         | Specifies the response mode. The value can either be `query` or `form_post`                                                                                                                                                                                                                                                                |
 | `scope`                      | Optional                                                                                                            | `string[]`      | `["openid"]`                                                    | Specifies the requested scopes.                                                                                                                                                                                                                                                                                                            |
-| `serverOrigin`               | Required                                                                                                            | `string`        | ""                                                              | The origin of the Identity Provider. eg: `https://api.asgardeo.io`                                                                                                                                                                                                                                                                          |
+| `serverOrigin`               | Required                                                                                                            | `string`        | ""                                                              | The origin of the Identity Provider. eg: `https://api.asgardeo.io/t/<org_name>`                                                                                                                                                                                                                                                                          |
 | `endpoints`                  | Optional                                                                                                            | `OIDCEndpoints` | [OIDC Endpoints Default Values](#oidcendpoints)                 | The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS                                                                                                                                                                                                                                                                       | using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be | used. However, if the `overrideWellEndpointConfig` is set to `true`, then this will override the endpoints obtained from the `.well-known` endpoint. |
 | `overrideWellEndpointConfig` | Optional                                                                                                            | `boolean`       | `false`                                                         | If this option is set to `true`, then the `endpoints` object will override endpoints obtained                                                                                                                                                                                                                                              | from the `.well-known` endpoint. If this is set to `false`, then this will be used as a fallback if the request to the `.well-known` endpoint fails.        |
 | `wellKnownEndpoint`          | Optional                                                                                                            | `string`        | `"/oauth2/token /.well-known/ openid-configuration"`            | The URL of the `.well-known` endpoint.                                                                                                                                                                                                                                                                                                     |
@@ -689,7 +693,7 @@ import { AppComponent } from "./app.component";
         HttpClientModule,
         AsgardeoAuthModule.forRoot({
             ...
-            serverOrigin: "https://localhost:9443",
+            serverOrigin: "https://api.asgardeo.io/t/<org_name>",
 
             // Add the correct scope(s) required by the API here
             scope: ["internal_login"],
