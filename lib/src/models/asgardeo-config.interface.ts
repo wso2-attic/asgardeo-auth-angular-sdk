@@ -32,6 +32,10 @@ export interface AuthAngularConfig extends SPAConfig {
     skipRedirectCallback?: boolean;
 }
 
+/**
+ * Interface for the Authenticated state of the user which is exposed
+ * via `state` object.
+ */
 export interface AuthStateInterface {
     /**
      * Scopes in the Token.
@@ -53,6 +57,10 @@ export interface AuthStateInterface {
      * Are the Auth requests loading.
      */
     isLoading: boolean;
+    /**
+     * The `uid` corresponding to whom the ID token belongs to.
+     */
+    sub?: string;
     /**
      * Username.
      */

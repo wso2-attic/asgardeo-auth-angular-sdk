@@ -87,8 +87,9 @@ export class AsgardeoAuthService implements OnDestroy {
                         displayName: response.displayName,
                         email: response.email,
                         isAuthenticated: true,
-                        username: response.username,
-                        isLoading: false
+                        isLoading: false,
+                        sub: response.sub,
+                        username: response.username
                     };
                 }
 
@@ -226,6 +227,7 @@ export class AsgardeoAuthService implements OnDestroy {
                         email: basicUserInfo.email,
                         isAuthenticated: true,
                         isLoading: false,
+                        sub: basicUserInfo.sub,
                         username: basicUserInfo.username
                     };
                 }

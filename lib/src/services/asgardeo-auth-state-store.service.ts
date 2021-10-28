@@ -32,6 +32,7 @@ export class AsgardeoAuthStateStoreService {
         email: "",
         isAuthenticated: false,
         isLoading: true,
+        sub: "",
         username: ""
     };
 
