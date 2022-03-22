@@ -1,7 +1,7 @@
 {
     "clientID": "",
     "serverOrigin": "",
-    "signInRedirectURL": "https://localhost:5000/signin/redirect",
-    "signOutRedirectURL": "https://localhost:5000",
+    "signInRedirectURL": "https://localhost:3000/signin/redirect",
+    "signOutRedirectURL": "https://localhost:3000",
     "scope": ["profile"]
 }
