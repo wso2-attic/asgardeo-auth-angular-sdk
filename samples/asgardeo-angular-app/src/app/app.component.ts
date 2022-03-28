@@ -18,7 +18,7 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { AsgardeoAuthService, AuthStateInterface, BasicUserInfo } from "@asgardeo/auth-angular";
+import { AsgardeoAuthService, AuthStateInterface, BasicUserInfo, Hooks } from "@asgardeo/auth-angular";
 import { default as authConfig } from "../config.json";
 import { Observable } from "rxjs";
 import { ParsedIDTokenInterface, parseIdToken } from "./utils";
@@ -67,6 +67,12 @@ export class AppComponent implements OnInit {
                     this.hasErrors = true;
                 }
             );
+
+        this.auth.on(Hooks.SignOutFailed, (error) => {
+            if (error.description === "End User denied the logout request") {
+                this.hasErrors = true;
+            }
+        });
     }
 
     handleLogin() {
