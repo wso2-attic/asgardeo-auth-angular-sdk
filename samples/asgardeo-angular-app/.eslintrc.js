@@ -18,6 +18,9 @@
  */
 
 module.exports = {
+    "env": {
+        "es6": true
+    },
     "root": true,
     "ignorePatterns": [
         "projects/**/*"
