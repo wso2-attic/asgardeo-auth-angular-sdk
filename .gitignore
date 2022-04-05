@@ -46,3 +46,8 @@ debug.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Environment variables files
+.env
+!samples/asgardeo-angular-app/.env
+!samples/asgardeo-angular-app-with-router/.env
