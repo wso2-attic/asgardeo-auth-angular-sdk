@@ -58,7 +58,7 @@ Before trying out the sample apps, you need to create an application in **Asgard
    
 4. Click on Register. You will be navigated to management page of the **sample** application.
    
-5. Add `https://localhost:5000` to **Allowed Origins** under **Access** tab and check **Public client** option.
+5. Add `https://localhost:3000` to **Allowed Origins** under **Access** tab and check **Public client** option.
    
 6. Click on **Update** at the bottom.
    
@@ -78,8 +78,8 @@ Read more about the SDK configurations [here](#configuration) .
 {
     "clientID": "",
     "serverOrigin": "https://api.asgardeo.io/t/<org_name>",
-    "signInRedirectURL": "https://localhost:5000",
-    "signOutRedirectURL": "https://localhost:5000"
+    "signInRedirectURL": "https://localhost:3000",
+    "signOutRedirectURL": "https://localhost:3000"
 }
 ```
 
@@ -89,7 +89,7 @@ Read more about the SDK configurations [here](#configuration) .
 npm install && npm start
 ```
 
-4. Navigate to [`https://localhost:5000`](https://localhost:5000).
+4. Navigate to [`https://localhost:3000`](https://localhost:3000).
 
 #### a. Basic Angular Sample
 
@@ -98,7 +98,7 @@ npm install && npm start
 - Find More Info: [README](/samples/asgardeo-angular-app/README.md)
 
 - **Redirect URL(s):**
-  - `https://localhost:5000`
+  - `https://localhost:3000`
 
 #### b. Angular Sample With Router
 
@@ -107,8 +107,8 @@ npm install && npm start
 - Find More Info: [README](/samples/asgardeo-angular-app-with-router/README.md)
 
 - **Redirect URL(s):**
-  - `https://localhost:5000`
-  - `https://localhost:5000/signin/redirect`
+  - `https://localhost:3000`
+  - `https://localhost:3000/signin/redirect`
 
 ## Getting Started
 
@@ -142,7 +142,7 @@ import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
 
         // Provide the configs (See API Docs)
         AsgardeoAuthModule.forRoot({
-            signInRedirectURL: "https://localhost:5000",
+            signInRedirectURL: "https://localhost:3000",
             clientID: "clientID",
             serverOrigin: "https://api.asgardeo.io/t/<org_name>"
         })
@@ -255,8 +255,8 @@ This SDK currently supports following configuration parameters defined in [@asga
 | Attribute                    | Required?                                                                                                           | Type            | Default Value                                                   | Description                                                                                                                                                                                                                                                                                                                                |
 | :--------------------------- | :------------------------------------------------------------------------------------------------------------------ | :-------------- | :-------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `signInRedirectURL`          | Required                                                                                                            | `string`        | ""                                                              | The URL to redirect to after the user authorizes the client app.                                                                                                                                                                                                                                                                           |
-| `signOutRedirectURL`         | Optional                                                                                                            | `string`        | `signInRedirectURL` will be used if this value is not provided. | The URL to redirect to after the user is signed out                                                                                                                                                                                                                                                                                        | signs out. eg: `https://localhost:5000/dashboard`                                                                                                           |
-| `clientHost`                 | Optional                                                                                                            | `string`        | Origin of the client app obtained using `window.origin`         | The hostname of the client app. eg: `https://localhost:5000`                                                                                                                                                                                                                                                                               |
+| `signOutRedirectURL`         | Optional                                                                                                            | `string`        | `signInRedirectURL` will be used if this value is not provided. | The URL to redirect to after the user is signed out                                                                                                                                                                                                                                                                                        | signs out. eg: `https://localhost:3000/dashboard`                                                                                                           |
+| `clientHost`                 | Optional                                                                                                            | `string`        | Origin of the client app obtained using `window.origin`         | The hostname of the client app. eg: `https://localhost:3000`                                                                                                                                                                                                                                                                               |
 | `clientID`                   | Required                                                                                                            | `string`        | ""                                                              | The client ID of the OIDC application hosted in the Asgardeo.                                                                                                                                                                                                                                                                              |
 | `clientSecret`               | Optional                                                                                                            | `string`        | ""                                                              | The client secret of the OIDC application                                                                                                                                                                                                                                                                                                  |
 | `enablePKCE`                 | Optional                                                                                                            | `boolean`       | `true`                                                          | Specifies if a PKCE should be sent with the request for the authorization code.                                                                                                                                                                                                                                                            |
