@@ -77,7 +77,7 @@ Read more about the SDK configurations [here](#configuration) .
 ```json
 {
     "clientID": "",
-    "serverOrigin": "https://api.asgardeo.io/t/<org_name>",
+    "baseUrl": "https://api.asgardeo.io/t/<org_name>",
     "signInRedirectURL": "https://localhost:3000",
     "signOutRedirectURL": "https://localhost:3000"
 }
@@ -144,7 +144,7 @@ import { AsgardeoAuthModule } from "@asgardeo/auth-angular";
         AsgardeoAuthModule.forRoot({
             signInRedirectURL: "https://localhost:3000",
             clientID: "clientID",
-            serverOrigin: "https://api.asgardeo.io/t/<org_name>"
+            baseUrl: "https://api.asgardeo.io/t/<org_name>"
         })
     ],
     providers: [],
@@ -263,9 +263,8 @@ This SDK currently supports following configuration parameters defined in [@asga
 | `prompt`                     | Optional                                                                                                            | `string`        | ""                                                              | Specifies the prompt type of an OIDC request                                                                                                                                                                                                                                                                                               |
 | `responseMode`               | Optional                                                                                                            | `ResponseMode`  | `query`                                                         | Specifies the response mode. The value can either be `query` or `form_post`                                                                                                                                                                                                                                                                |
 | `scope`                      | Optional                                                                                                            | `string[]`      | `["openid"]`                                                    | Specifies the requested scopes.                                                                                                                                                                                                                                                                                                            |
-| `serverOrigin`               | Required                                                                                                            | `string`        | ""                                                              | The origin of the Identity Provider. eg: `https://api.asgardeo.io/t/<org_name>`                                                                                                                                                                                                                                                                          |
-| `endpoints`                  | Optional                                                                                                            | `OIDCEndpoints` | [OIDC Endpoints Default Values](#oidcendpoints)                 | The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS                                                                                                                                                                                                                                                                       | using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be | used. However, if the `overrideWellEndpointConfig` is set to `true`, then this will override the endpoints obtained from the `.well-known` endpoint. |
-| `overrideWellEndpointConfig` | Optional                                                                                                            | `boolean`       | `false`                                                         | If this option is set to `true`, then the `endpoints` object will override endpoints obtained                                                                                                                                                                                                                                              | from the `.well-known` endpoint. If this is set to `false`, then this will be used as a fallback if the request to the `.well-known` endpoint fails.        |
+| `baseUrl`               | Required                                                                                                            | `string`        | ""                                                              | The origin of the Identity Provider. eg: `https://api.asgardeo.io/t/<org_name>`                                                                                                                                                                                                                                                                          |
+| `endpoints`                  | Optional                                                                                                            | `OIDCEndpoints` | [OIDC Endpoints Default Values](#oidcendpoints)                 | The OIDC endpoint URLs. The SDK will try to obtain the endpoint URLS                                                                                                                                                                                                                                                                       | using the `.well-known` endpoint. If this fails, the SDK will use these endpoint URLs. If this attribute is not set, then the default endpoint URLs will be | used. |
 | `wellKnownEndpoint`          | Optional                                                                                                            | `string`        | `"/oauth2/token /.well-known/ openid-configuration"`            | The URL of the `.well-known` endpoint.                                                                                                                                                                                                                                                                                                     |
 | `validateIDToken`            | Optional                                                                                                            | `boolean`       | `true`                                                          | Allows you to enable/disable JWT ID token validation after obtaining the ID token.                                                                                                                                                                                                                                                         |
 | `clockTolerance`             | Optional                                                                                                            | `number`        | `60`                                                            | Allows you to configure the leeway when validating the `id_token`.                                                                                                                                                                                                                                                                         |
@@ -693,7 +692,7 @@ import { AppComponent } from "./app.component";
         HttpClientModule,
         AsgardeoAuthModule.forRoot({
             ...
-            serverOrigin: "https://api.asgardeo.io/t/<org_name>",
+            baseUrl: "https://api.asgardeo.io/t/<org_name>",
 
             // Add the correct scope(s) required by the API here
             scope: ["internal_login"],
@@ -807,8 +806,7 @@ Of the four methods, storing the session information in the **web worker** is th
 | `introspectionEndpoint` | `string` | ""                                                 | The introspection endpoint.                                               |
 | `checkSessionIframe`    | `string` | `"/oidc/checksession"`                             | The check-session endpoint.                                               |
 | `endSessionEndpoint`    | `string` | `"/oidc/logout"`                                   | The end-session endpoint.                                                 |
-| `issuer`                | `string` | ""                                                 | The issuer of the token.                                                  |
-| `wellKnownEndpoint`     | `string` | `"/oauth2/token/.well-known/openid-configuration"` | The well-known endpoint. This is the default endpoint defined in the SDK. |
+| `issuer`                | `string` | ""                                                 | The issuer of the token. |
 
 ### CustomGrantConfig
 
