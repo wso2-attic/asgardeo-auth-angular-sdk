@@ -17,9 +17,14 @@
  *
  */
 
-import { from, Observable, Subject } from 'rxjs';
+import { from, Observable, Subject } from "rxjs";
 import { Inject, Injectable, OnDestroy } from "@angular/core";
-import { AsgardeoSPAClient, AuthClientConfig, SPAUtils } from "@asgardeo/auth-spa";
+import {
+    AsgardeoSPAClient,
+    AuthClientConfig,
+    SPAUtils,
+    FetchResponse,
+} from "@asgardeo/auth-spa";
 import { ASGARDEO_CONFIG } from "../configs/asgardeo-config";
 import { AuthAngularConfig, AuthStateInterface } from "../models";
 import {
@@ -30,24 +35,24 @@ import {
     HttpRequestConfig,
     HttpResponse,
     OIDCEndpoints,
-    SignInConfig
+    SignInConfig,
 } from "../models/asgardeo-spa.models";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 import { AsgardeoAuthStateStoreService } from "./asgardeo-auth-state-store.service";
 import { takeUntil } from "rxjs/operators";
 
 @Injectable({
-    providedIn: "root"
+    providedIn: "root",
 })
 export class AsgardeoAuthService implements OnDestroy {
-
-    private auth: AsgardeoSPAClient = AsgardeoSPAClient.getInstance();
     public readonly state$ = this.stateStore.state$;
+    private auth: AsgardeoSPAClient = AsgardeoSPAClient.getInstance();
     private readonly config: AuthClientConfig<AuthAngularConfig>;
     private subscriptionDestroyer$: Subject<boolean> = new Subject<boolean>();
 
     constructor(
-        @Inject(ASGARDEO_CONFIG) private authConfig: AuthClientConfig<AuthAngularConfig>,
+        @Inject(ASGARDEO_CONFIG)
+        private authConfig: AuthClientConfig<AuthAngularConfig>,
         private navigator: AsgardeoNavigatorService,
         private stateStore: AsgardeoAuthStateStoreService
     ) {
@@ -71,11 +76,15 @@ export class AsgardeoAuthService implements OnDestroy {
         this.subscriptionDestroyer$.unsubscribe();
     }
 
-    signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string): Promise<BasicUserInfo> {
-
+    signIn(
+        config?: SignInConfig,
+        authorizationCode?: string,
+        sessionState?: string
+    ): Promise<BasicUserInfo> {
         this.stateStore.setIsLoading(true);
 
-        return this.auth.signIn(config, authorizationCode, sessionState)
+        return this.auth
+            .signIn(config, authorizationCode, sessionState)
             .then(async (response: BasicUserInfo) => {
                 if (!response) {
                     return;
@@ -89,15 +98,13 @@ export class AsgardeoAuthService implements OnDestroy {
                         isAuthenticated: true,
                         isLoading: false,
                         sub: response.sub,
-                        username: response.username
+                        username: response.username,
                     };
                 }
 
                 return response;
             })
-            .catch((error) => {
-                return Promise.reject(error);
-            })
+            .catch((error) => Promise.reject(error))
             .finally(() => {
                 this.stateStore.setIsLoading(false);
             });
@@ -105,25 +112,25 @@ export class AsgardeoAuthService implements OnDestroy {
 
     signInWithRedirect(): Promise<boolean> {
         this.navigator.setRedirectUrl();
-        const redirectRoute = this.navigator.getRouteWithoutParams(this.authConfig.signInRedirectURL);
+        const redirectRoute = this.navigator.getRouteWithoutParams(
+            this.authConfig.signInRedirectURL
+        );
 
         return this.navigator.navigateByUrl(redirectRoute);
     }
 
     signOut(): Promise<boolean> {
-
         this.stateStore.setIsLoading(true);
 
-        return this.auth.signOut()
+        return this.auth
+            .signOut()
             .then((response: boolean) => {
                 // Reset the state.
                 this.stateStore.reset();
 
                 return response;
             })
-            .catch((error) => {
-                return Promise.reject(error);
-            })
+            .catch((error) => Promise.reject(error))
             .finally(() => {
                 this.stateStore.setIsLoading(false);
             });
@@ -158,23 +165,25 @@ export class AsgardeoAuthService implements OnDestroy {
     }
 
     revokeAccessToken(): Promise<boolean> {
-
-        return this.auth.revokeAccessToken()
+        return this.auth
+            .revokeAccessToken()
             .then(() => {
                 // Reset the state.
                 this.stateStore.reset();
 
                 return true;
             })
-            .catch((error) => {
-                return Promise.reject(error);
-            })
+            .catch((error) => Promise.reject(error))
             .finally(() => {
                 this.stateStore.setIsLoading(false);
             });
     }
 
-    on(hook: Hooks, callback: (response?: any) => void, id?: string): Promise<void> {
+    on(
+        hook: Hooks,
+        callback: (response?: any) => void,
+        id?: string
+    ): Promise<void> {
         if (hook === Hooks.CustomGrant) {
             return this.auth.on(hook, callback, id as string);
         }
@@ -182,7 +191,9 @@ export class AsgardeoAuthService implements OnDestroy {
         return this.auth.on(hook, callback);
     }
 
-    requestCustomGrant(config: CustomGrantConfig): Promise<HttpResponse<any> | BasicUserInfo> {
+    requestCustomGrant(
+        config: CustomGrantConfig
+    ): Promise<FetchResponse<any> | BasicUserInfo> {
         return this.auth.requestCustomGrant(config);
     }
 
@@ -208,18 +219,21 @@ export class AsgardeoAuthService implements OnDestroy {
      * this.auth.trySignInSilently()
      *```
      */
-    public trySignInSilently = async (state: AuthStateInterface): Promise<BasicUserInfo | boolean> => {
-
+    public trySignInSilently = async (
+        state: AuthStateInterface
+    ): Promise<BasicUserInfo | boolean> => {
         this.stateStore.setIsLoading(true);
 
-        return this.auth.trySignInSilently()
+        return this.auth
+            .trySignInSilently()
             .then(async (response: BasicUserInfo | boolean) => {
                 if (!response) {
                     return false;
                 }
 
                 if (await this.auth.isAuthenticated()) {
-                    const basicUserInfo: BasicUserInfo = response as BasicUserInfo;
+                    const basicUserInfo: BasicUserInfo =
+                        response as BasicUserInfo;
 
                     this.stateStore.state = {
                         allowedScopes: basicUserInfo.allowedScopes,
@@ -228,19 +242,17 @@ export class AsgardeoAuthService implements OnDestroy {
                         isAuthenticated: true,
                         isLoading: false,
                         sub: basicUserInfo.sub,
-                        username: basicUserInfo.username
+                        username: basicUserInfo.username,
                     };
                 }
 
                 return response;
             })
-            .catch((error) => {
-                return Promise.reject(error);
-            })
+            .catch((error) => Promise.reject(error))
             .finally(() => {
                 this.stateStore.setIsLoading(false);
             });
-    }
+    };
 
     /**
      * Handles auto login by trying to exchange tokens if auth params i.e `code` and `session_state` is
@@ -249,13 +261,15 @@ export class AsgardeoAuthService implements OnDestroy {
      * @private
      * @return {Observable<BasicUserInfo | boolean>}
      */
-    private handleAutoLogin (): Observable<BasicUserInfo | boolean> {
-
+    private handleAutoLogin(): Observable<BasicUserInfo | boolean> {
         this.stateStore.setIsLoading(true);
 
         // If `skipRedirectCallback` is not true, check if the URL has `code` and `session_state` params.
         // If so, initiate the sign in. If not, try to login silently.
-        if (!this.config.skipRedirectCallback && SPAUtils.hasAuthSearchParamsInURL()) {
+        if (
+            !this.config.skipRedirectCallback &&
+            SPAUtils.hasAuthSearchParamsInURL()
+        ) {
             return from(this.signIn());
         }
 
