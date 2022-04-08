@@ -1,6 +1,6 @@
 {
     "name": "asgardeo-auth-angular-sdk",
-    "version": "0.2.6",
+    "version": "0.3.0",
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
