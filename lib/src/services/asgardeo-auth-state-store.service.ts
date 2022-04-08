@@ -22,7 +22,7 @@ import { AuthStateInterface } from "../models";
 import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-    providedIn: "root",
+    providedIn: "root"
 })
 export class AsgardeoAuthStateStoreService {
     private DEFAULT_STATE: AuthStateInterface = {
@@ -32,7 +32,7 @@ export class AsgardeoAuthStateStoreService {
         isAuthenticated: false,
         isLoading: true,
         sub: "",
-        username: "",
+        username: ""
     };
 
     // Readonly State BehaviorSubject. Not accessible from outside.
@@ -58,7 +58,7 @@ export class AsgardeoAuthStateStoreService {
     public set state(newState: AuthStateInterface) {
         this._state.next({
             ...this._state,
-            ...newState,
+            ...newState
         });
     }
 
@@ -69,7 +69,7 @@ export class AsgardeoAuthStateStoreService {
     public setIsLoading(isLoading: boolean): void {
         this._state.next({
             ...this.state,
-            isLoading,
+            isLoading
         });
     }
 

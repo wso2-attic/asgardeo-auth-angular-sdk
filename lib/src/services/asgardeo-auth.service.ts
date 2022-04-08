@@ -35,14 +35,14 @@ import {
     HttpRequestConfig,
     HttpResponse,
     OIDCEndpoints,
-    SignInConfig,
+    SignInConfig
 } from "../models/asgardeo-spa.models";
 import { AsgardeoNavigatorService } from "./asgardeo-navigator.service";
 import { AsgardeoAuthStateStoreService } from "./asgardeo-auth-state-store.service";
 import { takeUntil } from "rxjs/operators";
 
 @Injectable({
-    providedIn: "root",
+    providedIn: "root"
 })
 export class AsgardeoAuthService implements OnDestroy {
     public readonly state$ = this.stateStore.state$;
@@ -98,7 +98,7 @@ export class AsgardeoAuthService implements OnDestroy {
                         isAuthenticated: true,
                         isLoading: false,
                         sub: response.sub,
-                        username: response.username,
+                        username: response.username
                     };
                 }
 
@@ -242,7 +242,7 @@ export class AsgardeoAuthService implements OnDestroy {
                         isAuthenticated: true,
                         isLoading: false,
                         sub: basicUserInfo.sub,
-                        username: basicUserInfo.username,
+                        username: basicUserInfo.username
                     };
                 }
 
