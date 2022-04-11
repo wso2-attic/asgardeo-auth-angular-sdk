@@ -25,7 +25,6 @@ import { BehaviorSubject } from "rxjs";
     providedIn: "root"
 })
 export class AsgardeoAuthStateStoreService {
-
     private DEFAULT_STATE: AuthStateInterface = {
         allowedScopes: "",
         displayName: "",
@@ -37,7 +36,9 @@ export class AsgardeoAuthStateStoreService {
     };
 
     // Readonly State BehaviorSubject. Not accessible from outside.
-    private readonly _state = new BehaviorSubject<AuthStateInterface>(this.DEFAULT_STATE);
+    private readonly _state = new BehaviorSubject<AuthStateInterface>(
+        this.DEFAULT_STATE
+    );
 
     // Outside can access this readonly state object by subscribing.
     readonly state$ = this._state.asObservable();
@@ -47,7 +48,6 @@ export class AsgardeoAuthStateStoreService {
      * @return {AuthStateInterface}
      */
     public get state(): AuthStateInterface {
-
         return this._state.getValue();
     }
 
@@ -77,6 +77,6 @@ export class AsgardeoAuthStateStoreService {
      * Resets the state back to the default.
      */
     public reset(): void {
-        this._state.next(this.DEFAULT_STATE)
+        this._state.next(this.DEFAULT_STATE);
     }
 }

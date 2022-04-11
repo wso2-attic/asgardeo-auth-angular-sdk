@@ -26,7 +26,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Follow the instructions in the [Try Out the Sample Apps](../../README.md#try-out-the-sample-apps) section to register an application.
 
-Make sure to add `https://localhost:5000` as a Redirect URL and also add it under allowed origins. 
+Make sure to add `https://localhost:3000` as a Redirect URL and also add it under allowed origins. 
 
 ### Download the Sample
 
@@ -43,9 +43,9 @@ Read more about the SDK configurations [here](../../README.md#configuration).
 ```json
 {
     "clientID": "<ADD_CLIENT_ID_HERE>",
-    "serverOrigin": "https://api.asgardeo.io",
-    "signInRedirectURL": "https://localhost:5000",
-    "signOutRedirectURL": "https://localhost:5000"
+    "baseUrl": "https://api.asgardeo.io",
+    "signInRedirectURL": "https://localhost:3000",
+    "signOutRedirectURL": "https://localhost:3000"
 }
 ```
 
@@ -54,7 +54,7 @@ Read more about the SDK configurations [here](../../README.md#configuration).
 ```bash
 npm install && npm start
 ```
-The app should open at [`https://localhost:5000`](https://localhost:5000)
+The app should open at [`https://localhost:3000`](https://localhost:3000)
 
 ## Available Scripts
 
@@ -66,7 +66,18 @@ npm install -g @angular/cli
 
 ### Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:5000/`. The app will automatically reload if you change any of the source files.
+Run `ng serve` for a dev server. Navigate to `http://localhost:3000/`. The app will automatically reload if you change any of the source files.
+
+### Change the Application's Development Server Port
+
+By default, the development server runs on port `3000`. Incase if you wish to change this to something else, 
+follow the steps below.
+
+1. Update the `PORT` in [.env](.env) file in the app root.
+2. Update the `signInRedirectURL` & `signOutRedirectURL` in [src/config.json](./src/config.json)
+3. Go to the Asgardeo Console and navigate to the protocol tab of your application:
+    - Update the Authorized Redirect URL.
+    - Update the Allowed Origins.
 
 ### Build
 

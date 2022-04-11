@@ -40,7 +40,7 @@ import { ProfileComponent } from "./profile/profile.component";
             signInRedirectURL: window.location.origin + "/signin/redirect",
             signOutRedirectURL: window.location.origin,
             clientID: "",
-            serverOrigin: "https://localhost:9443",
+            baseUrl: "https://localhost:9443",
             scope: ["internal_login"],
             resourceServerURLs: ["https://localhost:9443/scim2"]
         })
