@@ -22,6 +22,8 @@ import { AsgardeoAuthService, AuthStateInterface, BasicUserInfo, Hooks } from "@
 import { default as authConfig } from "../config.json";
 import { Observable } from "rxjs";
 import { ParsedIDTokenInterface, parseIdToken } from "./utils";
+import { ActivatedRoute } from "@angular/router";
+import { USER_DENIED_LOGOUT } from "./constants/errors";
 
 @Component({
     selector: "app-root",
@@ -35,8 +37,22 @@ export class AppComponent implements OnInit {
     public parsedIDToken: ParsedIDTokenInterface;
     public hasErrors: boolean;
     public state$: Observable<AuthStateInterface>;
+    public hasLogoutRequestDeniedError: boolean = false;
+    public stateParam: string;
+    public errorParam: string;
+    public logoutRequestDeniedErrorMessage: string;
 
-    constructor(private auth: AsgardeoAuthService) { }
+    constructor(private auth: AsgardeoAuthService, private route: ActivatedRoute) {
+        this.logoutRequestDeniedErrorMessage = USER_DENIED_LOGOUT;
+        this.route.queryParams.subscribe(params => {
+            this.stateParam = params?.state;
+            this.errorParam = params?.error;
+
+            if(this.stateParam && this.errorParam) {
+                this.hasLogoutRequestDeniedError = true;
+            }
+        });
+    }
 
     ngOnInit() {
         this.state$ = this.auth.state$;
@@ -68,14 +84,14 @@ export class AppComponent implements OnInit {
                 }
             );
 
-        this.auth.on(Hooks.SignOutFailed, (error) => {
-            if (error.description === "End User denied the logout request") {
-                this.hasErrors = true;
-            }
+        this.auth.on(Hooks.SignOut, () => {
+            this.hasLogoutRequestDeniedError = false;
         });
     }
 
     handleLogin() {
+        console.log(this.hasLogoutRequestDeniedError)
+        this.hasLogoutRequestDeniedError = false;
         this.auth.signIn();
     }
 
