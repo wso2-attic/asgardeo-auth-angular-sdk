@@ -19,6 +19,7 @@
 
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
+import { RouterModule } from "@angular/router";
 import { AsgardeoAuthModule, AsgardeoConfigInterface } from "@asgardeo/auth-angular";
 import { default as authConfig } from "../config.json";
 import { AppComponent } from "./app.component";
@@ -31,7 +32,8 @@ import { JsonFormatterComponent } from "./json-formatter/json-formatter.componen
     ],
     imports: [
         BrowserModule,
-        AsgardeoAuthModule.forRoot(authConfig as AsgardeoConfigInterface)
+        AsgardeoAuthModule.forRoot(authConfig as AsgardeoConfigInterface),
+        RouterModule.forRoot([])
     ],
     providers: [],
     bootstrap: [AppComponent]

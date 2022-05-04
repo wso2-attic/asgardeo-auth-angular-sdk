@@ -42,39 +42,60 @@
 
         <div class="content">
 
+            <div *ngIf="hasLogoutRequestDeniedError; then logoutRequestDeniedError"></div>
+
             <div *ngIf="(state$ | async)?.isLoading; then loading else notLoading"></div>
 
             <ng-template #loading>
-                <div>Loading ...</div>
+                <ng-container *ngIf="!hasLogoutRequestDeniedError">
+                    <div>Loading ...</div>
+                </ng-container>
+            </ng-template>
+
+            <ng-template #logoutRequestDeniedError>
+                <div className="ui visible negative message">
+                    <div className="mt-4 h3 b"> {{logoutRequestDeniedErrorMessage}} </div>
+                    <p className="my-4">
+                      <a className="link-button pointer" role="button" (click)="handleLogin()">
+                        Try Log in again
+                      </a>
+                      &nbsp;or&nbsp;
+                      <a (click)="handleLogout()" className="link-button pointer" role="button">
+                        Log out from the application.
+                      </a>
+                    </p>
+                  </div>
             </ng-template>
 
             <ng-template #notLoading>
 
-                <div *ngIf="(state$ | async).isAuthenticated; then signedIn else notSignedIn"></div>
+                <div *ngIf="(state$ | async).isAuthenticated && !hasLogoutRequestDeniedError; then signedIn else notSignedIn"></div>
 
                 <ng-template #notSignedIn>
 
-                    <div class="home-image">
-                        <img
-                            src="/assets/angular-logo.png"
-                            class="logo"
-                        />
-                    </div>
-                    <h3>
-                        Sample demo to showcase authentication for a Single Page Application <br/>
-                        via the OpenID Connect Authorization Code flow, <br/>
-                        which is integrated using the
-                        <a
-                            href="https://github.com/asgardeo/asgardeo-auth-angular-sdk"
-                            target="_blank"
-                        >
-                            Asgardeo Auth Angular SDK</a>.
-                    </h3>
-                    <button
-                        class="btn primary"
-                        (click)="handleLogin()"
-                    >Login
-                    </button>
+                    <ng-container *ngIf="!hasLogoutRequestDeniedError">
+                        <div class="home-image">
+                            <img
+                                src="/assets/angular-logo.png"
+                                class="logo"
+                            />
+                        </div>
+                        <h3>
+                            Sample demo to showcase authentication for a Single Page Application <br/>
+                            via the OpenID Connect Authorization Code flow, <br/>
+                            which is integrated using the
+                            <a
+                                href="https://github.com/asgardeo/asgardeo-auth-angular-sdk"
+                                target="_blank"
+                            >
+                                Asgardeo Auth Angular SDK</a>.
+                        </h3>
+                        <button
+                            class="btn primary"
+                            (click)="handleLogin()"
+                        >Login
+                        </button>
+                    </ng-container>
                 </ng-template>
 
                 <ng-template #signedIn>

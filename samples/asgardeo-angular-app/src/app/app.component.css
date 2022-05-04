@@ -45,6 +45,10 @@ a:hover {
     margin-top: 40px !important;
 }
 
+.my-4 {
+    margin: 40px auto 40px auto;
+}
+
 .home-image {
     vertical-align: middle;
     margin-bottom: 50px;
@@ -193,4 +197,8 @@ code {
 
 .inline-code-block a {
   text-decoration: none !important;
+}
+
+.pointer {
+    cursor: pointer;
 }
