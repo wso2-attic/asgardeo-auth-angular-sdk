@@ -90,7 +90,6 @@ export class AppComponent implements OnInit {
     }
 
     handleLogin() {
-        console.log(this.hasLogoutRequestDeniedError)
         this.hasLogoutRequestDeniedError = false;
         this.auth.signIn();
     }
