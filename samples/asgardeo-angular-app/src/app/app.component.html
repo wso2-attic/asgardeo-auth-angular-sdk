@@ -43,11 +43,12 @@
         <div class="content">
 
             <div *ngIf="hasLogoutRequestDeniedError; then logoutRequestDeniedError"></div>
+            <div *ngIf="hasAuthenticationFailure; then authenticationFailureState"></div>
 
             <div *ngIf="(state$ | async)?.isLoading; then loading else notLoading"></div>
 
             <ng-template #loading>
-                <ng-container *ngIf="!hasLogoutRequestDeniedError">
+                <ng-container *ngIf="!hasLogoutRequestDeniedError && !hasAuthenticationFailure">
                     <div>Loading ...</div>
                 </ng-container>
             </ng-template>
@@ -67,13 +68,28 @@
                   </div>
             </ng-template>
 
+            <ng-template #authenticationFailureState>
+                <div class="content">
+                    <div class="ui visible negative message">
+                        <div class="header"><b>{{authenticationFailureErrorTitle}}</b></div>
+                        <p>{{authenticationFailureErrorDescription}}</p>
+                    </div>
+                    <button
+                        class="btn primary"
+                        (click)="handleLogin()"
+                    >Login
+                    </button>
+                </div>
+            </ng-template>
+
             <ng-template #notLoading>
 
-                <div *ngIf="(state$ | async).isAuthenticated && !hasLogoutRequestDeniedError; then signedIn else notSignedIn"></div>
+                <div *ngIf="(state$ | async).isAuthenticated && !hasLogoutRequestDeniedError &&
+                    !hasAuthenticationFailure; then signedIn else notSignedIn"></div>
 
                 <ng-template #notSignedIn>
 
-                    <ng-container *ngIf="!hasLogoutRequestDeniedError">
+                    <ng-container *ngIf="!hasLogoutRequestDeniedError && !hasAuthenticationFailure">
                         <div class="home-image">
                             <img
                                 src="/assets/angular-logo.png"

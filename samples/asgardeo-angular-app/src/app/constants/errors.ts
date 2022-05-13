@@ -18,3 +18,5 @@
  */
 
 export const USER_DENIED_LOGOUT = "End User denied the logout request";
+export const AUTHENTICATION_FAILURE_TITLE = "Authentication Error!";
+export const AUTHENTICATION_FAILURE_DESCRIPTION = "Please check application configuration and try login again!";
