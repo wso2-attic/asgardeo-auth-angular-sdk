@@ -18,13 +18,21 @@
  */
 
 import { Component, OnInit } from "@angular/core";
-import { AsgardeoAuthService, AuthStateInterface, BasicUserInfo, Hooks } from "@asgardeo/auth-angular";
+import {
+    AsgardeoAuthService,
+    AuthStateInterface,
+    BasicUserInfo,
+    Hooks
+} from "@asgardeo/auth-angular";
 import { default as authConfig } from "../config.json";
 import { Observable } from "rxjs";
 import { ParsedIDTokenInterface, parseIdToken } from "./utils";
 import { ActivatedRoute } from "@angular/router";
-import { USER_DENIED_LOGOUT } from "./constants/errors";
-
+import {
+    AUTHENTICATION_FAILURE_DESCRIPTION,
+    AUTHENTICATION_FAILURE_TITLE,
+    USER_DENIED_LOGOUT,
+} from "./constants/errors";
 @Component({
     selector: "app-root",
     templateUrl: "./app.component.html",
@@ -32,24 +40,33 @@ import { USER_DENIED_LOGOUT } from "./constants/errors";
 })
 export class AppComponent implements OnInit {
 
-    public isClientIDConfigured: boolean = !!authConfig.clientID;
+    public isClientIDConfigured = !!authConfig.clientID;
     public userInfo: BasicUserInfo;
     public parsedIDToken: ParsedIDTokenInterface;
     public hasErrors: boolean;
     public state$: Observable<AuthStateInterface>;
-    public hasLogoutRequestDeniedError: boolean = false;
+    public hasLogoutRequestDeniedError = false;
+    public hasAuthenticationFailure = false;
     public stateParam: string;
-    public errorParam: string;
+    public errorDescParam: string;
     public logoutRequestDeniedErrorMessage: string;
+    public authenticationFailureErrorTitle: string;
+    public authenticationFailureErrorDescription: string;
 
     constructor(private auth: AsgardeoAuthService, private route: ActivatedRoute) {
         this.logoutRequestDeniedErrorMessage = USER_DENIED_LOGOUT;
+        this.authenticationFailureErrorTitle = AUTHENTICATION_FAILURE_TITLE;
+        this.authenticationFailureErrorDescription = AUTHENTICATION_FAILURE_DESCRIPTION;
         this.route.queryParams.subscribe(params => {
             this.stateParam = params?.state;
-            this.errorParam = params?.error;
+            this.errorDescParam = params?.error_description;
 
-            if(this.stateParam && this.errorParam) {
-                this.hasLogoutRequestDeniedError = true;
+            if(this.stateParam && this.errorDescParam) {
+                if(this.errorDescParam === "End User denied the logout request") {
+                    this.hasLogoutRequestDeniedError = true;
+                } else {
+                    this.hasAuthenticationFailure = true;
+                }
             }
         });
     }
@@ -63,19 +80,21 @@ export class AppComponent implements OnInit {
                     if (state.isAuthenticated) {
                         this.auth.getBasicUserInfo()
                             .then((user: BasicUserInfo) => {
-                                const username: string[] = user?.username?.split('/');
+                                const username: string[] = user?.username?.split("/");
 
-                                if (username.length >= 2) {
-                                    username.shift();
-                                    user.username = username.join('/');
+                                if (username) {
+                                    if (username.length >= 2) {
+                                        username.shift();
+                                        user.username = username.join("/");
+                                    }
+
+                                    this.userInfo = user;
                                 }
-
-                                this.userInfo = user;
                             });
 
                         this.auth.getIDToken()
                             .then((payload: string) => {
-                                this.parsedIDToken = parseIdToken(payload)
+                                this.parsedIDToken = parseIdToken(payload);
                             });
                     }
                 },
