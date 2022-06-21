@@ -315,7 +315,7 @@ signIn(config?: SignInConfig, authorizationCode?: string, sessionState?: string)
 
 #### Description
 
-As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates generates the authorization URl and takes the user to the single-sign-on page of the identity server, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authentication themselves with the server.
+As the name implies, this method is used to sign-in users. This method will have to be called twice to implement the two phases of the authentication process. The first phase generates the authorization URl and takes the user to the single-sign-on page of the identity server, while second phase triggers the token request to complete the authentication process. So, this method should be called when initiating authentication and when the user is redirected back to the app after authentication themselves with the server.
 
 The `sign-in` hook is used to fire a callback function after signing in is successful. Check the [on()](#on) section for more information.
 
@@ -409,7 +409,7 @@ A Promise that resolves with the access token.
 
 #### Description
 
-This returns a promise that resolves with the access token. The promise resolves successfully only if the storage type is set to a type other than `webWorker`. Otherwise an error is thrown.
+This returns a promise that resolves with the access token. The promise resolves successfully only if the storage type is set to a type other than `webWorker`. Otherwise, an error is thrown.
 
 ### getIDToken
 
@@ -820,7 +820,8 @@ Of the four methods, storing the session information in the **web worker** is th
 
 #### Custom Grant Template Tags
 
-Session information can be attached to the body of a custom-grant request using template tags. This is useful when the session information is not exposed outside the SDK but you want such information to be used in custom-grant requests. The following table lists the available template tags.
+Session information can be attached to the body of a custom-grant request using template tags. This is useful when the session information is not exposed outside the SDK, but you want such information to be used in custom-grant requests. The following table lists the available template tags.
+
 | Tag                | Data               |
 | ------------------ | ------------------ |
 | "{{token}}"        | The access token.  |
