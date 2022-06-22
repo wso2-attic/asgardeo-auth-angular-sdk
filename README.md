@@ -781,7 +781,6 @@ Of the four methods, storing the session information in the **web worker** is th
 | `username`      | `string` | The username of the user.                                                                          |
 | `displayName`   | `string` | The display name of the user. It is the `preferred_username` in the id token payload or the `sub`. |
 | `allowedScopes` | `string` | The scopes allowed for the user.                                                                   |
-| `tenantDomain`  | `string` | The tenant domain to which the user belongs.                                                       |
 | `sessionState`  | `string` | The session state.                                                                                 |
 | `sub`           | `string` | The `uid` corresponding to the user to whom the ID token belongs to.                               |
 
@@ -839,7 +838,6 @@ Session information can be attached to the body of a custom-grant request using 
 | iss                | `string`               | The token issuer.                              |
 | email              | `string`               | The email address.                             |
 | preferred_username | `string`               | The preferred username.                        |
-| tenant_domain      | `string`               | The tenant domain to which the user belongs.   |
 
 ### AuthStateInterface
 
