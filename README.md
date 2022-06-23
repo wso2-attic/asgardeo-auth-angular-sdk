@@ -832,12 +832,12 @@ Session information can be attached to the body of a custom-grant request using 
 ### DecodedIDTokenPayload
 
 | Method             | Type                   | Description                                    |
-| ------------------ | ---------------------- | ---------------------------------------------- |
+|--------------------| ---------------------- | ---------------------------------------------- |
 | aud                | `string` \| `string[]` | The audience.                                  |
 | sub                | `string`               | The subject. This is the username of the user. |
 | iss                | `string`               | The token issuer.                              |
 | email              | `string`               | The email address.                             |
-| preferred_username | `string`               | The preferred username.                        |
+| exp                | `number`               | ID token expiry time.                          |
 
 ### AuthStateInterface
 
