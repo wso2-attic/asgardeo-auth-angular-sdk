@@ -210,7 +210,6 @@ export class AsgardeoAuthService implements OnDestroy {
      * First, this method sends a prompt none request to see if there is an active user session in the identity server.
      * If there is one, then it requests the access token and stores it. Else, it returns false.
      *
-     * @param {AuthStateInterface} state - Current Authenticated state.
      * @return {Promise<BasicUserInfo | boolean>} - A Promise that resolves with the user information after signing in
      * or with `false` if the user is not signed in.
      *
@@ -219,9 +218,7 @@ export class AsgardeoAuthService implements OnDestroy {
      * this.auth.trySignInSilently()
      *```
      */
-    public trySignInSilently = async (
-        state: AuthStateInterface
-    ): Promise<BasicUserInfo | boolean> => {
+    public trySignInSilently = async (): Promise<BasicUserInfo | boolean> => {
         this.stateStore.setIsLoading(true);
 
         return this.auth
@@ -275,6 +272,6 @@ export class AsgardeoAuthService implements OnDestroy {
 
         // This uses the RP iframe to get the session. Hence, will not work if 3rd party cookies are disabled.
         // If the browser has these cookies disabled, we'll not be able to retrieve the session on refreshes.
-        return from(this.trySignInSilently(this.stateStore.state));
+        return from(this.trySignInSilently());
     }
 }
