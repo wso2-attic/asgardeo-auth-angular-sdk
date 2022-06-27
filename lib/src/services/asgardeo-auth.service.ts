@@ -58,7 +58,7 @@ export class AsgardeoAuthService implements OnDestroy {
     ) {
         this.config = authConfig;
         this.auth = AsgardeoSPAClient.getInstance();
-
+        this.initializeHooks();
         (async (): Promise<void> => {
             await this.auth.initialize(this.authConfig);
             this.handleAutoLogin()
@@ -74,6 +74,13 @@ export class AsgardeoAuthService implements OnDestroy {
     ngOnDestroy(): void {
         this.subscriptionDestroyer$.next(true);
         this.subscriptionDestroyer$.unsubscribe();
+    }
+
+    /**
+     * Registering a sign-out hook clears user session data internally if there was a successful logout.
+     */
+    initializeHooks(): void {
+        this.auth.on(Hooks.SignOut, ()=>{});
     }
 
     signIn(
