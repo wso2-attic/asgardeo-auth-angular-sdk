@@ -221,6 +221,7 @@ export class AppComponent {
   - [state$](#state)
   - [signIn](#signin)
   - [signInWithRedirect](#signinwithredirect)
+  - [trySignInSilently](#trySignInSilently)
   - [signOut](#signout)
   - [isAuthenticated](#isauthenticated)
   - [getBasicUserInfo](#getbasicuserinfo)
@@ -356,6 +357,22 @@ AsgardeoAuthModule.forRoot({
     ...
 })
 ```    
+
+### trySignInSilently
+
+```typescript
+trySignInSilently(): Promise<BasicUserInfo | Boolean>
+```
+#### Returns
+
+A Promise that resolves with the user information after signing in or with `false` if the user is not signed in.
+
+#### Description
+
+This method allows you to sign in silently. First, it sends a prompt `none` request to see if there is an active user session in Asgardeo.
+If there is one, then it requests the access token and stores it. Else, it returns false.
+
+> :warning: **_Since this method uses an iFrame, this method will not work if third-party cookies are blocked in the browser._**
 
 ### signOut
 
