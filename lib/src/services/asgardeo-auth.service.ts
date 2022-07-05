@@ -61,6 +61,7 @@ export class AsgardeoAuthService implements OnDestroy {
 
         (async (): Promise<void> => {
             await this.auth.initialize(this.authConfig);
+            await this.handleSingleLogoutOnRedirect();
             this.handleAutoLogin()
                 .pipe(takeUntil(this.subscriptionDestroyer$))
                 .subscribe();
@@ -273,5 +274,20 @@ export class AsgardeoAuthService implements OnDestroy {
         // This uses the RP iframe to get the session. Hence, will not work if 3rd party cookies are disabled.
         // If the browser has these cookies disabled, we'll not be able to retrieve the session on refreshes.
         return from(this.trySignInSilently());
+    }
+
+    /**
+     * Handles single logout if a prompt none sign in response is received with an error parameter on the URL.
+     *
+     * @private
+     * @return {Promise<BasicUserInfo | void>}
+     */
+    private async handleSingleLogoutOnRedirect(): Promise<BasicUserInfo | void> {
+
+        if (SPAUtils.hasErrorInURL()) {
+            // The signIn method call will call receivePromptNoneResponse method internally to handle the prompt none
+            // response in the single logout flow.
+            return this.signIn({callOnlyOnRedirect: true});
+        }
     }
 }
