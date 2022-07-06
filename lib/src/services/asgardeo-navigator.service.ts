@@ -64,4 +64,13 @@ export class AsgardeoNavigatorService {
             return window.location.href.split("?")[0];
         }
     }
+
+    getCurrentUrl(): string {
+        if (this.router) {
+            return this.router.url;
+        } else {
+            return window.location.href;
+        }
+
+    }
 }
