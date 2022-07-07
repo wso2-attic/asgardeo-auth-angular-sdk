@@ -21,6 +21,7 @@ import { Component, OnInit } from "@angular/core";
 import { Hooks } from "../models/asgardeo-spa.models";
 import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
 import { AsgardeoNavigatorService } from "../services/asgardeo-navigator.service";
+import { SPAUtils } from "@asgardeo/auth-spa";
 
 @Component({
     selector: "lib-asgardeo-sign-in-redirect",
@@ -34,6 +35,8 @@ export class AsgardeoSignInRedirectComponent implements OnInit {
             this.navigator.navigateByUrl(this.navigator.getRedirectUrl());
         });
 
-        this.auth.signIn();
+        if (!SPAUtils.hasAuthSearchParamsInURL(this.navigator.getCurrentUrl())) {
+            this.auth.signIn();
+        }
     }
 }
