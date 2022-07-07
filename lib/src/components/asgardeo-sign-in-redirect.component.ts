@@ -21,7 +21,7 @@ import { Component, OnInit } from "@angular/core";
 import { Hooks } from "../models/asgardeo-spa.models";
 import { AsgardeoAuthService } from "../services/asgardeo-auth.service";
 import { AsgardeoNavigatorService } from "../services/asgardeo-navigator.service";
-import {SPAUtils} from "@asgardeo/auth-spa";
+import { SPAUtils } from "@asgardeo/auth-spa";
 
 @Component({
     selector: "lib-asgardeo-sign-in-redirect",
