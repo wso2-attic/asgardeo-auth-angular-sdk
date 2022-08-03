@@ -53,6 +53,6 @@ jobs:
       working-directory: samples
       run: |
         for dir in */ ; do
-          yarn install --prefix "$dir"
-          yarn build --prefix "$dir" --if-present
+          yarn install "$dir"
+          yarn build "$dir" --if-present
         done
