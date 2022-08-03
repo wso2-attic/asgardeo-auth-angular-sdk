@@ -44,8 +44,8 @@ jobs:
 
       - name: Build
         run: |
-          npm ci
-          npm run build:prod --if-present
+          yarn install --frozen-lockfile
+          yarn build
 
       - name: Bump Library Version
         working-directory: lib
@@ -65,8 +65,8 @@ jobs:
 
       - name: Build
         run: |
-          npm ci
-          npm run build:prod --if-present
+          yarn install --frozen-lockfile
+          yarn build
 
       - name: Pack Release Artifacts
         run: |

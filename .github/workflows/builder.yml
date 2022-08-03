@@ -46,13 +46,13 @@ jobs:
 
     - name: Build
       run: |
-        npm ci
-        npm run build:prod --if-present
+        yarn install --frozen-lockfile
+        yarn build
 
     - name: Build Samples
       working-directory: samples
       run: |
         for dir in */ ; do
-          npm ci --prefix "$dir"
-          npm run build --prefix "$dir" --if-present
+          yarn install --prefix "$dir"
+          yarn build --prefix "$dir" --if-present
         done
