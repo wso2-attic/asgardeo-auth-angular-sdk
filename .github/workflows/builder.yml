@@ -53,6 +53,8 @@ jobs:
       working-directory: samples
       run: |
         for dir in */ ; do
-          yarn install "$dir"
-          yarn build "$dir" --if-present
+          cd "$dir"
+          yarn install --frozen-lockfile
+          yarn build
+          cd ..
         done
