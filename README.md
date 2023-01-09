@@ -50,7 +50,7 @@ Create an organization in Asgardeo if you don't already have one. The organizati
 
 Before trying out the sample apps, you need to create an application in **Asgardeo**.
 
-1. Navigate to [**Asgardeo Console**](https://console.asgardeo.io/login) and click on **Applications** under **Develop** tab
+1. Navigate to [**Asgardeo Console**](https://console.asgardeo.io/login) and click on **Applications** under **Develop** tab.
    
 2. Click on **New Application** and then **Single Page Application**.
    
