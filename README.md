@@ -1,4 +1,10 @@
-# Asgardeo Auth Angular SDK & Samples 
+# [DEPRECATED] Asgardeo Auth Angular SDK & Samples
+
+## :warning: Warning!
+### Angular SDK is no longer encoraged and enriched by Asgardeo and may not work with the latest Angular versions.
+### Please consider using [asgardeo-auth-spa-sdk](https://github.com/asgardeo/asgardeo-auth-spa-sdk) instead.
+### Or, you can implement login using [Authorization Code flow with PKCE](https://wso2.com/asgardeo/docs/guides/authentication/oidc/implement-auth-code-with-pkce/#prerequisites) with Asgardeo for any SPA technology.
+---
 
 Repository containing the source of Asgardeo Auth Angular SDK & Samples.
 
