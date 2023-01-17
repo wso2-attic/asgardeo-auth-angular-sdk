@@ -1,4 +1,9 @@
-# Asgardeo Auth Angular SDK & Samples 
+# [DEPRECATED] Asgardeo Auth Angular SDK & Samples
+
+## :warning: Warning!
+### Angular SDK is **no longer supported by Asgardeo** and will not work with the latest Angular versions.
+### Consider using [asgardeo-auth-spa-sdk](https://github.com/asgardeo/asgardeo-auth-spa-sdk) as an alternative.
+---
 
 Repository containing the source of Asgardeo Auth Angular SDK & Samples.
 
